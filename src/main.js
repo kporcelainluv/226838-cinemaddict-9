@@ -21,7 +21,7 @@ const filmsListContainer = document.querySelector(`.films-list__container`);
 
 for (let i = 0; i < 5; i++) {
   render(filmsListContainer, filmOutsideCard(), "afterbegin");
-  // render(pageBody, popupTemplate(), "beforeend");
+  render(filmsListContainer, popupTemplate(), "beforeend");
 }
 const films = document.querySelector(`.films`);
 render(films, additionalFilmBlock(), "beforeend");
