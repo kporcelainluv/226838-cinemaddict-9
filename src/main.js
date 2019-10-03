@@ -1,16 +1,26 @@
 import { Search } from "./components/search";
 import { ProfileRating } from "./components/profileRating";
-import { mainFilterStats } from "./components/mainFilter";
-import { showMore } from "./components/showMoreBtn";
-import { filmsContainer } from "./components/filmsContainer";
+import { MainNav } from "./components/mainFilter";
+import { ShowMoreButton } from "./components/showMoreBtn";
+import { MainSorting } from "./components/mainSorting";
+import { FilmsList } from "./components/films-list";
 import { additionalFilmBlock } from "./components/additionalFilmBlocks";
 import { Film } from "./components/film";
 import { render1 } from "./components/utils";
 import { Popup } from "./components/popup";
+import { FilmContainer } from "./components/film-conainter";
+import { film } from "./components/mockData";
 
+const render = (container, template, place) => {
+  container.insertAdjacentHTML(place, template);
+};
+// delete soon
 const headerSearchContainer = document.querySelector(`.header`);
 const mainPageContainer = document.querySelector(`.main`);
+const footerContainer = document.querySelector(`.footer`);
 
+// compiling header
+// adding h1
 const addHeaderLogo = container => {
   const headerSearchHeading = document.createElement("h1");
   headerSearchHeading.className = "header__logo logo";
@@ -18,41 +28,60 @@ const addHeaderLogo = container => {
   render1(container, headerSearchHeading, "afterbegin");
 };
 
-const render = (container, template, place) => {
-  container.insertAdjacentHTML(place, template);
-};
-
-render(mainPageContainer, mainFilterStats(), "afterbegin");
-render(mainPageContainer, filmsContainer(), "beforeend");
-
 const renderHeader = () => {
   const headerSearchBar = new Search().getElement();
   const headerProfileRating = new ProfileRating().getElement();
-
-  render1(headerSearchContainer, headerSearchBar, "beforeend");
-  render1(headerSearchContainer, headerProfileRating, "beforeend");
+  //header logo
   addHeaderLogo(headerSearchContainer);
+  // header seach
+  render1(headerSearchContainer, headerSearchBar, "beforeend");
+  // header rating
+  render1(headerSearchContainer, headerProfileRating, "beforeend");
 };
-const filmsListContainer = document.querySelector(`.films-list__container`);
+// created header
 
-const films = document.querySelector(`.films`);
-render(films, additionalFilmBlock(), "beforeend");
-render(films, additionalFilmBlock(), "beforeend");
-const topLikedFilmContainer = document.querySelectorAll(
-  `.films-list--extra .films-list__container`
-)[0];
-const mostCommentedFilmContainer = document.querySelectorAll(
-  `.films-list--extra .films-list__container`
-)[1];
+// creating main
 
-render(filmsListContainer, showMore(), "beforeend");
+const renderMain = mainPageContainer => {
+  const filmContainer = new FilmContainer().getElement();
+  const mainSorting = new MainSorting().getElement();
+  const mainNav = new MainNav().getElement();
 
-const renderFilmsContainer = data => {
+  render1(mainPageContainer, filmContainer, "afterbegin"); // class films
+  render1(mainPageContainer, mainSorting, "afterbegin"); // ul sorting
+  render1(mainPageContainer, mainNav, "afterbegin"); // main nav
+
+  return [filmContainer, mainSorting, mainNav];
+};
+// created main
+
+// create film container
+
+const renderFilmsBlock = container => {
+  const filmsListBlock = new FilmsList().getElement(); //films-list
+  const topRatedBlock = new additionalFilmBlock("Top Rated").getElement(); // --extra
+  const showMoreBtn = new ShowMoreButton().getElement();
+  const mostCommentedBlock = new additionalFilmBlock(
+    "Most Commented"
+  ).getElement(); // --extra
+  render1(container, showMoreBtn, "afterbegin"); // show more
+  render1(container, filmsListBlock, "afterbegin");
+  render1(container, topRatedBlock, "beforeend");
+  render1(container, mostCommentedBlock, "beforeend");
+
+  return [filmsListBlock, topRatedBlock, mostCommentedBlock, showMoreBtn];
+};
+
+const renderFilmCard = (container, data) => {
+  const filmsListContainer = container.querySelector(".films-list__container");
+  console.log(filmsListContainer);
   const filmCard = new Film(data).getElement();
-  const popUpTemplate = new Popup(data).getElement();
-
+  console.log(filmCard);
   render1(filmsListContainer, filmCard, "afterbegin");
-  // render1(filmsListContainer, popUpTemplate, "afterbegin");
+};
+const renderPopUp = (container, data) => {
+  const popUpTemplate = new Popup(data).getElement();
+  render1(container, popUpTemplate, "afterbegin");
 };
 const data = {
   name: "The Great Gatsby",
@@ -68,5 +97,12 @@ const data = {
   details: "Hello",
   personalRating: "5"
 };
-renderFilmsContainer(data);
 renderHeader();
+const [filmContainer, mainSorting, mainNav] = renderMain(mainPageContainer);
+const [
+  filmsListBlock,
+  topRatedBlock,
+  mostCommentedBlock,
+  showMoreBtn
+] = renderFilmsBlock(filmContainer);
+renderFilmCard(filmsListBlock, data);
