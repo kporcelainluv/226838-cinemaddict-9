@@ -6,10 +6,9 @@ import { MainSorting } from "./components/mainSorting";
 import { FilmsList } from "./components/films-list";
 import { additionalFilmBlock } from "./components/additionalFilmBlocks";
 import { Film } from "./components/film";
-import { render1 } from "./components/utils";
+import { render } from "./components/utils";
 import { Popup } from "./components/popup";
 import { FilmContainer } from "./components/film-conainter";
-import { film } from "./components/mockData";
 
 const headerSearchContainer = document.querySelector(`.header`);
 const mainPageContainer = document.querySelector(`.main`);
@@ -20,15 +19,15 @@ const addHeaderLogo = container => {
   const headerSearchHeading = document.createElement("h1");
   headerSearchHeading.className = "header__logo logo";
   headerSearchHeading.innerHTML = "Cinemaddict";
-  render1(container, headerSearchHeading, "afterbegin");
+  render(container, headerSearchHeading, "afterbegin");
 };
 
 const renderHeader = () => {
   const headerSearchBar = new Search().getElement();
   const headerProfileRating = new ProfileRating().getElement();
   addHeaderLogo(headerSearchContainer);
-  render1(headerSearchContainer, headerSearchBar, "beforeend");
-  render1(headerSearchContainer, headerProfileRating, "beforeend");
+  render(headerSearchContainer, headerSearchBar, "beforeend");
+  render(headerSearchContainer, headerProfileRating, "beforeend");
 };
 
 const renderMain = mainPageContainer => {
@@ -36,9 +35,9 @@ const renderMain = mainPageContainer => {
   const mainSorting = new MainSorting().getElement();
   const mainNav = new MainNav().getElement();
 
-  render1(mainPageContainer, filmContainer, "afterbegin"); // class films
-  render1(mainPageContainer, mainSorting, "afterbegin"); // ul sorting
-  render1(mainPageContainer, mainNav, "afterbegin"); // main nav
+  render(mainPageContainer, filmContainer, "afterbegin"); // class films
+  render(mainPageContainer, mainSorting, "afterbegin"); // ul sorting
+  render(mainPageContainer, mainNav, "afterbegin"); // main nav
 
   return [filmContainer, mainSorting, mainNav];
 };
@@ -50,10 +49,10 @@ const renderFilmsBlock = container => {
   const mostCommentedBlock = new additionalFilmBlock(
     "Most Commented"
   ).getElement(); // --extra
-  render1(container, showMoreBtn, "afterbegin"); // show more
-  render1(container, filmsListBlock, "afterbegin");
-  render1(container, topRatedBlock, "beforeend");
-  render1(container, mostCommentedBlock, "beforeend");
+  render(container, showMoreBtn, "afterbegin"); // show more
+  render(container, filmsListBlock, "afterbegin");
+  render(container, topRatedBlock, "beforeend");
+  render(container, mostCommentedBlock, "beforeend");
 
   return [filmsListBlock, topRatedBlock, mostCommentedBlock, showMoreBtn];
 };
@@ -69,11 +68,11 @@ const renderFilmCard = (container, data, body) => {
   const filmsListContainer = container.querySelector(".films-list__container");
   const filmCard = new Film(data).getElement();
   const popUpTemplate = new Popup(data).getElement();
-  render1(filmsListContainer, filmCard, "afterbegin");
+  render(filmsListContainer, filmCard, "afterbegin");
 
   const commentsButton = filmCard.querySelector(".film-card__comments");
   commentsButton.addEventListener(`click`, () => {
-    render1(body, popUpTemplate, "beforeend");
+    render(body, popUpTemplate, "beforeend");
     document.addEventListener(`keydown`, onEscKeyDown);
   });
 };
@@ -109,4 +108,4 @@ const renderPage = (
   ] = renderFilmsBlock(filmContainer);
   renderFilmCard(filmsListBlock, data, bodyContainer);
 };
-renderPage(bodyContainer, renderHeader, renderFilmsBlock, renderFilmCard);
+renderPage(bodyContainer, renderHeader, renderFilmsBlock, renderFilmCard, data);
