@@ -1,29 +1,40 @@
-import { searchBar } from "./components/search";
+import { Search } from "./components/search";
+import { ProfileRating } from "./components/profileRating";
 import { mainFilterStats } from "./components/mainFilter";
 import { showMore } from "./components/showMoreBtn";
-import { popupTemplate } from "./components/popup";
 import { filmsContainer } from "./components/filmsContainer";
 import { additionalFilmBlock } from "./components/additionalFilmBlocks";
 import { Film } from "./components/film";
 import { render1 } from "./components/utils";
+import { Popup } from "./components/popup";
 
-const headerSearchBar = document.querySelector(`.header`);
+const headerSearchContainer = document.querySelector(`.header`);
 const mainPageContainer = document.querySelector(`.main`);
+
+const addHeaderLogo = container => {
+  const headerSearchHeading = document.createElement("h1");
+  headerSearchHeading.className = "header__logo logo";
+  headerSearchHeading.innerHTML = "Cinemaddict";
+  render1(container, headerSearchHeading, "afterbegin");
+};
 
 const render = (container, template, place) => {
   container.insertAdjacentHTML(place, template);
 };
 
-render(headerSearchBar, searchBar(), "beforeend");
 render(mainPageContainer, mainFilterStats(), "afterbegin");
 render(mainPageContainer, filmsContainer(), "beforeend");
 
+const renderHeader = () => {
+  const headerSearchBar = new Search().getElement();
+  const headerProfileRating = new ProfileRating().getElement();
+
+  render1(headerSearchContainer, headerSearchBar, "beforeend");
+  render1(headerSearchContainer, headerProfileRating, "beforeend");
+  addHeaderLogo(headerSearchContainer);
+};
 const filmsListContainer = document.querySelector(`.films-list__container`);
-//
-// for (let i = 0; i < 5; i++) {
-//   render(filmsListContainer, filmOutsideCard(), "afterbegin");
-//   // render(films, popupTemplate(), "beforeend");
-// }
+
 const films = document.querySelector(`.films`);
 render(films, additionalFilmBlock(), "beforeend");
 render(films, additionalFilmBlock(), "beforeend");
@@ -34,17 +45,14 @@ const mostCommentedFilmContainer = document.querySelectorAll(
   `.films-list--extra .films-list__container`
 )[1];
 
-// for (let i = 0; i < 2; i++) {
-//   render(topLikedFilmContainer, filmOutsideCard(), "beforeend");
-//   render(mostCommentedFilmContainer, filmOutsideCard(), "beforeend");
-// }
-
 render(filmsListContainer, showMore(), "beforeend");
 
-const renderTask = data => {
-  const filmCard = new Film(data);
+const renderFilmsContainer = data => {
+  const filmCard = new Film(data).getElement();
+  const popUpTemplate = new Popup(data).getElement();
 
-  render1(filmsListContainer, filmCard.getTemplate(), "afterbegin");
+  render1(filmsListContainer, filmCard, "afterbegin");
+  // render1(filmsListContainer, popUpTemplate, "afterbegin");
 };
 const data = {
   name: "The Great Gatsby",
@@ -54,6 +62,11 @@ const data = {
   time: "1h 16m",
   poster: "made-for-each-other",
   comments: "9",
-  descriptionText: "Hello world!"
+  descriptionText: "Hello world!",
+  ageRating: "18+",
+  titleOriginal: "The Great Gatsby by S.Fitzgerald",
+  details: "Hello",
+  personalRating: "5"
 };
-renderTask(data);
+renderFilmsContainer(data);
+renderHeader();
