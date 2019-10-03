@@ -1,17 +1,24 @@
 import { createElement } from "./utils";
-class ShowMoreButton {
+
+class FilmsList {
   constructor() {
     this._element = null;
   }
-
   getTemplate() {
-    return `<button class="films-list__show-more">Show more</button>`;
+    return `<section class="films-list">
+      <h2 class="films-list__title visually-hidden">All movies. Upcoming</h2>
+      <div class="films-list__container">
+      </div>
+      </section>
+  `;
   }
   getElement() {
     if (!this._element) {
       this._element = createElement(this.getTemplate());
     }
+
     return this._element;
   }
 }
-export { ShowMoreButton };
+
+export { FilmsList };
