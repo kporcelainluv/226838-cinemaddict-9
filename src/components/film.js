@@ -39,5 +39,9 @@ class Film {
     }
     return this._element;
   }
+  removeElement() {
+    this._element = null;
+  }
+
 }
 export { Film };

@@ -14,6 +14,7 @@ import { film } from "./components/mockData";
 const headerSearchContainer = document.querySelector(`.header`);
 const mainPageContainer = document.querySelector(`.main`);
 const footerContainer = document.querySelector(`.footer`);
+const bodyContainer = document.getElementsByTagName("body")[0];
 
 const addHeaderLogo = container => {
   const headerSearchHeading = document.createElement("h1");
@@ -57,15 +58,24 @@ const renderFilmsBlock = container => {
   return [filmsListBlock, topRatedBlock, mostCommentedBlock, showMoreBtn];
 };
 
-const renderFilmCard = (container, data) => {
+const renderFilmCard = (container, data, body) => {
+  const onEscKeyDown = evt => {
+    if (evt.key === `Escape` || evt.key === `Esc`) {
+      popUpTemplate.remove();
+      document.removeEventListener(`keydown`, onEscKeyDown);
+    }
+  };
+
   const filmsListContainer = container.querySelector(".films-list__container");
   const filmCard = new Film(data).getElement();
-  render1(filmsListContainer, filmCard, "afterbegin");
-};
-const renderPopUp = (container, data) => {
-  const filmsListContainer = container.querySelector(".films-list__container");
   const popUpTemplate = new Popup(data).getElement();
-  render1(filmsListContainer, popUpTemplate, "afterbegin");
+  render1(filmsListContainer, filmCard, "afterbegin");
+
+  const commentsButton = filmCard.querySelector(".film-card__comments");
+  commentsButton.addEventListener(`click`, () => {
+    render1(body, popUpTemplate, "beforeend");
+    document.addEventListener(`keydown`, onEscKeyDown);
+  });
 };
 
 const data = {
@@ -83,7 +93,12 @@ const data = {
   personalRating: "5"
 };
 
-const renderPage = (renderHeader, renderFilmsBlock, renderFilmCard) => {
+const renderPage = (
+  bodyContainer,
+  renderHeader,
+  renderFilmsBlock,
+  renderFilmCard
+) => {
   renderHeader();
   const [filmContainer, mainSorting, mainNav] = renderMain(mainPageContainer);
   const [
@@ -92,7 +107,6 @@ const renderPage = (renderHeader, renderFilmsBlock, renderFilmCard) => {
     mostCommentedBlock,
     showMoreBtn
   ] = renderFilmsBlock(filmContainer);
-  renderFilmCard(filmsListBlock, data);
-  // renderPopUp(filmsListBlock, data);
+  renderFilmCard(filmsListBlock, data, bodyContainer);
 };
-renderPage(renderHeader, renderFilmsBlock, renderFilmCard);
+renderPage(bodyContainer, renderHeader, renderFilmsBlock, renderFilmCard);
