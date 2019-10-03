@@ -14,8 +14,7 @@ class Film {
   }
 
   getTemplate() {
-    return `
-        <article class="film-card">
+    return `<article class="film-card">
           <h3 class="film-card__title">${this._name}</h3>
           <p class="film-card__rating">${this._rating}</p>
           <p class="film-card__info">
