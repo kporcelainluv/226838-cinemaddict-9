@@ -6,7 +6,7 @@ import { MainSorting } from "./components/mainSorting";
 import { FilmsList } from "./components/films-list";
 import { additionalFilmBlock } from "./components/additionalFilmBlocks";
 import { Film } from "./components/film";
-import { render } from "./components/utils";
+import { render, unrender } from "./components/utils";
 import { Popup } from "./components/popup";
 import { FilmContainer } from "./components/film-conainter";
 
@@ -60,7 +60,7 @@ const renderFilmsBlock = container => {
 const renderFilmCard = (container, data, body) => {
   const onEscKeyDown = evt => {
     if (evt.key === `Escape` || evt.key === `Esc`) {
-      popUpTemplate.remove();
+      unrender(popUpTemplate);
       document.removeEventListener(`keydown`, onEscKeyDown);
     }
   };
@@ -74,6 +74,11 @@ const renderFilmCard = (container, data, body) => {
   commentsButton.addEventListener(`click`, () => {
     render(body, popUpTemplate, "beforeend");
     document.addEventListener(`keydown`, onEscKeyDown);
+  });
+
+  const closeButton = popUpTemplate.querySelector(".film-details__close-btn");
+  closeButton.addEventListener("click", () => {
+    unrender(popUpTemplate);
   });
 };
 
