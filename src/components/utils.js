@@ -19,7 +19,6 @@ const render = (container, element, place) => {
       container.append(element);
       break;
   }
-  // container.insertAdjacentHTML(place, element);
 };
 
 const unrender = element => {
@@ -27,4 +26,4 @@ const unrender = element => {
     element.remove();
   }
 };
-export { createElement, render, unrender };
+export { createElement, render, unrender, Position };
