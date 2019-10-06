@@ -1,6 +1,7 @@
-import { createElement } from "./utils";
-class Film {
+import { AbstractComponent } from "./abstractComponent";
+class Film extends AbstractComponent {
   constructor(data) {
+    super();
     this._name = data.name;
     this._rating = data.rating;
     this._year = data.year;
@@ -9,8 +10,6 @@ class Film {
     this._poster = data.poster;
     this._descriptionText = data.descriptionText;
     this._commentsAmount = data.comments;
-    this._element = null;
-    this._onClick = null;
   }
 
   getTemplate() {
@@ -33,15 +32,5 @@ class Film {
         </article>
         `;
   }
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-  removeElement() {
-    this._element = null;
-  }
-
 }
 export { Film };

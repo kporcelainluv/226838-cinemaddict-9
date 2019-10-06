@@ -9,6 +9,7 @@ import { Film } from "./components/film";
 import { render, unrender } from "./components/utils";
 import { Popup } from "./components/popup";
 import { FilmContainer } from "./components/film-conainter";
+import { PageController } from "./controllers/page-controller";
 
 const headerSearchContainer = document.querySelector(`.header`);
 const mainPageContainer = document.querySelector(`.main`);
@@ -57,31 +58,6 @@ const renderFilmsBlock = container => {
   return [filmsListBlock, topRatedBlock, mostCommentedBlock, showMoreBtn];
 };
 
-const renderFilmCard = (container, data, body) => {
-  const onEscKeyDown = evt => {
-    if (evt.key === `Escape` || evt.key === `Esc`) {
-      unrender(popUpTemplate);
-      document.removeEventListener(`keydown`, onEscKeyDown);
-    }
-  };
-
-  const filmsListContainer = container.querySelector(".films-list__container");
-  const filmCard = new Film(data).getElement();
-  const popUpTemplate = new Popup(data).getElement();
-  render(filmsListContainer, filmCard, "afterbegin");
-
-  const commentsButton = filmCard.querySelector(".film-card__comments");
-  commentsButton.addEventListener(`click`, () => {
-    render(body, popUpTemplate, "beforeend");
-    document.addEventListener(`keydown`, onEscKeyDown);
-  });
-
-  const closeButton = popUpTemplate.querySelector(".film-details__close-btn");
-  closeButton.addEventListener("click", () => {
-    unrender(popUpTemplate);
-  });
-};
-
 const data = {
   name: "The Great Gatsby",
   rating: "9.8",
@@ -97,12 +73,7 @@ const data = {
   personalRating: "5"
 };
 
-const renderPage = (
-  bodyContainer,
-  renderHeader,
-  renderFilmsBlock,
-  renderFilmCard
-) => {
+const renderPage = (bodyContainer, renderHeader, renderFilmsBlock) => {
   renderHeader();
   const [filmContainer, mainSorting, mainNav] = renderMain(mainPageContainer);
   const [
@@ -111,6 +82,7 @@ const renderPage = (
     mostCommentedBlock,
     showMoreBtn
   ] = renderFilmsBlock(filmContainer);
-  renderFilmCard(filmsListBlock, data, bodyContainer);
+  const filmCardController = new PageController(filmsListBlock, data);
+  filmCardController.init();
 };
-renderPage(bodyContainer, renderHeader, renderFilmsBlock, renderFilmCard, data);
+renderPage(bodyContainer, renderHeader, renderFilmsBlock, data);

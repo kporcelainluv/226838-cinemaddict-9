@@ -1,8 +1,8 @@
-import { createElement } from "./utils";
+import { AbstractComponent } from "./abstractComponent";
 
-class MainNav {
+class MainNav extends AbstractComponent {
   constructor() {
-    this._element = null;
+    super();
   }
   getTemplate() {
     return `<nav class="main-navigation">
@@ -12,13 +12,6 @@ class MainNav {
     <a href="#favorites" class="main-navigation__item">Favorites <span class="main-navigation__item-count">8</span></a>
     <a href="#stats" class="main-navigation__item main-navigation__item--additional">Stats</a>
   </nav>`;
-  }
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
   }
 }
 

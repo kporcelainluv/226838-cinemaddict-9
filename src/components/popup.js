@@ -1,7 +1,8 @@
-import { createElement } from "./utils";
+import { AbstractComponent } from "./abstractComponent";
 
-class Popup {
+class Popup extends AbstractComponent {
   constructor(card) {
+    super();
     this._poster = card.poster;
     this._ageRating = card.ageRating;
     this._title = card.title;
@@ -13,7 +14,6 @@ class Popup {
     this._isViewed = true;
     this._isFavorite = true;
     this._personalRating = card.personalRating;
-    // this._isFilmDetails = card.isFilmDetails;
   }
   getTemplate() {
     const {
@@ -149,15 +149,6 @@ class Popup {
     <div class="form-details__bottom-container"></div>
     </form>
   </section>`;
-  }
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
-  }
-  removeElement() {
-    this._element = null;
   }
 }
 export { Popup };

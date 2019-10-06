@@ -1,7 +1,7 @@
-import { createElement } from "./utils";
-class Search {
+import { AbstractComponent } from "./abstractComponent";
+class Search extends AbstractComponent {
   constructor() {
-    this._element = null;
+    super();
   }
   getTemplate() {
     return `<form class="header__search search"><input type="text" name="search" class="search__field" placeholder="Search movies">
@@ -12,13 +12,5 @@ class Search {
         <button class="search__reset" type="reset">Reset</button>
       </form>`;
   }
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
-  }
 }
 export { Search };
-// <h1 class="header__logo logo">Cinemaddict</h1>

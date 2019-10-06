@@ -1,8 +1,7 @@
-import { createElement } from "./utils";
-
-class FilmsList {
+import { AbstractComponent } from "./abstractComponent";
+class FilmsList extends AbstractComponent {
   constructor() {
-    this._element = null;
+    super();
   }
   getTemplate() {
     return `<section class="films-list">
@@ -11,13 +10,6 @@ class FilmsList {
       </div>
       </section>
   `;
-  }
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-
-    return this._element;
   }
 }
 
