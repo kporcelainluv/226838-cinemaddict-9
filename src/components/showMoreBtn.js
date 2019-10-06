@@ -1,17 +1,11 @@
-import { createElement } from "./utils";
-class ShowMoreButton {
+import { AbstractComponent } from "./abstractComponent";
+class ShowMoreButton extends AbstractComponent {
   constructor() {
-    this._element = null;
+    super();
   }
 
   getTemplate() {
     return `<button class="films-list__show-more">Show more</button>`;
-  }
-  getElement() {
-    if (!this._element) {
-      this._element = createElement(this.getTemplate());
-    }
-    return this._element;
   }
 }
 export { ShowMoreButton };
