@@ -1,13 +1,9 @@
 import { Search } from "./components/search";
 import { ProfileRating } from "./components/profileRating";
-import { MainNav } from "./components/mainFilter";
 import { ShowMoreButton } from "./components/showMoreBtn";
-import { MainSorting } from "./components/mainSorting";
 import { FilmsList } from "./components/films-list";
 import { additionalFilmBlock } from "./components/additionalFilmBlocks";
-import { Film } from "./components/film";
-import { render, unrender } from "./components/utils";
-import { Popup } from "./components/popup";
+import { render } from "./components/utils";
 import { FilmContainer } from "./components/film-conainter";
 import { PageController } from "./controllers/page-controller";
 
@@ -33,14 +29,9 @@ const renderHeader = () => {
 
 const renderMain = mainPageContainer => {
   const filmContainer = new FilmContainer().getElement();
-  const mainSorting = new MainSorting().getElement();
-  const mainNav = new MainNav().getElement();
+  render(mainPageContainer, filmContainer, "beforeend"); // class films
 
-  render(mainPageContainer, filmContainer, "afterbegin"); // class films
-  render(mainPageContainer, mainSorting, "afterbegin"); // ul sorting
-  render(mainPageContainer, mainNav, "afterbegin"); // main nav
-
-  return [filmContainer, mainSorting, mainNav];
+  return [filmContainer];
 };
 
 const renderFilmsBlock = container => {
@@ -58,31 +49,78 @@ const renderFilmsBlock = container => {
   return [filmsListBlock, topRatedBlock, mostCommentedBlock, showMoreBtn];
 };
 
-const data = {
-  name: "The Great Gatsby",
-  rating: "9.8",
-  genre: "drama",
-  year: "2018",
-  time: "1h 16m",
-  poster: "made-for-each-other",
-  comments: "9",
-  descriptionText: "Hello world!",
-  ageRating: "18+",
-  titleOriginal: "The Great Gatsby by S.Fitzgerald",
-  details: "Hello",
-  personalRating: "5"
-};
+const data = [
+  {
+    name: "The Great Gatsby",
+    rating: "10",
+    genre: "drama",
+    year: "2013",
+    time: "1h 16m",
+    // poster: "made-for-each-other",
+    comments: "9",
+    descriptionText: "Hello world!",
+    ageRating: "18+",
+    titleOriginal: "The Great Gatsby by S.Fitzgerald",
+    details: "Hello",
+    personalRating: "10",
+    director: "ksusha",
+    writers: "yanis",
+    actors: "polina",
+    date: "04.05.1996",
+    runtime: "2h",
+    country: "usa"
+  },
+  {
+    name: "Inception",
+    rating: "8",
+    genre: "action",
+    year: "2011",
+    time: "3h 16m",
+    // poster: "popeye-meets-sinbad",
+    comments: "3",
+    descriptionText: "OMG!!!",
+    ageRating: "4+",
+    titleOriginal: "Inception into the brain",
+    details: "Wonderful",
+    personalRating: "8",
+    director: "ksusha",
+    writers: "yanis",
+    actors: "polina",
+    date: "04.05.1996",
+    runtime: "2h",
+    country: "usa"
+  },
+  {
+    name: "Joker",
+    rating: "7",
+    genre: "thriller",
+    year: "2019",
+    time: "2h 10m",
+    // poster: "popeye-meets-sinbad",
+    comments: "5",
+    descriptionText: "YES!!!",
+    ageRating: "18+",
+    titleOriginal: "Crazy motherf*cker",
+    details: "Scary",
+    personalRating: "7",
+    director: "ksusha",
+    writers: "yanis",
+    actors: "polina",
+    date: "04.05.1996",
+    runtime: "2h",
+    country: "usa"
+  }
+];
 
-const renderPage = (bodyContainer, renderHeader, renderFilmsBlock) => {
+const renderPage = (bodyContainer, renderHeader, renderFilmsBlock, data) => {
   renderHeader();
-  const [filmContainer, mainSorting, mainNav] = renderMain(mainPageContainer);
-  const [
+  const filmContainer = renderMain(mainPageContainer)[0];
+  const filmsListBlock = renderFilmsBlock(filmContainer)[0];
+  const filmCardController = new PageController(
     filmsListBlock,
-    topRatedBlock,
-    mostCommentedBlock,
-    showMoreBtn
-  ] = renderFilmsBlock(filmContainer);
-  const filmCardController = new PageController(filmsListBlock, data);
+    mainPageContainer,
+    data
+  );
   filmCardController.init();
 };
 renderPage(bodyContainer, renderHeader, renderFilmsBlock, data);

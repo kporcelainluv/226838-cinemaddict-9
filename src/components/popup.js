@@ -14,17 +14,14 @@ class Popup extends AbstractComponent {
     this._isViewed = true;
     this._isFavorite = true;
     this._personalRating = card.personalRating;
+    this._director = card.director;
+    this._writers = card.writers;
+    this._actors = card.actors;
+    this._date = card.date;
+    this._runtime = card.runtime;
+    this._country = card.country;
   }
   getTemplate() {
-    const {
-      director,
-      writers,
-      actors,
-      date,
-      runtime,
-      country,
-      genres
-    } = this._details;
     return `<section class="film-details">
     <form class="film-details__inner" action="" method="get">
       <div class="form-details__top-container">
@@ -33,9 +30,7 @@ class Popup extends AbstractComponent {
         </div>
         <div class="film-details__info-wrap">
           <div class="film-details__poster">
-            <img class="film-details__poster-img" src="./${
-              this._poster
-            }" alt="">
+            <img class="film-details__poster-img" src="images/posters/made-for-each-other.png" alt="">
 
             <p class="film-details__age">${this._ageRating}+</p>
           </div>
@@ -55,28 +50,28 @@ class Popup extends AbstractComponent {
             </div>
             <table class="film-details__table">
               <tr class="film-details__row">
-                <td class="film-details__term">${this._details}</td>
-                <td class="film-details__cell">${this._details}</td>
+                <td class="film-details__term">${this._director}</td>
+                <td class="film-details__cell">${this._director}</td>
               </tr>
               <tr class="film-details__row">
-                <td class="film-details__term">${this._details}</td>
-                <td class="film-details__cell">${this._details}</td>
+                <td class="film-details__term">${this._director}</td>
+                <td class="film-details__cell">${this._director}</td>
               </tr>
               <tr class="film-details__row">
-                <td class="film-details__term">${this._details}</td>
-                <td class="film-details__cell">${this._details}</td>
+                <td class="film-details__term">${this._director}</td>
+                <td class="film-details__cell">${this._director}</td>
               </tr>
               <tr class="film-details__row">
-                <td class="film-details__term">${this._details}</td>
-                <td class="film-details__cell">${this._details}</td>
+                <td class="film-details__term">${this._director}</td>
+                <td class="film-details__cell">${this._director}</td>
               </tr>
               <tr class="film-details__row">
-                <td class="film-details__term">${this._details}</td>
-                <td class="film-details__cell">${this._details}</td>
+                <td class="film-details__term">${this._director}</td>
+                <td class="film-details__cell">${this._director}</td>
               </tr>
               <tr class="film-details__row">
-                <td class="film-details__term">${this._details}</td>
-                <td class="film-details__cell">${this._details}</td>
+                <td class="film-details__term">${this._director}</td>
+                <td class="film-details__cell">${this._director}</td>
               </tr>
               <tr class="film-details__row">
                 <td class="film-details__term">${this._details}</td>
@@ -117,9 +112,7 @@ class Popup extends AbstractComponent {
 
         <div class="film-details__user-score">
           <div class="film-details__user-rating-poster">
-            <img src="./${
-              this._poster
-            }" alt="film-poster" class="film-details__user-rating-img">
+            <img src="#" alt="film-poster" class="film-details__user-rating-img">
           </div>
 
           <section class="film-details__user-rating-inner">
