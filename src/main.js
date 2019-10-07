@@ -1,17 +1,11 @@
 import { Search } from "./components/search";
 import { ProfileRating } from "./components/profileRating";
-import { MainNav } from "./components/mainFilter";
 import { ShowMoreButton } from "./components/showMoreBtn";
-import { MainSorting } from "./components/mainSorting";
 import { FilmsList } from "./components/films-list";
 import { additionalFilmBlock } from "./components/additionalFilmBlocks";
-import { Film } from "./components/film";
-import { render, unrender } from "./components/utils";
-import { Popup } from "./components/popup";
+import { render } from "./components/utils";
 import { FilmContainer } from "./components/film-conainter";
 import { PageController } from "./controllers/page-controller";
-import { MenuController } from "./controllers/menu-controller";
-import { SortingController } from "./controllers/sort-controller";
 
 const headerSearchContainer = document.querySelector(`.header`);
 const mainPageContainer = document.querySelector(`.main`);
@@ -62,7 +56,7 @@ const data = [
     genre: "drama",
     year: "2013",
     time: "1h 16m",
-    poster: "made-for-each-other",
+    // poster: "made-for-each-other",
     comments: "9",
     descriptionText: "Hello world!",
     ageRating: "18+",
@@ -82,7 +76,7 @@ const data = [
     genre: "action",
     year: "2011",
     time: "3h 16m",
-    poster: "popeye-meets-sinbad",
+    // poster: "popeye-meets-sinbad",
     comments: "3",
     descriptionText: "OMG!!!",
     ageRating: "4+",
@@ -102,7 +96,7 @@ const data = [
     genre: "thriller",
     year: "2019",
     time: "2h 10m",
-    poster: "popeye-meets-sinbad",
+    // poster: "popeye-meets-sinbad",
     comments: "5",
     descriptionText: "YES!!!",
     ageRating: "18+",
@@ -122,10 +116,6 @@ const renderPage = (bodyContainer, renderHeader, renderFilmsBlock, data) => {
   renderHeader();
   const filmContainer = renderMain(mainPageContainer)[0];
   const filmsListBlock = renderFilmsBlock(filmContainer)[0];
-  // const sortingController = new SortingController(mainPageContainer, data);
-  // sortingController.init();
-  const menuController = new MenuController(mainPageContainer);
-  menuController.init();
   const filmCardController = new PageController(
     filmsListBlock,
     mainPageContainer,
