@@ -9,8 +9,9 @@ import { Film } from "./components/film";
 import { render, unrender } from "./components/utils";
 import { Popup } from "./components/popup";
 import { FilmContainer } from "./components/film-conainter";
-import { FilmsController } from "./controllers/films-controller";
-import { SortController } from "./controllers/sort-controller";
+import { PageController } from "./controllers/page-controller";
+import { MenuController } from "./controllers/menu-controller";
+import { SortingController } from "./controllers/sort-controller";
 
 const headerSearchContainer = document.querySelector(`.header`);
 const mainPageContainer = document.querySelector(`.main`);
@@ -34,13 +35,9 @@ const renderHeader = () => {
 
 const renderMain = mainPageContainer => {
   const filmContainer = new FilmContainer().getElement();
-  const mainSorting = new MainSorting().getElement();
-  const mainSortingController = new SortController(mainPageContainer);
-  mainSortingController.init();
-  render(mainPageContainer, mainSorting, "beforeend"); // ul sorting
   render(mainPageContainer, filmContainer, "beforeend"); // class films
 
-  return [filmContainer, mainSorting];
+  return [filmContainer];
 };
 
 const renderFilmsBlock = container => {
@@ -58,31 +55,82 @@ const renderFilmsBlock = container => {
   return [filmsListBlock, topRatedBlock, mostCommentedBlock, showMoreBtn];
 };
 
-const data = {
-  name: "The Great Gatsby",
-  rating: "9.8",
-  genre: "drama",
-  year: "2018",
-  time: "1h 16m",
-  poster: "made-for-each-other",
-  comments: "9",
-  descriptionText: "Hello world!",
-  ageRating: "18+",
-  titleOriginal: "The Great Gatsby by S.Fitzgerald",
-  details: "Hello",
-  personalRating: "5"
-};
+const data = [
+  {
+    name: "The Great Gatsby",
+    rating: "10",
+    genre: "drama",
+    year: "2013",
+    time: "1h 16m",
+    poster: "made-for-each-other",
+    comments: "9",
+    descriptionText: "Hello world!",
+    ageRating: "18+",
+    titleOriginal: "The Great Gatsby by S.Fitzgerald",
+    details: "Hello",
+    personalRating: "10",
+    director: "ksusha",
+    writers: "yanis",
+    actors: "polina",
+    date: "04.05.1996",
+    runtime: "2h",
+    country: "usa"
+  },
+  {
+    name: "Inception",
+    rating: "8",
+    genre: "action",
+    year: "2011",
+    time: "3h 16m",
+    poster: "popeye-meets-sinbad",
+    comments: "3",
+    descriptionText: "OMG!!!",
+    ageRating: "4+",
+    titleOriginal: "Inception into the brain",
+    details: "Wonderful",
+    personalRating: "8",
+    director: "ksusha",
+    writers: "yanis",
+    actors: "polina",
+    date: "04.05.1996",
+    runtime: "2h",
+    country: "usa"
+  },
+  {
+    name: "Joker",
+    rating: "7",
+    genre: "thriller",
+    year: "2019",
+    time: "2h 10m",
+    poster: "popeye-meets-sinbad",
+    comments: "5",
+    descriptionText: "YES!!!",
+    ageRating: "18+",
+    titleOriginal: "Crazy motherf*cker",
+    details: "Scary",
+    personalRating: "7",
+    director: "ksusha",
+    writers: "yanis",
+    actors: "polina",
+    date: "04.05.1996",
+    runtime: "2h",
+    country: "usa"
+  }
+];
 
-const renderPage = (bodyContainer, renderHeader, renderFilmsBlock) => {
+const renderPage = (bodyContainer, renderHeader, renderFilmsBlock, data) => {
   renderHeader();
-  const [filmContainer, mainSorting, mainNav] = renderMain(mainPageContainer);
-  const [
+  const filmContainer = renderMain(mainPageContainer)[0];
+  const filmsListBlock = renderFilmsBlock(filmContainer)[0];
+  // const sortingController = new SortingController(mainPageContainer, data);
+  // sortingController.init();
+  const menuController = new MenuController(mainPageContainer);
+  menuController.init();
+  const filmCardController = new PageController(
     filmsListBlock,
-    topRatedBlock,
-    mostCommentedBlock,
-    showMoreBtn
-  ] = renderFilmsBlock(filmContainer);
-  const filmCardController = new FilmsController(filmsListBlock, data);
+    mainPageContainer,
+    data
+  );
   filmCardController.init();
 };
 renderPage(bodyContainer, renderHeader, renderFilmsBlock, data);
