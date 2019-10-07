@@ -9,7 +9,8 @@ import { Film } from "./components/film";
 import { render, unrender } from "./components/utils";
 import { Popup } from "./components/popup";
 import { FilmContainer } from "./components/film-conainter";
-import { PageController } from "./controllers/page-controller";
+import { FilmsController } from "./controllers/films-controller";
+import { SortController } from "./controllers/sort-controller";
 
 const headerSearchContainer = document.querySelector(`.header`);
 const mainPageContainer = document.querySelector(`.main`);
@@ -34,13 +35,12 @@ const renderHeader = () => {
 const renderMain = mainPageContainer => {
   const filmContainer = new FilmContainer().getElement();
   const mainSorting = new MainSorting().getElement();
-  const mainNav = new MainNav().getElement();
+  const mainSortingController = new SortController(mainPageContainer);
+  mainSortingController.init();
+  render(mainPageContainer, mainSorting, "beforeend"); // ul sorting
+  render(mainPageContainer, filmContainer, "beforeend"); // class films
 
-  render(mainPageContainer, filmContainer, "afterbegin"); // class films
-  render(mainPageContainer, mainSorting, "afterbegin"); // ul sorting
-  render(mainPageContainer, mainNav, "afterbegin"); // main nav
-
-  return [filmContainer, mainSorting, mainNav];
+  return [filmContainer, mainSorting];
 };
 
 const renderFilmsBlock = container => {
@@ -82,7 +82,7 @@ const renderPage = (bodyContainer, renderHeader, renderFilmsBlock) => {
     mostCommentedBlock,
     showMoreBtn
   ] = renderFilmsBlock(filmContainer);
-  const filmCardController = new PageController(filmsListBlock, data);
+  const filmCardController = new FilmsController(filmsListBlock, data);
   filmCardController.init();
 };
 renderPage(bodyContainer, renderHeader, renderFilmsBlock, data);

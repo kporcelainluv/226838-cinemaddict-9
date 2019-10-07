@@ -2,7 +2,7 @@ import { Film } from "../components/film";
 import { Popup } from "../components/popup";
 import { render, unrender, Position } from "../components/utils";
 
-class PageController {
+class FilmsController {
   constructor(container, data) {
     this._container = container;
     this._data = data;
@@ -40,4 +40,4 @@ class PageController {
     render(this._filmsListContainer, filmCard, Position.AFTERBEGIN);
   }
 }
-export { PageController };
+export { FilmsController };
