@@ -30,9 +30,7 @@ class Popup extends AbstractComponent {
         </div>
         <div class="film-details__info-wrap">
           <div class="film-details__poster">
-            <img class="film-details__poster-img" src="./${
-              this._poster
-            }" alt="">
+            <img class="film-details__poster-img" src="images/posters/made-for-each-other.png" alt="">
 
             <p class="film-details__age">${this._ageRating}+</p>
           </div>
@@ -114,9 +112,7 @@ class Popup extends AbstractComponent {
 
         <div class="film-details__user-score">
           <div class="film-details__user-rating-poster">
-            <img src="./${
-              this._poster
-            }" alt="film-poster" class="film-details__user-rating-img">
+            <img src="#" alt="film-poster" class="film-details__user-rating-img">
           </div>
 
           <section class="film-details__user-rating-inner">
