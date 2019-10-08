@@ -1,17 +1,16 @@
 import { AbstractComponent } from "./abstractComponent";
-
 class Popup extends AbstractComponent {
   constructor(card) {
     super();
     this._poster = card.poster;
     this._ageRating = card.ageRating;
-    this._title = card.title;
+    this._title = card.name;
     this._titleOriginal = card.titleOriginal;
     this._rating = card.rating;
     this._details = card.details;
     this._description = card.descriptionText;
     this.isWatchlist = card.isWatchlist;
-    this.isWatched = card.isWatched;
+    this._isWatched = card.isWatched;
     this._isFavorite = card.isFavorite;
     this._personalRating = card.personalRating;
     this._director = card.director;
@@ -21,6 +20,7 @@ class Popup extends AbstractComponent {
     this._runtime = card.runtime;
     this._country = card.country;
   }
+
   getTemplate() {
     return `<section class="film-details">
     <form class="film-details__inner" action="" method="get">
@@ -91,20 +91,18 @@ class Popup extends AbstractComponent {
           }>
           <label for="watchlist" class="film-details__control-label film-details__control-label--watchlist">Add to watchlist</label>
 
-          <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" ${
-            this._isViewed ? `checked` : ``
-          }>
-          <label for="watched" class="film-details__control-label film-details__control-label--watched">Already watched</label>
-
+          <input type="checkbox" class="film-details__control-input visually-hidden" id="watched" name="watched" >
+          <label for="watched" class="film-details__control-label film-details__control-label--watched ">Already watched</label>
           <input type="checkbox" class="film-details__control-input visually-hidden" id="favorite" name="favorite" ${
             this._isFavorite ? `checked` : ``
           }>
-          <label for="favorite" class="film-details__control-label film-details__control-label--favorite">Add to favorites</label>
+          <label for="favorite" class="film-details__control-label film-details__control-label--favorite ">Add to favorites</label>
         </section>
       </div>
       <div class="form-details__middle-container ${
-        this._isViewed ? `` : `visually-hidden`
+        this._isWatched ? `` : `visually-hidden`
       }">
+      
       <section class="film-details__user-rating-wrap">
         <div class="film-details__user-rating-controls">
           <button class="film-details__watched-reset" type="button">Undo</button>
@@ -112,28 +110,30 @@ class Popup extends AbstractComponent {
 
         <div class="film-details__user-score">
           <div class="film-details__user-rating-poster">
-            <img src="#" alt="film-poster" class="film-details__user-rating-img">
+            <img src="./images/posters/${
+              this._poster
+            }" alt="film-poster" class="film-details__user-rating-img">
           </div>
 
           <section class="film-details__user-rating-inner">
             <h3 class="film-details__user-rating-title">${this._title}</h3>
 
             <p class="film-details__user-rating-feelings">How you feel it?</p>
-
             <div class="film-details__user-rating-score">
-              
+      ${new Array(10)
+        .fill()
+        .map(
+          (_, id) => `
                 <input type="radio" name="score"
                   class="film-details__user-rating-input visually-hidden"
-                  value=""
-                  // id="rating"
-                  ${this._rating}
-                >
-                <label class="film-details__user-rating-label" for="rating-${
-                  this._rating
-                }</label>
-              
-                
-            </div>
+                  value="${id}"
+    id="rating-${id}"
+      ${Number(this._personalRating) === id ? `checked` : ``}
+    >
+    <label class="film-details__user-rating-label" for="rating-${id}">${id}</label>
+    `
+        )
+        .join(` `)}</div>
           </section>
         </div>
       </section>
