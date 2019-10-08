@@ -10,9 +10,9 @@ class Popup extends AbstractComponent {
     this._rating = card.rating;
     this._details = card.details;
     this._description = card.descriptionText;
-    this._isWatchlist = true;
-    this._isViewed = true;
-    this._isFavorite = true;
+    this.isWatchlist = card.isWatchlist;
+    this.isWatched = card.isWatched;
+    this._isFavorite = card.isFavorite;
     this._personalRating = card.personalRating;
     this._director = card.director;
     this._writers = card.writers;
