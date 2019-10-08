@@ -51,6 +51,7 @@ const renderFilmsBlock = container => {
 
 const data = [
   {
+    id: 0,
     name: "The Great Gatsby",
     rating: "10",
     genre: "drama",
@@ -68,9 +69,13 @@ const data = [
     actors: "polina",
     date: "04.05.1996",
     runtime: "2h",
-    country: "usa"
+    country: "usa",
+    isWatchlist: false,
+    isWatched: false,
+    isFavorite: false
   },
   {
+    id: 1,
     name: "Inception",
     rating: "8",
     genre: "action",
@@ -88,9 +93,13 @@ const data = [
     actors: "polina",
     date: "04.05.1996",
     runtime: "2h",
-    country: "usa"
+    country: "usa",
+    isWatchlist: false,
+    isWatched: false,
+    isFavorite: false
   },
   {
+    id: 2,
     name: "Joker",
     rating: "7",
     genre: "thriller",
@@ -108,7 +117,10 @@ const data = [
     actors: "polina",
     date: "04.05.1996",
     runtime: "2h",
-    country: "usa"
+    country: "usa",
+    isWatchlist: false,
+    isWatched: false,
+    isFavorite: false
   }
 ];
 
