@@ -5,15 +5,20 @@ import { MainSorting } from "../components/mainSorting";
 import { MovieController } from "../controllers/movie-controller";
 
 class PageController {
-  constructor(container, mainPageContainer, data) {
+  constructor(container, mainPageContainer, films) {
     this._container = container;
     this._mainPageContainer = mainPageContainer;
-    this._films = data;
+
+    this._films = films;
+
     this._filmsListContainer = this._container.querySelector(
       `.films-list__container`
     );
     this._sort = new MainSorting();
+
+    this.onDataChange = this.onDataChange.bind(this);
   }
+
   init() {
     for (let film of this._films) {
       this._renderFilm(this._filmsListContainer, film);
@@ -37,7 +42,9 @@ class PageController {
     );
     movieController.init();
   }
-
+  _removeFilmsFromContainer() {
+    this._filmsListContainer.innerHTML = "";
+  }
   onDataChange(updatedFilm) {
     this._films = this._films.reduce((films, film) => {
       if (film.id === updatedFilm.id) {
@@ -45,6 +52,9 @@ class PageController {
       }
       return [...films, film];
     }, []);
+    this._removeFilmsFromContainer();
+    this.init();
+    console.log(this._films);
   }
 
   _sortedByDateFilms(films) {
@@ -63,7 +73,7 @@ class PageController {
     if (evt.target.tagName !== `A`) {
       return;
     }
-    this._filmsListContainer.innerHTML = ``;
+    this._removeFilmsFromContainer();
 
     switch (evt.target.dataset.sortType) {
       case `default`:
