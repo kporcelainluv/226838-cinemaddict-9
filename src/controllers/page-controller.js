@@ -8,14 +8,14 @@ class PageController {
   constructor(container, mainPageContainer, data) {
     this._container = container;
     this._mainPageContainer = mainPageContainer;
-    this._data = data;
+    this._films = data;
     this._filmsListContainer = this._container.querySelector(
-      ".films-list__container"
+      `.films-list__container`
     );
     this._sort = new MainSorting();
   }
   init() {
-    for (let film of this._data) {
+    for (let film of this._films) {
       this._renderFilm(this._filmsListContainer, film);
     }
     render(
@@ -32,17 +32,19 @@ class PageController {
     const movieController = new MovieController(
       container,
       film,
-      undefined,
+      this.onDataChange,
       undefined
     );
     movieController.init();
   }
-  _onDataChange(oldData, newData) {
-    for (let i of this._data) {
-      if (i === oldData) {
-        this._data = this._data.splice(i, 1, newData);
+
+  onDataChange(updatedFilm) {
+    this._films = this._films.reduce((films, film) => {
+      if (film.id === updatedFilm.id) {
+        return [...films, updatedFilm];
       }
-    }
+      return [...films, film];
+    }, []);
   }
 
   _sortedByDateFilms(films) {
@@ -61,19 +63,19 @@ class PageController {
     if (evt.target.tagName !== `A`) {
       return;
     }
-    this._filmsListContainer.innerHTML = "";
+    this._filmsListContainer.innerHTML = ``;
 
     switch (evt.target.dataset.sortType) {
       case `default`:
-        const sortedByDefault = this._data;
+        const sortedByDefault = this._films;
         sortedByDefault.forEach(mock => this._renderFilm(mock));
         break;
       case `date`:
-        const sortedByDate = this._sortedByDateFilms(this._data);
+        const sortedByDate = this._sortedByDateFilms(this._films);
         sortedByDate.forEach(mock => this._renderFilm(mock));
         break;
       case `rating`:
-        const sortedByRating = this._sortedByRatingFilms(this._data);
+        const sortedByRating = this._sortedByRatingFilms(this._films);
         sortedByRating.forEach(mock => this._renderFilm(mock));
         break;
     }
