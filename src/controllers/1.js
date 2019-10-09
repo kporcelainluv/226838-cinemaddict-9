@@ -506,6 +506,8 @@ class TaskController {
           )
         };
 
+        // Нужно что-то сделать с `entry`: изменить первоначальные данные.
+
         document.removeEventListener(`keydown`, onEscKeyDown);
       });
 
