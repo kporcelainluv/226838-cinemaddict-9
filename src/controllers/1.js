@@ -422,9 +422,10 @@ class TaskEdit extends AbstractComponent {
 
 // controllers/task.js
 class TaskController {
-  constructor(container, data) {
+  constructor(container, data, onDataChange) {
     this._container = container;
     this._data = data;
+    this._onDataChange = onDataChange;
     this._taskView = new Task(data);
     this._taskEdit = new TaskEdit(data);
 
@@ -506,7 +507,7 @@ class TaskController {
           )
         };
 
-        // Нужно что-то сделать с `entry`: изменить первоначальные данные.
+        this._onDataChange(entry, this._data);
 
         document.removeEventListener(`keydown`, onEscKeyDown);
       });
@@ -527,6 +528,8 @@ class BoardController {
     this._board = new Board();
     this._sort = new Sort();
     this._taskList = new TaskList();
+
+    this._onDataChange = this._onDataChange.bind(this);
   }
 
   init() {
@@ -549,8 +552,26 @@ class BoardController {
       .addEventListener(`click`, evt => this._onSortLinkClick(evt));
   }
 
+  _renderBoard(tasks) {
+    unrender(this._taskList.getElement());
+
+    this._taskList.removeElement();
+    render(
+      this._board.getElement(),
+      this._taskList.getElement(),
+      Position.BEFOREEND
+    );
+    this._tasks.forEach(taskMock => this._renderTask(taskMock));
+  }
+
   _renderTask(task) {
-    new TaskController(this._taskList, task);
+    new TaskController(this._taskList, task, this._onDataChange);
+  }
+
+  _onDataChange(newData, oldData) {
+    this._tasks[this._tasks.findIndex(it => it === oldData)] = newData;
+
+    this._renderBoard(this._tasks);
   }
 
   _onSortLinkClick(evt) {
