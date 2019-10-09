@@ -49,7 +49,7 @@ class PageController {
     this._filmsListContainer.innerHTML = "";
   }
   onChangeView() {
-    this._subscriptions.forEach((subscription) => subscription());
+    this._subscriptions.forEach(subscription => subscription());
   }
   onDataChange(updatedFilm) {
     this._films = this._films.reduce((films, film) => {
@@ -58,6 +58,7 @@ class PageController {
       }
       return [...films, film];
     }, []);
+    // TODO: move to method
     this._removeFilmsFromContainer();
     this.init();
   }
