@@ -422,7 +422,7 @@ class TaskEdit extends AbstractComponent {
 
 // controllers/task.js
 class TaskController {
-  constructor(container, data, onDataChange, onChangeView) {
+  constructor(container, data, onChangeView, onDataChange) {
     this._container = container;
     this._data = data;
     this._onChangeView = onChangeView;
@@ -480,8 +480,6 @@ class TaskController {
       .getElement()
       .querySelector(`.card__save`)
       .addEventListener(`click`, evt => {
-        evt.preventDefault();
-
         const formData = new FormData(
           this._taskEdit.getElement().querySelector(`.card__form`)
         );
@@ -575,24 +573,24 @@ class BoardController {
     this._tasks.forEach(taskMock => this._renderTask(taskMock));
   }
 
+  _onChangeView() {
+    this._subscriptions.forEach(it => it());
+  }
+
   _renderTask(task) {
     const taskController = new TaskController(
       this._taskList,
       task,
-      this._onDataChange,
-      this._onChangeView
+      this._onChangeView,
+      this._onDataChange
     );
     this._subscriptions.push(
       taskController.setDefaultView.bind(taskController)
     );
   }
 
-  _onChangeView() {
-    this._subscriptions.forEach(it => it());
-  }
-
   _onDataChange(newData, oldData) {
-    this._tasks[this._tasks.findIndex(it => it === oldData)] = newData;
+    this._tasks[this._tasks.findIndex(it2 => it2 === oldData)] = newData;
 
     this._renderBoard(this._tasks);
   }
