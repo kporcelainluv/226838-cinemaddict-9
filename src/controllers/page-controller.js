@@ -1,53 +1,59 @@
-import { Film } from "../components/film";
-import { Popup } from "../components/popup";
 import { render, unrender, Position } from "../components/utils";
 import { MainSorting } from "../components/mainSorting";
 import { MovieController } from "../controllers/movie-controller";
+import { FilmsList } from "../components/films-list";
+import { FilmContainer } from "../components/film-containter";
 
 class PageController {
-  constructor(container, mainPageContainer, films) {
+  constructor(container, films) {
     this._container = container;
-    this._mainPageContainer = mainPageContainer;
     this._subscriptions = [];
     this._films = films;
-
-    this._filmsListContainer = this._container.querySelector(
-      `.films-list__container`
-    );
+    this._filmsListBlock = new FilmsList();
+    this._filmsListContainer = this._filmsListBlock
+      .getElement()
+      .querySelector(`.films-list__container`);
+    this._filmContainer = new FilmContainer();
     this._sort = new MainSorting();
     this.onDataChange = this.onDataChange.bind(this);
     this.onChangeView = this.onChangeView.bind(this);
   }
-
+  // TODO: rerendering board through init method is not ok
   init() {
-    for (let film of this._films) {
-      this._renderFilm(this._filmsListContainer, film);
-    }
+    render(this._container, this._filmContainer.getElement(), "afterbegin");
     render(
-      this._mainPageContainer,
-      this._sort.getElement(),
-      Position.AFTERBEGIN
+      this._filmContainer.getElement(),
+      this._filmsListBlock.getElement(),
+      "afterbegin"
     );
+    render(this._container, this._sort.getElement(), Position.AFTERBEGIN);
+
+    this._films.forEach(film => {
+      this._renderFilmCard(this._filmsListContainer, film);
+    });
+
     this._sort
       .getElement()
       .addEventListener(`click`, evt => this._onSortLinkClick(evt));
   }
 
-  _renderFilm(container, film) {
+  _renderFilmCard(container, film) {
     const movieController = new MovieController(
       container,
       film,
       this.onDataChange,
       this.onChangeView
     );
+
     movieController.init();
-    this._subscriptions.push(
-      movieController.setDefaultView.bind(movieController)
-    );
+    this._subscriptions.push(movieController.setDefaultView.bind(movieController));
   }
-  _removeFilmsFromContainer() {
-    this._filmsListContainer.innerHTML = "";
+
+  _unrenderFilmList() {
+    unrender(this._filmsListBlock.getElement());
+    this._filmsListBlock.removeElement();
   }
+
   onChangeView() {
     this._subscriptions.forEach(subscription => subscription());
   }
@@ -59,10 +65,22 @@ class PageController {
       return [...films, film];
     }, []);
     // TODO: move to method
-    this._removeFilmsFromContainer();
-    this.init();
+    this._renderFilmsList();
   }
-
+  _renderFilmsList() {
+    this._unrenderFilmList();
+    render(
+      this._filmContainer.getElement(),
+      this._filmsListBlock.getElement(),
+      "afterbegin"
+    );
+    this._filmsListContainer = this._filmsListBlock
+      .getElement()
+      .querySelector(`.films-list__container`);
+    this._films.forEach(film => {
+      this._renderFilmCard(this._filmsListContainer, film);
+    });
+  }
   _sortedByDateFilms(films) {
     return films.sort((a, b) => {
       return parseInt(a.year, 10) - parseInt(b.year, 10);
@@ -79,20 +97,19 @@ class PageController {
     if (evt.target.tagName !== `A`) {
       return;
     }
-    this._removeFilmsFromContainer();
 
     switch (evt.target.dataset.sortType) {
       case `default`:
         const sortedByDefault = this._films;
-        sortedByDefault.forEach(mock => this._renderFilm(mock));
+        sortedByDefault.forEach(mock => this._renderFilmCard(mock));
         break;
       case `date`:
         const sortedByDate = this._sortedByDateFilms(this._films);
-        sortedByDate.forEach(mock => this._renderFilm(mock));
+        sortedByDate.forEach(mock => this._renderFilmCard(mock));
         break;
       case `rating`:
         const sortedByRating = this._sortedByRatingFilms(this._films);
-        sortedByRating.forEach(mock => this._renderFilm(mock));
+        sortedByRating.forEach(mock => this._renderFilmCard(mock));
         break;
     }
   }
