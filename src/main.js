@@ -27,13 +27,6 @@ const renderHeader = () => {
   render(headerSearchContainer, headerProfileRating, `beforeend`);
 };
 
-const renderMain = mainPageContainer => {
-  const filmContainer = new FilmContainer().getElement();
-  render(mainPageContainer, filmContainer, `beforeend`); // class films
-
-  return [filmContainer];
-};
-
 const renderFilmsBlock = container => {
   const topRatedBlock = new AdditionalFilmBlock(`Top Rated`).getElement(); // --extra
   const showMoreBtn = new ShowMoreButton().getElement();
@@ -41,8 +34,6 @@ const renderFilmsBlock = container => {
     `Most Commented`
   ).getElement(); // --extra
   render(container, showMoreBtn, `afterbegin`); // show more
-  render(container, topRatedBlock, `beforeend`);
-  render(container, mostCommentedBlock, `beforeend`);
 
   return [topRatedBlock, mostCommentedBlock, showMoreBtn];
 };

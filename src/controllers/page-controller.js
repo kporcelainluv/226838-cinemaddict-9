@@ -3,6 +3,8 @@ import { MainSorting } from "../components/mainSorting";
 import { MovieController } from "../controllers/movie-controller";
 import { FilmsList } from "../components/films-list";
 import { FilmContainer } from "../components/film-containter";
+import { AdditionalFilmBlock } from "../components/additionalFilmBlocks";
+import { ShowMoreButton } from "../components/showMoreBtn";
 
 class PageController {
   constructor(container, films) {
@@ -17,20 +19,34 @@ class PageController {
     this._sort = new MainSorting();
     this.onDataChange = this.onDataChange.bind(this);
     this.onChangeView = this.onChangeView.bind(this);
+    this._topRatedBlock = new AdditionalFilmBlock(`Top Rated`);
+    this._showMoreBtn = new ShowMoreButton();
+    this._mostCommentedBlock = new AdditionalFilmBlock(`Most Commented`);
   }
   // TODO: rerendering board through init method is not ok
   init() {
+    render(this._container, this._showMoreBtn.getElement(), `afterbegin`);
+    this._films.forEach(film => {
+      this._renderFilmCard(this._filmsListContainer, film);
+    });
     render(this._container, this._filmContainer.getElement(), "afterbegin");
     render(
       this._filmContainer.getElement(),
       this._filmsListBlock.getElement(),
       "afterbegin"
     );
-    render(this._container, this._sort.getElement(), Position.AFTERBEGIN);
+    render(this._container, this._sort.getElement(), "afterbegin");
 
-    this._films.forEach(film => {
-      this._renderFilmCard(this._filmsListContainer, film);
-    });
+    render(
+      this._filmsListContainer,
+      this._topRatedBlock.getElement(),
+      `beforeend`
+    );
+    render(
+      this._filmsListContainer,
+      this._mostCommentedBlock.getElement(),
+      `beforeend`
+    );
 
     this._sort
       .getElement()
@@ -46,7 +62,9 @@ class PageController {
     );
 
     movieController.init();
-    this._subscriptions.push(movieController.setDefaultView.bind(movieController));
+    this._subscriptions.push(
+      movieController.setDefaultView.bind(movieController)
+    );
   }
 
   _unrenderFilmList() {

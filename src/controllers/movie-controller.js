@@ -105,7 +105,6 @@ class MovieController {
       .getElement()
       .querySelector(".film-details__control-label--watched")
       .addEventListener("click", evt => {
-        evt.preventDefault();
         console.log("watched", this._film.isWatched);
         const updatedFilm = {
           ...this._film,
@@ -118,7 +117,6 @@ class MovieController {
       .getElement()
       .querySelector(".film-details__control-label--watchlist")
       .addEventListener("click", evt => {
-        evt.preventDefault();
         console.log("watchlist", this._film.isWatchlist);
         const updatedFilm = {
           ...this._film,
@@ -131,7 +129,6 @@ class MovieController {
       .getElement()
       .querySelector(".film-details__control-label--favorite")
       .addEventListener("click", evt => {
-        evt.preventDefault();
         console.log("fav", this._film.isFavorite);
         this._film = {
           ...this._film,
