@@ -21,7 +21,11 @@ class MovieController {
       `.film-details__emoji-item`
     );
   }
-
+  setDefaultView() {
+    if (this._body.contains(this._popUpTemplate)) {
+      console.log("exists");
+    }
+  }
   init() {
     const onEscKeyDown = evt => {
       if (evt.key === `Escape` || evt.key === `Esc`) {
@@ -32,6 +36,7 @@ class MovieController {
 
     this._commentsButton.addEventListener(`click`, () => {
       render(this._body, this._popUpTemplate, "beforeend");
+      this._onChangeView();
       document.addEventListener(`keydown`, onEscKeyDown);
     });
 
@@ -80,7 +85,7 @@ class MovieController {
       .querySelector(".film-details__control-label--watched")
       .addEventListener("click", evt => {
         evt.preventDefault();
-        console.log("watched");
+        console.log("watched", this._film.isWatched);
         const updatedFilm = {
           ...this._film,
           isWatched: !this._film.isWatched
@@ -108,7 +113,6 @@ class MovieController {
           isFavorite: !this._film.isFavorite
         };
         this._onDataChange(this._film);
-
       });
     // adding emoji
     for (let emoji of this._emojiLabel) {

@@ -8,15 +8,15 @@ class PageController {
   constructor(container, mainPageContainer, films) {
     this._container = container;
     this._mainPageContainer = mainPageContainer;
-
+    this._subscriptions = [];
     this._films = films;
 
     this._filmsListContainer = this._container.querySelector(
       `.films-list__container`
     );
     this._sort = new MainSorting();
-
     this.onDataChange = this.onDataChange.bind(this);
+    this.onChangeView = this.onChangeView.bind(this);
   }
 
   init() {
@@ -38,12 +38,18 @@ class PageController {
       container,
       film,
       this.onDataChange,
-      undefined
+      this.onChangeView
     );
     movieController.init();
+    this._subscriptions.push(
+      movieController.setDefaultView.bind(movieController)
+    );
   }
   _removeFilmsFromContainer() {
     this._filmsListContainer.innerHTML = "";
+  }
+  onChangeView() {
+    this._subscriptions.forEach((subscription) => subscription());
   }
   onDataChange(updatedFilm) {
     this._films = this._films.reduce((films, film) => {
@@ -54,7 +60,6 @@ class PageController {
     }, []);
     this._removeFilmsFromContainer();
     this.init();
-    console.log(this._films);
   }
 
   _sortedByDateFilms(films) {
