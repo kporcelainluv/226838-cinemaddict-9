@@ -434,6 +434,12 @@ class TaskController {
   }
 
   create() {
+    flatpickr(this._taskEdit.getElement().querySelector(`.card__date`), {
+      altInput: true,
+      allowInput: true,
+      defaultDate: this._data.dueDate
+    });
+
     const onEscKeyDown = evt => {
       if (evt.key === Key.ESCAPE || evt.key === Key.ESCAPE_IE) {
         this._container
