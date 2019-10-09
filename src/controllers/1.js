@@ -422,9 +422,10 @@ class TaskEdit extends AbstractComponent {
 
 // controllers/task.js
 class TaskController {
-  constructor(container, data, onDataChange) {
+  constructor(container, data, onDataChange, onChangeView) {
     this._container = container;
     this._data = data;
+    this._onChangeView = onChangeView;
     this._onDataChange = onDataChange;
     this._taskView = new Task(data);
     this._taskEdit = new TaskEdit(data);
@@ -518,6 +519,14 @@ class TaskController {
       Position.BEFOREEND
     );
   }
+
+  setDefaultView() {
+    if (this._container.getElement().contains(this._taskEdit.getElement())) {
+      this._container
+        .getElement()
+        .replaceChild(this._taskView.getElement(), this._taskEdit.getElement());
+    }
+  }
 }
 
 // controllers/board.js
@@ -529,6 +538,8 @@ class BoardController {
     this._sort = new Sort();
     this._taskList = new TaskList();
 
+    this._subscriptions = [];
+    this._onChangeView = this._onChangeView.bind(this);
     this._onDataChange = this._onDataChange.bind(this);
   }
 
@@ -565,7 +576,19 @@ class BoardController {
   }
 
   _renderTask(task) {
-    new TaskController(this._taskList, task, this._onDataChange);
+    const taskController = new TaskController(
+      this._taskList,
+      task,
+      this._onDataChange,
+      this._onChangeView
+    );
+    this._subscriptions.push(
+      taskController.setDefaultView.bind(taskController)
+    );
+  }
+
+  _onChangeView() {
+    this._subscriptions.forEach(it => it());
   }
 
   _onDataChange(newData, oldData) {
