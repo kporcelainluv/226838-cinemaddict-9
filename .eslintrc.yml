@@ -4,6 +4,10 @@ env:
   commonjs: true
 
 extends: "htmlacademy/es6"
+rules:
+  indent: off
+  object-curly-spacing: off
+  arrow-parens: off
 
 parserOptions:
   ecmaVersion: 2015
