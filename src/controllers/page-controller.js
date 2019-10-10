@@ -5,6 +5,7 @@ import { FilmsList } from "../components/films-list";
 import { FilmContainer } from "../components/film-containter";
 import { AdditionalFilmBlock } from "../components/additionalFilmBlocks";
 import { ShowMoreButton } from "../components/showMoreBtn";
+import { MainNav } from "../components/mainFilter";
 
 class PageController {
   constructor(container, films) {
@@ -17,6 +18,7 @@ class PageController {
       .querySelector(`.films-list__container`);
     this._filmContainer = new FilmContainer();
     this._sort = new MainSorting();
+    this._mainNav = new MainNav();
     this.onDataChange = this.onDataChange.bind(this);
     this.onChangeView = this.onChangeView.bind(this);
     this._topRatedBlock = new AdditionalFilmBlock(`Top Rated`);
@@ -25,25 +27,31 @@ class PageController {
   }
   // TODO: rerendering board through init method is not ok
   init() {
-    render(this._container, this._showMoreBtn.getElement(), `afterbegin`);
-    this._films.forEach(film => {
-      this._renderFilmCard(this._filmsListContainer, film);
-    });
-    render(this._container, this._filmContainer.getElement(), "afterbegin");
+    render(this._container, this._sort.getElement(), "afterbegin");
+    render(this._container, this._mainNav.getElement(), "afterbegin");
+
+    render(this._container, this._filmContainer.getElement(), "beforeend");
     render(
       this._filmContainer.getElement(),
       this._filmsListBlock.getElement(),
-      "afterbegin"
+      "beforeend"
     );
-    render(this._container, this._sort.getElement(), "afterbegin");
 
+    this._films.forEach(film => {
+      this._renderFilmCard(this._filmsListContainer, film);
+    });
     render(
-      this._filmsListContainer,
+      this._filmContainer.getElement(),
+      this._showMoreBtn.getElement(),
+      `beforeend`
+    );
+    render(
+      this._filmContainer.getElement(),
       this._topRatedBlock.getElement(),
       `beforeend`
     );
     render(
-      this._filmsListContainer,
+      this._filmContainer.getElement(),
       this._mostCommentedBlock.getElement(),
       `beforeend`
     );
