@@ -1,4 +1,5 @@
 import { AbstractComponent } from "./abstractComponent";
+const moment = require("moment");
 class Film extends AbstractComponent {
   constructor(data) {
     super();
@@ -20,7 +21,9 @@ class Film extends AbstractComponent {
           <h3 class="film-card__title">${this._name}</h3>
           <p class="film-card__rating">${this._rating}</p>
           <p class="film-card__info">
-            <span class="film-card__year">${this._year}</span>
+            <span class="film-card__year">${moment(this._year).format(
+              "YYYY"
+            )}</span>
             <span class="film-card__duration">${this._time}</span>
             <span class="film-card__genre">${this._genre}</span>
           </p>
