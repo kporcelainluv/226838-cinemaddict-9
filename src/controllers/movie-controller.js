@@ -21,18 +21,14 @@ class MovieController {
       .getElement()
       .querySelector(`.film-details__close-btn`);
     this._body = document.getElementsByTagName("body")[0];
+    this._ratingBlockContainer = this._popUpTemplate
+      .getElement()
+      .querySelector(`.form-details__middle-container `);
     this._emojiLabel = this._popUpTemplate
       .getElement()
       .querySelectorAll(`.film-details__emoji-item`);
 
     this.setDefaultView = this.setDefaultView.bind(this);
-  }
-  getState() {
-    return {
-      isWatchlist: this._film.isWatchlist,
-      isWatched: this._film.isWatched,
-      isFavorite: this._film.isFavorite
-    };
   }
   setDefaultView() {
     if (this._body.contains(this._popUpTemplate.getElement())) {
@@ -48,6 +44,13 @@ class MovieController {
         this._popUpTemplate.removeElement();
         document.removeEventListener(`keydown`, onEscKeyDown);
       }
+    };
+
+    const Emojis = {
+      "emoji-smile": "smile",
+      "emoji-sleeping": "sleeping",
+      "emoji-gpuke": "puke",
+      "emoji-angry": "angry"
     };
 
     this._commentsButton.addEventListener(`click`, () => {
@@ -105,19 +108,21 @@ class MovieController {
       .getElement()
       .querySelector(".film-details__control-label--watched")
       .addEventListener("click", evt => {
-        console.log("watched", this._film.isWatched);
         const updatedFilm = {
           ...this._film,
           isWatched: !this._film.isWatched
         };
         this._onDataChange(updatedFilm);
         this._film = updatedFilm;
+        this._popUpTemplate
+          .getElement()
+          .querySelector(`.form-details__middle-container`)
+          .classList.toggle(`visually-hidden`);
       });
     this._popUpTemplate
       .getElement()
       .querySelector(".film-details__control-label--watchlist")
       .addEventListener("click", evt => {
-        console.log("watchlist", this._film.isWatchlist);
         const updatedFilm = {
           ...this._film,
           isWatchlist: !this._film.isWatchlist
@@ -129,7 +134,6 @@ class MovieController {
       .getElement()
       .querySelector(".film-details__control-label--favorite")
       .addEventListener("click", evt => {
-        console.log("fav", this._film.isFavorite);
         this._film = {
           ...this._film,
           isFavorite: !this._film.isFavorite
@@ -141,6 +145,11 @@ class MovieController {
     for (let emoji of this._emojiLabel) {
       emoji.addEventListener("click", evt => {
         evt.preventDefault();
+        this._popUpTemplate
+          .getElement()
+          .querySelector(
+            ".film-details__add-emoji-label img"
+          ).src = `./images/emoji/${Emojis[evt.target.id]}.png`;
       });
     }
   }
