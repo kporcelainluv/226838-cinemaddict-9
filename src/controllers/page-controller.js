@@ -106,6 +106,11 @@ class PageController {
       this._renderFilmCard(this._filmsListContainer, film);
     });
   }
+  _sortedByDefault(films) {
+    return films.sort((a, b) => {
+      return b.id - a.id;
+    });
+  }
   _sortedByDateFilms(films) {
     return films.sort((a, b) => {
       return parseInt(a.year, 10) - parseInt(b.year, 10);
@@ -122,19 +127,19 @@ class PageController {
     if (evt.target.tagName !== `A`) {
       return;
     }
-
     switch (evt.target.dataset.sortType) {
       case `default`:
-        const sortedByDefault = this._films;
-        sortedByDefault.forEach(mock => this._renderFilmCard(mock));
+        this._films = this._sortedByDefault(this._films);
+        this._renderFilmsList();
         break;
       case `date`:
-        const sortedByDate = this._sortedByDateFilms(this._films);
-        sortedByDate.forEach(mock => this._renderFilmCard(mock));
+        this._films = this._sortedByDateFilms(this._films);
+        this._renderFilmsList();
         break;
+
       case `rating`:
-        const sortedByRating = this._sortedByRatingFilms(this._films);
-        sortedByRating.forEach(mock => this._renderFilmCard(mock));
+        this._films = this._sortedByRatingFilms(this._films);
+        this._renderFilmsList();
         break;
     }
   }
