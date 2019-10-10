@@ -7,9 +7,9 @@ class FilmsController {
     this._container = container;
     this._data = data;
     this._filmsListContainer = container.querySelector(
-      ".films-list__container"
+      `.films-list__container`
     );
-    this._body = document.getElementsByTagName("body")[0];
+    this._body = document.getElementsByTagName(`body`)[0];
   }
   init() {
     render(this._container, this._filmsListContainer, Position.AFTERBEGIN);
@@ -27,14 +27,14 @@ class FilmsController {
       }
     };
 
-    const commentsButton = filmCard.querySelector(".film-card__comments");
+    const commentsButton = filmCard.querySelector(`.film-card__comments`);
     commentsButton.addEventListener(`click`, () => {
-      render(this._body, popUpTemplate, "beforeend");
+      render(this._body, popUpTemplate, `beforeend`);
       document.addEventListener(`keydown`, onEscKeyDown);
     });
 
-    const closeButton = popUpTemplate.querySelector(".film-details__close-btn");
-    closeButton.addEventListener("click", () => {
+    const closeButton = popUpTemplate.querySelector(`.film-details__close-btn`);
+    closeButton.addEventListener(`click`, () => {
       unrender(popUpTemplate);
     });
     render(this._filmsListContainer, filmCard, Position.AFTERBEGIN);

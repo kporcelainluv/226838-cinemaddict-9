@@ -27,17 +27,6 @@ const renderHeader = () => {
   render(headerSearchContainer, headerProfileRating, `beforeend`);
 };
 
-const renderFilmsBlock = container => {
-  const topRatedBlock = new AdditionalFilmBlock(`Top Rated`).getElement(); // --extra
-  const showMoreBtn = new ShowMoreButton().getElement();
-  const mostCommentedBlock = new AdditionalFilmBlock(
-    `Most Commented`
-  ).getElement(); // --extra
-  render(container, showMoreBtn, `afterbegin`); // show more
-
-  return [topRatedBlock, mostCommentedBlock, showMoreBtn];
-};
-
 const films = [
   {
     id: 0,

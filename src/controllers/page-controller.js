@@ -1,4 +1,4 @@
-import { render, unrender, Position } from "../components/utils";
+import { render, unrender } from "../components/utils";
 import { MainSorting } from "../components/mainSorting";
 import { MovieController } from "../controllers/movie-controller";
 import { FilmsList } from "../components/films-list";
@@ -25,16 +25,15 @@ class PageController {
     this._showMoreBtn = new ShowMoreButton();
     this._mostCommentedBlock = new AdditionalFilmBlock(`Most Commented`);
   }
-  // TODO: rerendering board through init method is not ok
   init() {
-    render(this._container, this._sort.getElement(), "afterbegin");
-    render(this._container, this._mainNav.getElement(), "afterbegin");
+    render(this._container, this._sort.getElement(), `afterbegin`);
+    render(this._container, this._mainNav.getElement(), `afterbegin`);
 
-    render(this._container, this._filmContainer.getElement(), "beforeend");
+    render(this._container, this._filmContainer.getElement(), `beforeend`);
     render(
       this._filmContainer.getElement(),
       this._filmsListBlock.getElement(),
-      "beforeend"
+      `beforeend`
     );
 
     this._films.forEach(film => {
@@ -98,7 +97,7 @@ class PageController {
     render(
       this._filmContainer.getElement(),
       this._filmsListBlock.getElement(),
-      "afterbegin"
+      `afterbegin`
     );
     this._filmsListContainer = this._filmsListBlock
       .getElement()

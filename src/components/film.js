@@ -42,7 +42,7 @@ class Film extends AbstractComponent {
         `;
   }
   _checkActiveState(state) {
-    return state ? `film-card__controls-item--active` : "";
+    return state ? `film-card__controls-item--active` : ``;
   }
 }
 export { Film };
