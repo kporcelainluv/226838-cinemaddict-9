@@ -6,6 +6,8 @@ import { AdditionalFilmBlock } from "./components/additionalFilmBlocks";
 import { render } from "./components/utils";
 import { FilmContainer } from "./components/film-containter";
 import { PageController } from "./controllers/page-controller";
+import { Statistics } from "./components/statistics";
+import { MainNav } from "./components/mainFilter";
 
 const headerSearchContainer = document.querySelector(`.header`);
 const mainPageContainer = document.querySelector(`.main`);
@@ -36,7 +38,6 @@ const films = [
     year: `2013`,
     time: `1h 16m`,
     // poster: "made-for-each-other",
-    comments: `9`,
     descriptionText: `Hello world!`,
     ageRating: `18+`,
     titleOriginal: `The Great Gatsby by S.Fitzgerald`,
@@ -50,7 +51,22 @@ const films = [
     country: `usa`,
     isWatchlist: false,
     isWatched: false,
-    isFavorite: false
+    isFavorite: false,
+    comments: [
+      { id: 0, text: "Absurd", name: "Alison Cruze", date: "19/10/2019 17:20" },
+      {
+        id: 1,
+        text: "Boring",
+        name: "Michelle Obama",
+        date: "19/12/2018 12:10"
+      },
+      {
+        id: 2,
+        text: "Amusing",
+        name: "Sarrah Fergusson",
+        date: "29/02/2019 01:12"
+      }
+    ]
   },
   {
     id: 1,
@@ -60,7 +76,6 @@ const films = [
     year: `2011`,
     time: `3h 16m`,
     // poster: "popeye-meets-sinbad",
-    comments: `3`,
     descriptionText: `OMG!!!`,
     ageRating: `4+`,
     titleOriginal: `Inception into the brain`,
@@ -74,17 +89,31 @@ const films = [
     country: `usa`,
     isWatchlist: false,
     isWatched: false,
-    isFavorite: false
+    isFavorite: false,
+    comments: [
+      { id: 0, text: "Absurd", name: "Alison Cruze", date: "19/10/2019 17:20" },
+      {
+        id: 1,
+        text: "Boring",
+        name: "Michelle Obama",
+        date: "19/12/2018 12:10"
+      },
+      {
+        id: 2,
+        text: "Amusing",
+        name: "Sarrah Fergusson",
+        date: "29/02/2019 01:12"
+      }
+    ]
   },
   {
     id: 2,
     name: `Joker`,
-    rating: `7`,
     genre: `thriller`,
     year: `2019`,
     time: `2h 10m`,
+    rating: `7`,
     // poster: "popeye-meets-sinbad",
-    comments: `5`,
     descriptionText: `YES!!!`,
     ageRating: `18+`,
     titleOriginal: `Crazy motherf*cker`,
@@ -98,12 +127,63 @@ const films = [
     country: `usa`,
     isWatchlist: false,
     isWatched: false,
-    isFavorite: false
+    isFavorite: false,
+    comments: [
+      { id: 0, text: "Absurd", name: "Alison Cruze", date: "19/10/2019 17:20" },
+      {
+        id: 1,
+        text: "Boring",
+        name: "Michelle Obama",
+        date: "19/12/2018 12:10"
+      },
+      {
+        id: 2,
+        text: "Amusing",
+        name: "Sarrah Fergusson",
+        date: "29/02/2019 01:12"
+      }
+    ]
   }
 ];
 
 (() => {
+  const statistics = new Statistics();
+  const mainNav = new MainNav();
+
+  statistics.getElement().classList.add(`visually-hidden`);
+
   renderHeader();
   const filmCardController = new PageController(mainPageContainer, films);
   filmCardController.init();
+
+  render(mainPageContainer, statistics.getElement(), `beforeend`);
+  render(mainPageContainer, mainNav.getElement(), `afterbegin`);
+
+  mainNav.getElement().addEventListener(`click`, evt => {
+    evt.preventDefault();
+    if (!evt.target.classList.contains(`main-navigation__item`)) {
+      return;
+    }
+    switch (evt.target.hash) {
+      case `#all`:
+        statistics.getElement().classList.add(`visually-hidden`);
+        filmCardController.show();
+        break;
+      case `#watchlist`:
+        statistics.getElement().classList.add(`visually-hidden`);
+        break;
+      case `#history`:
+        statistics.getElement().classList.add(`visually-hidden`);
+        // filmCardController.show();
+        break;
+      case `#favorites`:
+        statistics.getElement().classList.add(`visually-hidden`);
+        // filmCardController.show();
+        break;
+      case `#stats`:
+        filmCardController.hide();
+        statistics.getElement().classList.remove(`visually-hidden`);
+        break;
+    }
+  });
 })();
