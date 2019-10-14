@@ -18,7 +18,6 @@ class PageController {
       .querySelector(`.films-list__container`);
     this._filmContainer = new FilmContainer();
     this._sort = new MainSorting();
-    this._mainNav = new MainNav();
     this.onDataChange = this.onDataChange.bind(this);
     this.onChangeView = this.onChangeView.bind(this);
     this._topRatedBlock = new AdditionalFilmBlock(`Top Rated`);
@@ -27,7 +26,6 @@ class PageController {
   }
   init() {
     render(this._container, this._sort.getElement(), `afterbegin`);
-    render(this._container, this._mainNav.getElement(), `afterbegin`);
 
     render(this._container, this._filmContainer.getElement(), `beforeend`);
     render(
@@ -89,10 +87,9 @@ class PageController {
       }
       return [...films, film];
     }, []);
-    // TODO: move to method
-    this._renderFilmsList();
+    this._renderFilmsList(this._films);
   }
-  _renderFilmsList() {
+  _renderFilmsList(films) {
     this._unrenderFilmList();
     render(
       this._filmContainer.getElement(),
@@ -102,7 +99,7 @@ class PageController {
     this._filmsListContainer = this._filmsListBlock
       .getElement()
       .querySelector(`.films-list__container`);
-    this._films.forEach(film => {
+    films.forEach(film => {
       this._renderFilmCard(this._filmsListContainer, film);
     });
   }
@@ -130,18 +127,27 @@ class PageController {
     switch (evt.target.dataset.sortType) {
       case `default`:
         this._films = this._sortedByDefault(this._films);
-        this._renderFilmsList();
+        this._renderFilmsList(this._films);
         break;
       case `date`:
         this._films = this._sortedByDateFilms(this._films);
-        this._renderFilmsList();
+        this._renderFilmsList(this._films);
         break;
 
       case `rating`:
         this._films = this._sortedByRatingFilms(this._films);
-        this._renderFilmsList();
+        this._renderFilmsList(this._films);
         break;
     }
+  }
+  hide() {
+    this._filmContainer.getElement().classList.add(`visually-hidden`);
+    this._sort.getElement().classList.add(`visually-hidden`);
+  }
+
+  show() {
+    this._filmContainer.getElement().classList.remove(`visually-hidden`);
+    this._sort.getElement().classList.remove(`visually-hidden`);
   }
 }
 export { PageController };
