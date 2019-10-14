@@ -23,6 +23,7 @@ class PageController {
     this._topRatedBlock = new AdditionalFilmBlock(`Top Rated`);
     this._showMoreBtn = new ShowMoreButton();
     this._mostCommentedBlock = new AdditionalFilmBlock(`Most Commented`);
+
   }
   init() {
     render(this._container, this._sort.getElement(), `afterbegin`);

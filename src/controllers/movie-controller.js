@@ -1,6 +1,7 @@
 import { Popup } from "../components/popup";
 import { Position, render, unrender } from "../components/utils";
 import { Film } from "../components/film";
+import { CommentsController } from "../controllers/comments-controller";
 
 class MovieController {
   constructor(container, film, onDataChange, onChangeView) {
@@ -28,6 +29,11 @@ class MovieController {
       .querySelectorAll(`.film-details__emoji-item`);
 
     this.setDefaultView = this.setDefaultView.bind(this);
+    this._commentsController = new CommentsController(
+      this._popUpTemplate,
+      this._film,
+      this._onDataChange.bind(this)
+    );
   }
   setDefaultView() {
     if (this._body.contains(this._popUpTemplate.getElement())) {
@@ -55,13 +61,13 @@ class MovieController {
     this._commentsButton.addEventListener(`click`, () => {
       this._onChangeView();
       render(this._body, this._popUpTemplate.getElement(), "beforeend");
+      this._commentsController.init();
       document.addEventListener(`keydown`, onEscKeyDown);
     });
 
     this._popUPCloseButton.addEventListener("click", () => {
       unrender(this._popUpTemplate.getElement());
     });
-
     render(this._container, this._filmCard.getElement(), Position.AFTERBEGIN);
 
     // check if in favorites, in watchlist, in watched
@@ -149,25 +155,6 @@ class MovieController {
           .querySelector(
             ".film-details__add-emoji-label img"
           ).src = `./images/emoji/${Emojis[evt.target.id]}.png`;
-      });
-    }
-
-    const p = this._popUpTemplate
-      .getElement()
-      .querySelectorAll(`.film-details__comment-delete`);
-    for (let i = 0; i < p.length; i++) {
-      let comment = p[i];
-      comment.addEventListener("click", evt => {
-        evt.preventDefault();
-
-        const updatedFilm = {
-          ...this._film,
-          comments: [
-            ...this._film.comments.slice(0, i),
-            ...this._film.comments.slice(i + 1)
-          ]
-        };
-        this._onDataChange(updatedFilm);
       });
     }
   }
