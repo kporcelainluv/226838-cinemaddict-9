@@ -19,6 +19,8 @@ class Popup extends AbstractComponent {
     this._date = card.date;
     this._runtime = card.runtime;
     this._country = card.country;
+    this._comments = card.comments;
+    this._commentsLen = this._comments.length;
   }
 
   getTemplate() {
@@ -137,66 +139,29 @@ class Popup extends AbstractComponent {
         .join(` `)}</div>
           </section>
         </div>
-      </section>
-    </div>
-
-    <div class="form-details__bottom-container">
+        </section>
+      </div>
+        <div class="form-details__bottom-container">
       <section class="film-details__comments-wrap">
-        <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">4</span></h3>
-
+        <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${
+          this._commentsLen
+        }</span></h3>
         <ul class="film-details__comments-list">
-          <li class="film-details__comment">
-            <span class="film-details__comment-emoji">
-              <img src="./images/emoji/smile.png" width="55" height="55" alt="emoji">
-            </span>
-            <div>
-              <p class="film-details__comment-text">Interesting setting and a good cast</p>
-              <p class="film-details__comment-info">
-                <span class="film-details__comment-author">Tim Macoveev</span>
-                <span class="film-details__comment-day">3 days ago</span>
-                <button class="film-details__comment-delete">Delete</button>
-              </p>
-            </div>
-          </li>
-          <li class="film-details__comment">
-            <span class="film-details__comment-emoji">
-              <img src="./images/emoji/sleeping.png" width="55" height="55" alt="emoji">
-            </span>
-            <div>
-              <p class="film-details__comment-text">Booooooooooring</p>
-              <p class="film-details__comment-info">
-                <span class="film-details__comment-author">John Doe</span>
-                <span class="film-details__comment-day">2 days ago</span>
-                <button class="film-details__comment-delete">Delete</button>
-              </p>
-            </div>
-          </li>
-          <li class="film-details__comment">
-            <span class="film-details__comment-emoji">
-              <img src="./images/emoji/puke.png" width="55" height="55" alt="emoji">
-            </span>
-            <div>
-              <p class="film-details__comment-text">Very very old. Meh</p>
-              <p class="film-details__comment-info">
-                <span class="film-details__comment-author">John Doe</span>
-                <span class="film-details__comment-day">2 days ago</span>
-                <button class="film-details__comment-delete">Delete</button>
-              </p>
-            </div>
-          </li>
-          <li class="film-details__comment">
+        ${this._comments.map(comment => {
+          return `<li class="film-details__comment">
             <span class="film-details__comment-emoji">
               <img src="./images/emoji/angry.png" width="55" height="55" alt="emoji">
             </span>
             <div>
-              <p class="film-details__comment-text">Almost two hours? Seriously?</p>
+              <p class="film-details__comment-text">${comment.text}</p>
               <p class="film-details__comment-info">
-                <span class="film-details__comment-author">John Doe</span>
-                <span class="film-details__comment-day">Today</span>
+                <span class="film-details__comment-author">${comment.name}</span>
+                <span class="film-details__comment-day">${comment.date}</span>
                 <button class="film-details__comment-delete">Delete</button>
               </p>
             </div>
-          </li>
+          </li>`;
+        })}
         </ul>
 
         <div class="film-details__new-comment">
@@ -209,7 +174,7 @@ class Popup extends AbstractComponent {
           </label>
 
           <div class="film-details__emoji-list">
-          
+
             <input class="film-details__emoji-item visually-hidden" name="comment-emoji" type="radio" id="emoji-smile" value="sleeping">
             <label class="film-details__emoji-label" for="emoji-smile">
               <img src="./images/emoji/smile.png" width="30" height="30" alt="emoji">
@@ -236,5 +201,21 @@ class Popup extends AbstractComponent {
     </form>
   </section>`;
   }
+  // _getComments(comment) {
+  //   return `<li class="film-details__comment">
+  //           <span class="film-details__comment-emoji">
+  //             <img src="./images/emoji/smile.png" width="55" height="55" alt="emoji">
+  //           </span>
+  //           <div>
+  //             <p class="film-details__comment-text">${comment.text}</p>
+  //             <p class="film-details__comment-info">
+  //               <span class="film-details__comment-author">${comment.name}</span>
+  //               <span class="film-details__comment-day">${comment.date}</span>
+  //               <button class="film-details__comment-delete">Delete</button>
+  //             </p>
+  //           </div>
+  //         </li>
+  //       `;
+  // }
 }
 export { Popup };
