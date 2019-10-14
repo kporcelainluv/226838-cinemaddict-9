@@ -1,5 +1,5 @@
 import { Popupcomments } from "../components/commentsComponent";
-import { render } from "../components/utils";
+import { render, unrender } from "../components/utils";
 
 class CommentsController {
   constructor(popUp, film, onDataChange) {
@@ -7,13 +7,14 @@ class CommentsController {
     this._film = film;
     this._onDataChange = onDataChange;
     this._popupComments = new Popupcomments(this._film);
+    this.init = this.init.bind(this);
   }
   init() {
     const commentNodesList = this._popupComments
       .getElement()
       .querySelectorAll(`.film-details__comment-delete`);
-    for (let idx = 0; idx < commentNodesList.length; idx++) {
-      let comment = commentNodesList[idx];
+
+    Array.from(commentNodesList).forEach((comment, idx) => {
       comment.addEventListener("click", evt => {
         evt.preventDefault();
 
@@ -26,12 +27,21 @@ class CommentsController {
         };
         this._onDataChange(updatedFilm);
         this._film = updatedFilm;
+        this._unrenderCommentsSection();
+        this._popupComments = new Popupcomments(this._film);
+        this.init();
       });
-    }
+    });
+
     const popupBottomContainer = this._popUpTemplate
       .getElement()
       .querySelector(".form-details__bottom-container");
+
     render(popupBottomContainer, this._popupComments.getElement(), "beforeend");
+  }
+  _unrenderCommentsSection() {
+    unrender(this._popupComments.getElement());
+    this._popupComments.removeElement();
   }
 }
 export { CommentsController };
