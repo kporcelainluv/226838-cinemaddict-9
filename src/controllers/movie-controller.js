@@ -8,7 +8,6 @@ class MovieController {
     this._filmCard = new Film(this._film);
     // TODO: remove popupTemplate
     this._popUpTemplate = new Popup(this._film);
-
     this._container = container;
 
     this._onDataChange = onDataChange;
@@ -150,6 +149,25 @@ class MovieController {
           .querySelector(
             ".film-details__add-emoji-label img"
           ).src = `./images/emoji/${Emojis[evt.target.id]}.png`;
+      });
+    }
+
+    const p = this._popUpTemplate
+      .getElement()
+      .querySelectorAll(`.film-details__comment-delete`);
+    for (let i = 0; i < p.length; i++) {
+      let comment = p[i];
+      comment.addEventListener("click", evt => {
+        evt.preventDefault();
+
+        const updatedFilm = {
+          ...this._film,
+          comments: [
+            ...this._film.comments.slice(0, i),
+            ...this._film.comments.slice(i + 1)
+          ]
+        };
+        this._onDataChange(updatedFilm);
       });
     }
   }
