@@ -10,7 +10,7 @@ class Film extends AbstractComponent {
     this._genre = data.genre;
     this._poster = data.poster;
     this._descriptionText = data.descriptionText;
-    this._commentsAmount = data.comments;
+    this._comments = data.comments.length;
     this._isWatchlist = data.isWatchlist;
     this._isWatched = data.isWatched;
     this._isFavorite = data.isFavorite;
@@ -29,7 +29,7 @@ class Film extends AbstractComponent {
           </p>
           <img src="images/posters/made-for-each-other.png" alt="" class="film-card__poster">
           <p class="film-card__description">${this._descriptionText}</p>
-          <a class="film-card__comments">${this._commentsAmount} comments</a>
+          <a class="film-card__comments">${this._comments} comments</a>
           <form class="film-card__controls">
             <button class="film-card__controls-item button film-card__controls-item--add-to-watchlist ${this._checkActiveState(
               this._isWatchlist
