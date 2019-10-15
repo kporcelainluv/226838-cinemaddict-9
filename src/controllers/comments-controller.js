@@ -42,6 +42,9 @@ class CommentsController {
         this._film = updatedFilm;
         this._unrenderCommentsSection();
         this._popupComments = new Popupcomments(this._film);
+        this._emojiLabel = this._popupComments
+          .getElement()
+          .querySelectorAll(`.film-details__emoji-item`);
         this.init();
       });
     });
@@ -73,7 +76,7 @@ class CommentsController {
           this._popUpTemplate.getElement().querySelector(".film-details__inner")
         );
         const newComment = {
-          emoji: this._currentEmoji ? this._currentEmoji : `angry`,
+          emoji: this._currentEmoji || `angry`,
           text: formData.get(`comment`),
           name: "You",
           date: new Date().toISOString().slice(0, 10)
@@ -82,10 +85,16 @@ class CommentsController {
           ...this._film,
           comments: [...this._film.comments, newComment]
         };
+
         this._onDataChange(updatedFilm);
         this._film = updatedFilm;
         this._unrenderCommentsSection();
-        this._renderCommentsSection();
+        document.removeEventListener(`keydown`, onAddComment);
+        this._popupComments = new Popupcomments(this._film);
+        this._emojiLabel = this._popupComments
+          .getElement()
+          .querySelectorAll(`.film-details__emoji-item`);
+        this.init();
       }
     };
     this._popupComments
@@ -99,10 +108,6 @@ class CommentsController {
   _unrenderCommentsSection() {
     unrender(this._popupComments.getElement());
     this._popupComments.removeElement();
-  }
-  _renderCommentsSection() {
-    this._popupComments = new Popupcomments(this._film);
-    this.init();
   }
 }
 export { CommentsController };
