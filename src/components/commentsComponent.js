@@ -11,10 +11,11 @@ class Popupcomments extends AbstractComponent {
           this._commentsLen
         }</span></h3>
         <ul class="film-details__comments-list">
-        ${this._comments.map(comment => {
-          return `<li class="film-details__comment">
+        
+        ${this._comments.reduce((acc, comment) => {
+          acc += `<li class="film-details__comment">
             <span class="film-details__comment-emoji">
-              <img src="./images/emoji/angry.png" width="55" height="55" alt="emoji">
+              <img src="./images/emoji/${comment.emoji}.png" width="55" height="55" alt="emoji">
             </span>
             <div>
               <p class="film-details__comment-text">${comment.text}</p>
@@ -25,7 +26,8 @@ class Popupcomments extends AbstractComponent {
               </p>
             </div>
           </li>`;
-        })}
+          return acc;
+        }, "")}
         </ul>
 
         <div class="film-details__new-comment">
