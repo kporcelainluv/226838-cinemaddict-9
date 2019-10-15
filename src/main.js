@@ -53,18 +53,26 @@ const films = [
     isWatched: false,
     isFavorite: false,
     comments: [
-      { id: 0, text: "Absurd", name: "Alison Cruze", date: "19/10/2019 17:20" },
+      {
+        id: 0,
+        text: "Absurd",
+        name: "Alison Cruze",
+        date: "19/10/2019 17:20",
+        emoji: "puke"
+      },
       {
         id: 1,
         text: "Boring",
         name: "Michelle Obama",
-        date: "19/12/2018 12:10"
+        date: "19/12/2018 12:10",
+        emoji: "angry"
       },
       {
         id: 2,
         text: "Amusing",
         name: "Sarrah Fergusson",
-        date: "29/02/2019 01:12"
+        date: "29/02/2019 01:12",
+        emoji: "sleeping"
       }
     ]
   },
@@ -91,18 +99,26 @@ const films = [
     isWatched: false,
     isFavorite: false,
     comments: [
-      { id: 0, text: "Absurd", name: "Alison Cruze", date: "19/10/2019 17:20" },
+      {
+        id: 0,
+        text: "Absurd",
+        name: "Alison Cruze",
+        date: "19/10/2019 17:20",
+        emoji: "puke"
+      },
       {
         id: 1,
         text: "Boring",
         name: "Michelle Obama",
-        date: "19/12/2018 12:10"
+        date: "19/12/2018 12:10",
+        emoji: "angry"
       },
       {
         id: 2,
         text: "Amusing",
         name: "Sarrah Fergusson",
-        date: "29/02/2019 01:12"
+        date: "29/02/2019 01:12",
+        emoji: "sleeping"
       }
     ]
   },
@@ -116,7 +132,7 @@ const films = [
     // poster: "popeye-meets-sinbad",
     descriptionText: `YES!!!`,
     ageRating: `18+`,
-    titleOriginal: `Crazy motherf*cker`,
+    titleOriginal: `Crazy`,
     details: `Scary`,
     personalRating: `7`,
     director: `ksusha`,
@@ -129,18 +145,26 @@ const films = [
     isWatched: false,
     isFavorite: false,
     comments: [
-      { id: 0, text: "Absurd", name: "Alison Cruze", date: "19/10/2019 17:20" },
+      {
+        id: 0,
+        text: "Absurd",
+        name: "Alison Cruze",
+        date: "19/10/2019 17:20",
+        emoji: "puke"
+      },
       {
         id: 1,
         text: "Boring",
         name: "Michelle Obama",
-        date: "19/12/2018 12:10"
+        date: "19/12/2018 12:10",
+        emoji: "angry"
       },
       {
         id: 2,
         text: "Amusing",
         name: "Sarrah Fergusson",
-        date: "29/02/2019 01:12"
+        date: "29/02/2019 01:12",
+        emoji: "sleeping"
       }
     ]
   }
