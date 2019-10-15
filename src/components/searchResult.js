@@ -1,8 +1,8 @@
 import { AbstractComponent } from "./abstractComponent";
 class SearchResult extends AbstractComponent {
-  constructor(result) {
+  constructor(count) {
     super();
-    this._result = result;
+    this._result = count;
   }
   getTemplate() {
     return `<div class="result">

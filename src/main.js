@@ -1,4 +1,3 @@
-import { Search } from "./components/search";
 import { ProfileRating } from "./components/profileRating";
 import { ShowMoreButton } from "./components/showMoreBtn";
 import { FilmsList } from "./components/films-list";
@@ -8,26 +7,12 @@ import { FilmContainer } from "./components/film-containter";
 import { PageController } from "./controllers/page-controller";
 import { Statistics } from "./components/statistics";
 import { MainNav } from "./components/mainFilter";
+import { SearchController } from "./controllers/search-controller";
 
 const headerSearchContainer = document.querySelector(`.header`);
 const mainPageContainer = document.querySelector(`.main`);
 const footerContainer = document.querySelector(`.footer`);
 const bodyContainer = document.getElementsByTagName(`body`)[0];
-
-const addHeaderLogo = container => {
-  const headerSearchHeading = document.createElement(`h1`);
-  headerSearchHeading.className = `header__logo logo`;
-  headerSearchHeading.innerHTML = `Cinemaddict`;
-  render(container, headerSearchHeading, `afterbegin`);
-};
-
-const renderHeader = () => {
-  const headerSearchBar = new Search().getElement();
-  const headerProfileRating = new ProfileRating().getElement();
-  addHeaderLogo(headerSearchContainer);
-  render(headerSearchContainer, headerSearchBar, `beforeend`);
-  render(headerSearchContainer, headerProfileRating, `beforeend`);
-};
 
 const films = [
   {
@@ -176,8 +161,11 @@ const films = [
 
   statistics.getElement().classList.add(`visually-hidden`);
 
-  renderHeader();
-  const filmCardController = new PageController(mainPageContainer, films);
+  const filmCardController = new PageController(
+    headerSearchContainer,
+    mainPageContainer,
+    films
+  );
   filmCardController.init();
 
   render(mainPageContainer, statistics.getElement(), `beforeend`);

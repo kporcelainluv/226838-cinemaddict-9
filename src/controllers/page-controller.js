@@ -5,11 +5,25 @@ import { FilmsList } from "../components/films-list";
 import { FilmContainer } from "../components/film-containter";
 import { AdditionalFilmBlock } from "../components/additionalFilmBlocks";
 import { ShowMoreButton } from "../components/showMoreBtn";
+import { MainNav } from "../components/mainFilter";
+import { Search } from "../components/search";
+import { SearchResult } from "../components/searchResult";
+import { ProfileRating } from "../components/profileRating";
+import { SearchController } from "./search-controller";
+import { Statistics } from "../components/statistics";
+
+const filterFilms = (films, query) => {
+  // TODO: remove symbols with regexp
+  const formattedQuery = query.toLowerCase();
+  return films.filter(film => film.name.toLowerCase().includes(formattedQuery));
+};
 
 class PageController {
-  constructor(container, films) {
+  constructor(header, container, films) {
+    this._header = header;
     this._container = container;
     this._subscriptions = [];
+    this._initialFilms = films;
     this._films = films;
     this._filmsListBlock = new FilmsList();
     this._filmsListContainer = this._filmsListBlock
@@ -18,12 +32,23 @@ class PageController {
     this._filmContainer = new FilmContainer();
     this._sort = new MainSorting();
     this.onDataChange = this.onDataChange.bind(this);
+    this.onSearchChange = this.onSearchChange.bind(this);
     this.onChangeView = this.onChangeView.bind(this);
     this._topRatedBlock = new AdditionalFilmBlock(`Top Rated`);
     this._showMoreBtn = new ShowMoreButton();
     this._mostCommentedBlock = new AdditionalFilmBlock(`Most Commented`);
+    this._search = new Search(); //search input
+    this._headerProfileRating = new ProfileRating();
+    this._SearchController = new SearchController(
+      this._header,
+      this._films,
+      this._search,
+      this.onSearchChange
+    );
+    this._SearchController.init();
   }
   init() {
+    this._renderHeader();
     render(this._container, this._sort.getElement(), `afterbegin`);
 
     render(this._container, this._filmContainer.getElement(), `beforeend`);
@@ -88,6 +113,17 @@ class PageController {
     }, []);
     this._renderFilmsList(this._films);
   }
+
+  onSearchChange(query) {
+    if (query.length > 3) {
+      this._films = filterFilms(this._films, query);
+      this._renderFilmsList(this._films);
+    } else if (query.length === 0) {
+      this._films = this._initialFilms;
+      this._renderFilmsList(this._films);
+    }
+  }
+
   _renderFilmsList(films) {
     this._unrenderFilmList();
     render(
@@ -148,5 +184,15 @@ class PageController {
     this._filmContainer.getElement().classList.remove(`visually-hidden`);
     this._sort.getElement().classList.remove(`visually-hidden`);
   }
+  _renderHeader() {
+    const headerSearchHeading = document.createElement(`h1`);
+    headerSearchHeading.className = `header__logo logo`;
+    headerSearchHeading.innerHTML = `Cinemaddict`;
+    render(this._header, headerSearchHeading, `afterbegin`);
+
+    render(this._header, this._search.getElement(), `beforeend`);
+    render(this._header, this._headerProfileRating.getElement(), `beforeend`);
+  }
+  
 }
 export { PageController };
