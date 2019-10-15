@@ -24,9 +24,6 @@ class MovieController {
     this._ratingBlockContainer = this._popUpTemplate
       .getElement()
       .querySelector(`.form-details__middle-container `);
-    this._emojiLabel = this._popUpTemplate
-      .getElement()
-      .querySelectorAll(`.film-details__emoji-item`);
 
     this.setDefaultView = this.setDefaultView.bind(this);
     this._commentsController = new CommentsController(
@@ -51,13 +48,6 @@ class MovieController {
       }
     };
 
-    const Emojis = {
-      "emoji-smile": "smile",
-      "emoji-sleeping": "sleeping",
-      "emoji-gpuke": "puke",
-      "emoji-angry": "angry"
-    };
-
     this._commentsButton.addEventListener(`click`, () => {
       this._onChangeView();
       render(this._body, this._popUpTemplate.getElement(), "beforeend");
@@ -70,7 +60,6 @@ class MovieController {
     });
     render(this._container, this._filmCard.getElement(), Position.AFTERBEGIN);
 
-    // check if in favorites, in watchlist, in watched
     this._filmCard
       .getElement()
       .querySelector(".film-card__controls-item--add-to-watchlist")
@@ -146,17 +135,6 @@ class MovieController {
         this._onDataChange(this._film);
         this._film = updatedFilm;
       });
-    // adding emoji
-    for (let emoji of this._emojiLabel) {
-      emoji.addEventListener("click", evt => {
-        evt.preventDefault();
-        this._popUpTemplate
-          .getElement()
-          .querySelector(
-            ".film-details__add-emoji-label img"
-          ).src = `./images/emoji/${Emojis[evt.target.id]}.png`;
-      });
-    }
   }
 }
 export { MovieController };
