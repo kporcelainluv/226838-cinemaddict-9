@@ -11,6 +11,8 @@ import { SearchResult } from "../components/searchResult";
 import { ProfileRating } from "../components/profileRating";
 import { SearchController } from "./search-controller";
 import { Statistics } from "../components/statistics";
+import { MovieListController } from "./movie-list-controller";
+import { RENDER_POSITION } from "../consts";
 
 const filterFilms = (films, query) => {
   // TODO: remove symbols with regexp
@@ -19,8 +21,8 @@ const filterFilms = (films, query) => {
 };
 
 class PageController {
-  constructor(header, container, films) {
-    this._header = header;
+  constructor(headerContainer, container, films) {
+    this._headerContainer = headerContainer;
     this._container = container;
     this._subscriptions = [];
     this._initialFilms = films;
@@ -40,10 +42,25 @@ class PageController {
     this._search = new Search(); //search input
     this._headerProfileRating = new ProfileRating();
     this._SearchController = new SearchController(
-      this._header,
+      this._headerContainer,
       this._films,
       this._search,
       this.onSearchChange
+    );
+    this._movies = new MovieListController(
+      this._filmContainer,
+      this.onDataChange,
+      RENDER_POSITION.DEFAULT
+    );
+    this._topCommentedMovies = new MovieListController(
+      this._mostCommentedBlock,
+      this.onDataChange,
+      RENDER_POSITION.COMMENTED
+    );
+    this._topRatedMovies = new MovieListController(
+      this._topRatedBlock,
+      this.onDataChange,
+      RENDER_POSITION.RATED
     );
     this._SearchController.init();
   }
@@ -188,11 +205,13 @@ class PageController {
     const headerSearchHeading = document.createElement(`h1`);
     headerSearchHeading.className = `header__logo logo`;
     headerSearchHeading.innerHTML = `Cinemaddict`;
-    render(this._header, headerSearchHeading, `afterbegin`);
-
-    render(this._header, this._search.getElement(), `beforeend`);
-    render(this._header, this._headerProfileRating.getElement(), `beforeend`);
+    render(this._headerContainer, headerSearchHeading, `afterbegin`);
+    render(this._headerContainer, this._search.getElement(), `beforeend`);
+    render(
+      this._headerContainer,
+      this._headerProfileRating.getElement(),
+      `beforeend`
+    );
   }
-  
 }
 export { PageController };
