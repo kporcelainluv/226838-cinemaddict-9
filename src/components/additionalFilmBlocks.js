@@ -1,5 +1,6 @@
 import { AbstractComponent } from "./abstractComponent";
-class AdditionalFilmBlock extends AbstractComponent {
+
+export class AdditionalFilmList extends AbstractComponent {
   constructor(blockName) {
     super();
     this._blockName = blockName;
@@ -11,4 +12,3 @@ class AdditionalFilmBlock extends AbstractComponent {
         </section>`;
   }
 }
-export { AdditionalFilmBlock };

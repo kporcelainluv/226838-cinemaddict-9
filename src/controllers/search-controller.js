@@ -1,4 +1,4 @@
-import { FilmsList } from "../components/films-list";
+import { DefaultFilmList } from "../components/default-film-list";
 import { Search } from "../components/search";
 import { FilmContainer } from "../components/film-containter";
 import { SearchResult } from "../components/searchResult";
@@ -11,7 +11,7 @@ class SearchController {
     this._header = header;
     this._search = search;
     this._emptySearch = new EmptySearch(); // if returns 0
-    this._filmsListBlock = new FilmsList(); // film-list inside silf
+    this._filmsListBlock = new DefaultFilmList(); // film-list inside silf
     this._filmsListContainer = this._filmsListBlock
       .getElement()
       .querySelector(`.films-list__container`); // where films are rendered

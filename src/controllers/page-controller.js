@@ -1,9 +1,9 @@
 import { render, unrender } from "../components/utils";
 import { MainSorting } from "../components/mainSorting";
 import { MovieController } from "../controllers/movie-controller";
-import { FilmsList } from "../components/films-list";
+import { DefaultFilmList } from "../components/default-film-list";
 import { FilmContainer } from "../components/film-containter";
-import { AdditionalFilmBlock } from "../components/additionalFilmBlocks";
+import { AdditionalFilmList } from "../components/additionalFilmBlocks";
 import { ShowMoreButton } from "../components/showMoreBtn";
 import { MainNav } from "../components/mainFilter";
 import { Search } from "../components/search";
@@ -27,18 +27,18 @@ class PageController {
     this._subscriptions = [];
     this._initialFilms = films;
     this._films = films;
-    this._filmsListBlock = new FilmsList();
+    this._filmsListBlock = new DefaultFilmList();
     this._filmsListContainer = this._filmsListBlock
       .getElement()
       .querySelector(`.films-list__container`);
-    this._filmContainer = new FilmContainer();
+    // this._filmContainer = new FilmContainer();
     this._sort = new MainSorting();
     this.onDataChange = this.onDataChange.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
     this.onChangeView = this.onChangeView.bind(this);
-    this._topRatedBlock = new AdditionalFilmBlock(`Top Rated`);
+    this._topRatedBlock = new AdditionalFilmList(`Top Rated`);
     this._showMoreBtn = new ShowMoreButton();
-    this._mostCommentedBlock = new AdditionalFilmBlock(`Most Commented`);
+    this._mostCommentedBlock = new AdditionalFilmList(`Most Commented`);
     this._search = new Search(); //search input
     this._headerProfileRating = new ProfileRating();
     this._SearchController = new SearchController(
@@ -48,22 +48,13 @@ class PageController {
       this.onSearchChange
     );
     this._movies = new MovieListController(
-      this._filmContainer,
+      this._filmsListContainer,
       this.onDataChange,
       RENDER_POSITION.DEFAULT
     );
-    this._topCommentedMovies = new MovieListController(
-      this._mostCommentedBlock,
-      this.onDataChange,
-      RENDER_POSITION.COMMENTED
-    );
-    this._topRatedMovies = new MovieListController(
-      this._topRatedBlock,
-      this.onDataChange,
-      RENDER_POSITION.RATED
-    );
     this._SearchController.init();
   }
+
   init() {
     this._renderHeader();
     render(this._container, this._sort.getElement(), `afterbegin`);
@@ -81,16 +72,6 @@ class PageController {
     render(
       this._filmContainer.getElement(),
       this._showMoreBtn.getElement(),
-      `beforeend`
-    );
-    render(
-      this._filmContainer.getElement(),
-      this._topRatedBlock.getElement(),
-      `beforeend`
-    );
-    render(
-      this._filmContainer.getElement(),
-      this._mostCommentedBlock.getElement(),
       `beforeend`
     );
 

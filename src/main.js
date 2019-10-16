@@ -1,7 +1,7 @@
 import { ProfileRating } from "./components/profileRating";
 import { ShowMoreButton } from "./components/showMoreBtn";
-import { FilmsList } from "./components/films-list";
-import { AdditionalFilmBlock } from "./components/additionalFilmBlocks";
+import { DefaultFilmList } from "./components/default-film-list";
+import { AdditionalFilmList } from "./components/additionalFilmBlocks";
 import { render } from "./components/utils";
 import { FilmContainer } from "./components/film-containter";
 import { PageController } from "./controllers/page-controller";

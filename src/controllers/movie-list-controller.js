@@ -1,12 +1,21 @@
 import { RENDER_POSITION } from "../consts";
+import { MovieController } from "./movie-controller";
+import { render, unrender } from "../components/utils";
+import { FilmContainer } from "../components/film-containter";
+
+import { AdditionalFilmList } from "../components/additionalFilmBlocks";
+import { DefaultFilmList } from "../components/default-film-list";
+
+const renderInside = (container, innerContainer) => {
+  render(container, innerContainer.getElement(), `beforeend`);
+};
 
 export class MovieListController {
   constructor({
-    container,
+    parent,
     onDataChange,
     renderPosition = RENDER_POSITION.DEFAULT
   }) {
-    this._container = container;
     this._onDataChangeMain = onDataChange;
     this._renderPosition = renderPosition;
 
@@ -15,13 +24,51 @@ export class MovieListController {
 
     this._onChangeView = this._onChangeView.bind(this);
     this._onDataChange = this._onDataChange.bind(this);
+
+    const section = (() => {
+      if (renderPosition === RENDER_POSITION.DEFAULT) {
+        return new DefaultFilmList();
+      }
+      if (renderPosition === RENDER_POSITION.TOP_RATED) {
+        return new AdditionalFilmList(`Top Rated`);
+      }
+      if (renderPosition === RENDER_POSITION.MOST_COMMENTED) {
+        return new AdditionalFilmList(`Most Commented`);
+      }
+      return undefined;
+    })();
+    renderInside(parent, section);
+
+    this._container = section.querySelector(".films-list__container");
   }
 
-  renderFilms() {}
+  renderFilms(films) {
+    films.forEach(film => {
+      this._renderFilmCard(this._container, film);
+    });
+  }
 
-  showMoreFilms() {}
+  unrenderFilms() {
+    unrender(this._container);
+  }
 
-  _renderFilmCard() {}
+  showMoreFilms(films) {
+    return films;
+  }
+
+  _renderFilmCard(container, film) {
+    const movieController = new MovieController(
+      container,
+      film,
+      this.onDataChange,
+      this.onChangeView
+    );
+
+    movieController.init();
+    this._subscriptions.push(
+      movieController.setDefaultView.bind(movieController)
+    );
+  }
 
   _onChangeView() {}
 
