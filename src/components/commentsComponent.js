@@ -1,6 +1,6 @@
 import { AbstractComponent } from "./abstractComponent";
 
-export class Comments extends AbstractComponent {
+export class CommentsSection extends AbstractComponent {
   constructor(comments) {
     super();
     this._comments = comments;
@@ -88,5 +88,18 @@ export class Comments extends AbstractComponent {
     this.getElement().querySelector(
       ".film-details__add-emoji-label img"
     ).src = newUrl;
+  }
+
+  addCallbackOnEachDeleteBtnClick(callback) {
+    const commentList = this._comments
+      .getElement()
+      .querySelectorAll(`.film-details__comment-delete`);
+
+    Array.from(commentList).forEach((comment, idx) => {
+      comment.addEventListener("click", evt => {
+        evt.preventDefault();
+        callback(idx);
+      });
+    });
   }
 }

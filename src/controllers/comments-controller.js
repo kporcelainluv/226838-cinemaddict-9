@@ -1,4 +1,4 @@
-import { Comments } from "../components/commentsComponent";
+import { CommentsSection } from "../components/commentsComponent";
 import { render, unrender } from "../components/utils";
 
 const Emojis = {
@@ -14,54 +14,54 @@ export class CommentsController {
   constructor(popup, comments, onCommentsChange) {
     this._popup = popup;
     this._onCommentsChange = onCommentsChange;
+    this._comments = comments;
 
-    this._comments = new Comments(comments);
+    this._commentsSection = new CommentsSection(comments);
     this._currentEmoji = undefined;
 
     this.init = this.init.bind(this);
+    this._rerenderComments = this._rerenderComments.bind(this);
+    this._unrenderComments = this._unrenderComments.bind(this);
+    this._renderComments = this._renderComments.bind(this);
   }
 
   _renderComments() {
     render(
       this._popup.getCommentsContainer(),
-      this._comments.getElement(),
+      this._commentsSection.getElement(),
       "beforeend"
     );
   }
 
   _unrenderComments() {
-    unrender(this._comments.getElement());
-    this._comments.removeElement();
+    unrender(this._commentsSection.getElement());
+    this._commentsSection.removeElement();
+  }
+
+  _rerenderComments() {
+    this._unrenderComments();
+    this._commentsSection = new CommentsSection(this._comments);
+    this.init();
   }
 
   init() {
-    const commentNodesList = this._comments
-      .getElement()
-      .querySelectorAll(`.film-details__comment-delete`);
-
-    Array.from(commentNodesList).forEach((comment, idx) => {
-      comment.addEventListener("click", evt => {
-        evt.preventDefault();
-
-        this._comments = [
-          ...this.comments.slice(0, idx),
-          ...this.comments.slice(idx + 1)
-        ];
-        this._onCommentsChange(this._comments);
-        this._unrenderComments();
-        this._comments = new Comments(this._comments);
-        this.init();
-      });
+    this._commentsSection.addCallbackOnEachDeleteBtnClick(idx => {
+      this._comments = [
+        ...this.comments.slice(0, idx),
+        ...this.comments.slice(idx + 1)
+      ];
+      this._onCommentsChange(this._comments);
+      this._rerenderComments();
     });
 
     this._renderComments();
 
-    this._comments.addCallbackForEachEmojiOption(evt => {
+    this._commentsSection.addCallbackForEachEmojiOption(evt => {
       evt.preventDefault();
       const emojiId = evt.target.id;
 
       this._currentEmoji = Emojis[emojiId];
-      this._comments.updateSelectedEmojiUrl(getEmojiUrl(emojiId));
+      this._commentsSection.updateSelectedEmojiUrl(getEmojiUrl(emojiId));
     });
 
     const onAddComment = evt => {
@@ -81,14 +81,12 @@ export class CommentsController {
         this._comments = [...this.comments, newComment];
         this._onCommentsChange(this._comments);
 
-        this._unrenderComments();
         document.removeEventListener(`keydown`, onAddComment);
-        this._comments = new Comments(this._comments);
-        this.init();
+        this._rerenderComments();
       }
     };
 
-    this._comments.addCallbackOnTextInputFocus(evt => {
+    this._commentsSection.addCallbackOnTextInputFocus(evt => {
       evt.preventDefault();
       document.addEventListener(`keydown`, onAddComment);
     });
