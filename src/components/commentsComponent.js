@@ -67,4 +67,20 @@ export class Comments extends AbstractComponent {
       </section>
   `;
   }
+
+  addCallbackOnTextInputFocus(callback) {
+    this.getElement()
+      .querySelector(`.film-details__comment-input`)
+      .addEventListener(`focus`, callback);
+  }
+
+  addCallbackForEachEmojiOption(callback) {
+    const emojiOptions = this.getElement().querySelectorAll(
+      `.film-details__emoji-item`
+    );
+
+    Array.from(emojiOptions).forEach(emoji => {
+      emoji.addEventListener("click", callback);
+    });
+  }
 }

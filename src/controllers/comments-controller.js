@@ -8,7 +8,9 @@ const Emojis = {
   "emoji-angry": "angry"
 };
 
-class CommentsController {
+const getEmojiUrl = id => `./images/emoji/${Emojis[id]}.png`;
+
+export class CommentsController {
   constructor(popup, film, onDataChange) {
     this._popup = popup;
     this._film = film;
@@ -23,8 +25,9 @@ class CommentsController {
     this.init = this.init.bind(this);
   }
 
-  render(comments) {
-    unrender();
+  _unrenderCommentsSection() {
+    unrender(this._comments.getElement());
+    this._comments.removeElement();
   }
 
   init() {
@@ -59,18 +62,19 @@ class CommentsController {
       .querySelector(".form-details__bottom-container");
 
     render(popupBottomContainer, this._comments.getElement(), "beforeend");
-    // adding emoji
-    for (let emoji of this._emojiLabel) {
-      emoji.addEventListener("click", evt => {
-        this._currentEmoji = Emojis[evt.target.id];
-        evt.preventDefault();
-        this._popup
-          .getElement()
-          .querySelector(
-            ".film-details__add-emoji-label img"
-          ).src = `./images/emoji/${Emojis[evt.target.id]}.png`;
-      });
-    }
+
+    this._comments.addCallbackForEachEmojiOption(evt => {
+      evt.preventDefault();
+
+      const emojiId = evt.target.id;
+      this._currentEmoji = Emojis[emojiId];
+
+      this._popup
+        .getElement()
+        .querySelector(".film-details__add-emoji-label img").src = getEmojiUrl(
+        emojiId
+      );
+    });
 
     const onAddComment = evt => {
       if (
@@ -102,17 +106,10 @@ class CommentsController {
         this.init();
       }
     };
-    this._comments
-      .getElement()
-      .querySelector(`.film-details__comment-input`)
-      .addEventListener(`focus`, evt => {
-        evt.preventDefault();
-        document.addEventListener(`keydown`, onAddComment);
-      });
-  }
-  _unrenderCommentsSection() {
-    unrender(this._comments.getElement());
-    this._comments.removeElement();
+
+    this._comments.addCallbackOnTextInputFocus(evt => {
+      evt.preventDefault();
+      document.addEventListener(`keydown`, onAddComment);
+    });
   }
 }
-export { CommentsController };
