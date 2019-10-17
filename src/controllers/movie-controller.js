@@ -6,11 +6,11 @@ import { CommentsController } from "../controllers/comments-controller";
 const body = document.getElementsByTagName("body")[0];
 
 export class MovieController {
-  constructor(container, film, onDataChange, onTogglePopup) {
+  constructor(container, film, onFilmChange, onTogglePopup) {
     this._film = film;
     this._container = container;
 
-    this._onDataChange = onDataChange;
+    this._onFilmChange = onFilmChange;
     this._onTogglePopup = onTogglePopup;
 
     this.closePopup = this.closePopup.bind(this);
@@ -38,7 +38,7 @@ export class MovieController {
       ...this._film,
       comments: newComments
     };
-    this._onDataChange(this._film);
+    this._onFilmChange(this._film);
   }
 
   openPopup() {
@@ -71,7 +71,7 @@ export class MovieController {
         ...this._film,
         isWatchlist: !this._film.isWatchlist
       };
-      this._onDataChange(updatedFilm);
+      this._onFilmChange(updatedFilm);
     });
 
     this._filmCard.addCallbackOnClickHistoryBtn(evt => {
@@ -79,7 +79,7 @@ export class MovieController {
         ...this._film,
         isWatched: !this._film.isWatched
       };
-      this._onDataChange(updatedFilm);
+      this._onFilmChange(updatedFilm);
     });
 
     this._filmCard.addCallbackOnClickFavoriteBtn(evt => {
@@ -87,7 +87,7 @@ export class MovieController {
         ...this._film,
         isFavorite: !this._film.isFavorite
       };
-      this._onDataChange(updatedFilm);
+      this._onFilmChange(updatedFilm);
     });
 
     this._popup.addCallbackOnClickHistoryBtn(evt => {
@@ -95,7 +95,7 @@ export class MovieController {
         ...this._film,
         isWatched: !this._film.isWatched
       };
-      this._onDataChange(updatedFilm);
+      this._onFilmChange(updatedFilm);
       this._film = updatedFilm;
 
       this._popup.toggleRatingSection();
@@ -106,7 +106,7 @@ export class MovieController {
         ...this._film,
         isWatchlist: !this._film.isWatchlist
       };
-      this._onDataChange(updatedFilm);
+      this._onFilmChange(updatedFilm);
       this._film = updatedFilm;
     });
 
@@ -115,7 +115,7 @@ export class MovieController {
         ...this._film,
         isFavorite: !this._film.isFavorite
       };
-      this._onDataChange(updatedFilm);
+      this._onFilmChange(updatedFilm);
       this._film = updatedFilm;
     });
   }
