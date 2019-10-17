@@ -22,7 +22,15 @@ export class CommentsController {
     this.init = this.init.bind(this);
   }
 
-  _unrenderCommentsSection() {
+  _renderComments() {
+    render(
+      this._popup.getCommentsContainer(),
+      this._comments.getElement(),
+      "beforeend"
+    );
+  }
+
+  _unrenderComments() {
     unrender(this._comments.getElement());
     this._comments.removeElement();
   }
@@ -45,17 +53,13 @@ export class CommentsController {
         };
         this._onDataChange(updatedFilm);
         this._film = updatedFilm;
-        this._unrenderCommentsSection();
+        this._unrenderComments();
         this._comments = new Comments(this._film);
         this.init();
       });
     });
 
-    const popupBottomContainer = this._popup
-      .getElement()
-      .querySelector(".form-details__bottom-container");
-
-    render(popupBottomContainer, this._comments.getElement(), "beforeend");
+    this._renderComments();
 
     this._comments.addCallbackForEachEmojiOption(evt => {
       evt.preventDefault();
@@ -70,15 +74,15 @@ export class CommentsController {
         (evt.ctrlKey && evt.keyCode === 13) ||
         (evt.keyCode === 13 && evt.metaKey)
       ) {
-        const formData = new FormData(
-          this._popup.getElement().querySelector(".film-details__inner")
-        );
+        const formData = new FormData(this._popup.getFormElement());
+
         const newComment = {
           emoji: this._currentEmoji || `angry`,
           text: formData.get(`comment`),
           name: "You",
           date: new Date().toISOString().slice(0, 10)
         };
+
         const updatedFilm = {
           ...this._film,
           comments: [...this._film.comments, newComment]
@@ -86,7 +90,8 @@ export class CommentsController {
 
         this._onDataChange(updatedFilm);
         this._film = updatedFilm;
-        this._unrenderCommentsSection();
+
+        this._unrenderComments();
         document.removeEventListener(`keydown`, onAddComment);
         this._comments = new Comments(this._film);
         this.init();

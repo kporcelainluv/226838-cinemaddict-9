@@ -170,10 +170,19 @@ class Popup extends AbstractComponent {
       .querySelector(".film-details__control-label--watched")
       .addEventListener("click", callback);
   }
+
   toggleRatingSection() {
     this.getElement()
       .querySelector(`.form-details__middle-container`)
       .classList.toggle(`visually-hidden`);
+  }
+
+  getCommentsContainer() {
+    this.getElement().querySelector(".form-details__bottom-container");
+  }
+
+  getFormElement() {
+    this.getElement().querySelector(".film-details__inner");
   }
 }
 export { Popup };
