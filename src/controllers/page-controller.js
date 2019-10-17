@@ -31,7 +31,7 @@ class PageController {
     this._filmsListContainer = this._filmsListBlock
       .getElement()
       .querySelector(`.films-list__container`);
-    // this._filmContainer = new FilmContainer();
+    this._filmContainer = new FilmContainer();
     this._sort = new MainSorting();
     this.onDataChange = this.onDataChange.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
@@ -46,11 +46,6 @@ class PageController {
       this._films,
       this._search,
       this.onSearchChange
-    );
-    this._movies = new MovieListController(
-      this._filmsListContainer,
-      this.onDataChange,
-      RENDER_POSITION.DEFAULT
     );
     this._SearchController.init();
   }
