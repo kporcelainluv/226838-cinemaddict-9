@@ -8,22 +8,22 @@ const body = document.getElementsByTagName("body")[0];
 export class MovieController {
   constructor(container, film, onDataChange, onTogglePopup) {
     this._film = film;
-
-    this._filmCard = new FilmCard(this._film);
-    this._popup = new Popup(this._film);
     this._container = container;
 
     this._onDataChange = onDataChange;
     this._onTogglePopup = onTogglePopup;
 
-    this._commentsController = new CommentsController(
+    this._filmCard = new FilmCard(this._film);
+    this._popup = new Popup(this._film);
+    this._comments = new CommentsController(
       this._popup,
-      this._film,
-      this._onDataChange.bind(this)
+      this._film.comments,
+      this.onCommentsChange
     );
 
     this.closePopup = this.closePopup.bind(this);
     this.openPopup = this.openPopup.bind(this);
+    this.onCommentsChange = this.onCommentsChange.bind(this);
   }
 
   closePopup() {
@@ -31,6 +31,14 @@ export class MovieController {
       unrender(this._popup.getElement());
       this._popup.removeElement();
     }
+  }
+
+  onCommentsChange(newComments) {
+    this._film = {
+      ...this._film,
+      comments: newComments
+    };
+    this._onDataChange(this._film);
   }
 
   openPopup() {
@@ -50,7 +58,7 @@ export class MovieController {
     this._filmCard.addCallbackOnClickCommentsBtn(() => {
       this._onTogglePopup();
       this.openPopup();
-      this._commentsController.init();
+      this._comments.init();
       document.addEventListener(`keydown`, onEscKeyDown);
     });
 

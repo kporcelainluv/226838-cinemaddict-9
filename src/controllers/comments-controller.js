@@ -11,12 +11,11 @@ const Emojis = {
 const getEmojiUrl = id => `./images/emoji/${Emojis[id]}.png`;
 
 export class CommentsController {
-  constructor(popup, film, onDataChange) {
+  constructor(popup, comments, onCommentsChange) {
     this._popup = popup;
-    this._film = film;
-    this._onDataChange = onDataChange;
-    this._comments = new Comments(film.comments);
+    this._onCommentsChange = onCommentsChange;
 
+    this._comments = new Comments(comments);
     this._currentEmoji = undefined;
 
     this.init = this.init.bind(this);
@@ -44,17 +43,13 @@ export class CommentsController {
       comment.addEventListener("click", evt => {
         evt.preventDefault();
 
-        const updatedFilm = {
-          ...this._film,
-          comments: [
-            ...this._film.comments.slice(0, idx),
-            ...this._film.comments.slice(idx + 1)
-          ]
-        };
-        this._onDataChange(updatedFilm);
-        this._film = updatedFilm;
+        this._comments = [
+          ...this.comments.slice(0, idx),
+          ...this.comments.slice(idx + 1)
+        ];
+        this._onCommentsChange(this._comments);
         this._unrenderComments();
-        this._comments = new Comments(this._film);
+        this._comments = new Comments(this._comments);
         this.init();
       });
     });
@@ -83,17 +78,12 @@ export class CommentsController {
           date: new Date().toISOString().slice(0, 10)
         };
 
-        const updatedFilm = {
-          ...this._film,
-          comments: [...this._film.comments, newComment]
-        };
-
-        this._onDataChange(updatedFilm);
-        this._film = updatedFilm;
+        this._comments = [...this.comments, newComment];
+        this._onCommentsChange(this._comments);
 
         this._unrenderComments();
         document.removeEventListener(`keydown`, onAddComment);
-        this._comments = new Comments(this._film);
+        this._comments = new Comments(this._comments);
         this.init();
       }
     };
