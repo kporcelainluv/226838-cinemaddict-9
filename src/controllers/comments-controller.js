@@ -78,7 +78,7 @@ export class CommentsController {
           date: new Date().toISOString().slice(0, 10)
         };
 
-        this._comments = [...this.comments, newComment];
+        this._comments = [...this._comments, newComment];
         this._onCommentsChange(this._comments);
 
         document.removeEventListener(`keydown`, onAddComment);

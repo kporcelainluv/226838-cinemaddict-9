@@ -178,11 +178,11 @@ class Popup extends AbstractComponent {
   }
 
   getCommentsContainer() {
-    this.getElement().querySelector(".form-details__bottom-container");
+    return this.getElement().querySelector(".form-details__bottom-container");
   }
 
   getFormElement() {
-    this.getElement().querySelector(".film-details__inner");
+    return this.getElement().querySelector(".film-details__inner");
   }
 }
 export { Popup };

@@ -13,6 +13,10 @@ export class MovieController {
     this._onDataChange = onDataChange;
     this._onTogglePopup = onTogglePopup;
 
+    this.closePopup = this.closePopup.bind(this);
+    this.openPopup = this.openPopup.bind(this);
+    this.onCommentsChange = this.onCommentsChange.bind(this);
+
     this._filmCard = new FilmCard(this._film);
     this._popup = new Popup(this._film);
     this._comments = new CommentsController(
@@ -20,10 +24,6 @@ export class MovieController {
       this._film.comments,
       this.onCommentsChange
     );
-
-    this.closePopup = this.closePopup.bind(this);
-    this.openPopup = this.openPopup.bind(this);
-    this.onCommentsChange = this.onCommentsChange.bind(this);
   }
 
   closePopup() {

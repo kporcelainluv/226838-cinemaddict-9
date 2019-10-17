@@ -91,9 +91,9 @@ export class CommentsSection extends AbstractComponent {
   }
 
   addCallbackOnEachDeleteBtnClick(callback) {
-    const commentList = this._comments
-      .getElement()
-      .querySelectorAll(`.film-details__comment-delete`);
+    const commentList = this.getElement().querySelectorAll(
+      `.film-details__comment-delete`
+    );
 
     Array.from(commentList).forEach((comment, idx) => {
       comment.addEventListener("click", evt => {
