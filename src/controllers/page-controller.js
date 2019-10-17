@@ -3,16 +3,9 @@ import { MainSorting } from "../components/mainSorting";
 import { MovieController } from "../controllers/movie-controller";
 import { DefaultFilmList } from "../components/default-film-list";
 import { FilmContainer } from "../components/film-containter";
-import { AdditionalFilmList } from "../components/additionalFilmBlocks";
 import { ShowMoreButton } from "../components/showMoreBtn";
-import { Navigation } from "../components/navigation";
-import { Search } from "../components/search";
-import { SearchResult } from "../components/searchResult";
 import { ProfileRating } from "../components/profileRating";
 import { SearchController } from "./search-controller";
-import { Statistics } from "../components/statistics";
-import { MovieListController } from "./movie-list-controller";
-import { RENDER_POSITION } from "../consts";
 
 const filterFilms = (films, query) => {
   // TODO: remove symbols with regexp
@@ -39,9 +32,7 @@ class PageController {
     this.onSearchChange = this.onSearchChange.bind(this);
     this.onChangeView = this.onChangeView.bind(this);
 
-    this._topRatedBlock = new AdditionalFilmList(`Top Rated`);
     this._showMoreBtn = new ShowMoreButton();
-    this._mostCommentedBlock = new AdditionalFilmList(`Most Commented`);
     this._headerProfileRating = new ProfileRating();
     this._SearchController = new SearchController(
       this._headerContainer,
