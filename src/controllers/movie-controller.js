@@ -14,13 +14,12 @@ class MovieController {
     this._onDataChange = onDataChange;
     this._onChangeView = onChangeView;
 
-    this._commentsButton = this._filmCard
-      .getElement()
-      .querySelector(`.film-card__comments`);
     this._popUPCloseButton = this._popUpTemplate
       .getElement()
       .querySelector(`.film-details__close-btn`);
+
     this._body = document.getElementsByTagName("body")[0];
+
     this._ratingBlockContainer = this._popUpTemplate
       .getElement()
       .querySelector(`.form-details__middle-container `);
@@ -48,7 +47,7 @@ class MovieController {
       }
     };
 
-    this._commentsButton.addEventListener(`click`, () => {
+    this._filmCard.addCallbackOnClickCommentsBtn(() => {
       this._onChangeView();
       render(this._body, this._popUpTemplate.getElement(), "beforeend");
       this._commentsController.init();
@@ -60,41 +59,32 @@ class MovieController {
     });
     render(this._container, this._filmCard.getElement(), Position.AFTERBEGIN);
 
-    this._filmCard
-      .getElement()
-      .querySelector(".film-card__controls-item--add-to-watchlist")
-      .addEventListener("click", evt => {
-        evt.preventDefault();
-        const updatedFilm = {
-          ...this._film,
-          isWatchlist: !this._film.isWatchlist
-        };
-        this._onDataChange(updatedFilm);
-      });
+    this._filmCard.addCallbackOnClickWatchlistBtn(evt => {
+      evt.preventDefault();
+      const updatedFilm = {
+        ...this._film,
+        isWatchlist: !this._film.isWatchlist
+      };
+      this._onDataChange(updatedFilm);
+    });
 
-    this._filmCard
-      .getElement()
-      .querySelector(".film-card__controls-item--mark-as-watched")
-      .addEventListener("click", evt => {
-        evt.preventDefault();
-        const updatedFilm = {
-          ...this._film,
-          isWatched: !this._film.isWatched
-        };
-        this._onDataChange(updatedFilm);
-      });
+    this._filmCard.addCallbackOnClickHistoryBtn(evt => {
+      evt.preventDefault();
+      const updatedFilm = {
+        ...this._film,
+        isWatched: !this._film.isWatched
+      };
+      this._onDataChange(updatedFilm);
+    });
 
-    this._filmCard
-      .getElement()
-      .querySelector(".film-card__controls-item--favorite")
-      .addEventListener("click", evt => {
-        evt.preventDefault();
-        const updatedFilm = {
-          ...this._film,
-          isFavorite: !this._film.isFavorite
-        };
-        this._onDataChange(updatedFilm);
-      });
+    this._filmCard.addCallbackOnClickFavoriteBtn(evt => {
+      evt.preventDefault();
+      const updatedFilm = {
+        ...this._film,
+        isFavorite: !this._film.isFavorite
+      };
+      this._onDataChange(updatedFilm);
+    });
 
     // popUp event listeners
 
@@ -113,6 +103,7 @@ class MovieController {
           .querySelector(`.form-details__middle-container`)
           .classList.toggle(`visually-hidden`);
       });
+
     this._popUpTemplate
       .getElement()
       .querySelector(".film-details__control-label--watchlist")
@@ -124,6 +115,7 @@ class MovieController {
         this._onDataChange(updatedFilm);
         this._film = updatedFilm;
       });
+
     this._popUpTemplate
       .getElement()
       .querySelector(".film-details__control-label--favorite")

@@ -1,6 +1,7 @@
 import moment from "moment";
 
 import { AbstractComponent } from "./abstractComponent";
+import { render } from "./utils";
 
 export class FilmCard extends AbstractComponent {
   constructor(data) {
@@ -49,5 +50,29 @@ export class FilmCard extends AbstractComponent {
 
   _getActiveClass(state) {
     return state ? `film-card__controls-item--active` : ``;
+  }
+
+  addCallbackOnClickCommentsBtn(callback) {
+    const commentsBtn = this.getElement().querySelector(`.film-card__comments`);
+
+    commentsBtn.addEventListener(`click`, callback);
+  }
+
+  addCallbackOnClickWatchlistBtn(callback) {
+    this.getElement()
+      .querySelector(".film-card__controls-item--add-to-watchlist")
+      .addEventListener("click", callback);
+  }
+
+  addCallbackOnClickFavoriteBtn(callback) {
+    this.getElement()
+      .querySelector(".film-card__controls-item--mark-as-watched")
+      .addEventListener("click", callback);
+  }
+
+  addCallbackOnClickHistoryBtn(callback) {
+    this.getElement()
+      .querySelector(".film-card__controls-item--favorite")
+      .addEventListener("click", callback);
   }
 }
