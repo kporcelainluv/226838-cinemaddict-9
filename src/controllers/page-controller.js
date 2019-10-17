@@ -1,11 +1,11 @@
 import { render, unrender } from "../components/utils";
-import { MainSorting } from "../components/mainSorting";
 import { MovieController } from "../controllers/movie-controller";
 import { DefaultFilmList } from "../components/default-film-list";
 import { FilmContainer } from "../components/film-containter";
 import { ShowMoreButton } from "../components/showMoreBtn";
 import { ProfileRating } from "../components/profileRating";
 import { SearchController } from "./search-controller";
+import { SortController } from "./sort-controller";
 
 const filterFilms = (films, query) => {
   // TODO: remove symbols with regexp
@@ -27,13 +27,18 @@ class PageController {
       .getElement()
       .querySelector(`.films-list__container`);
     this._filmContainer = new FilmContainer();
-    this._sort = new MainSorting();
+
     this.onDataChange = this.onDataChange.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
     this.onChangeView = this.onChangeView.bind(this);
 
     this._showMoreBtn = new ShowMoreButton();
     this._headerProfileRating = new ProfileRating();
+
+    this._sort = new SortController(
+      this._container,
+      this._onSortTypeChange.bind(this)
+    );
     this._SearchController = new SearchController(
       this._headerContainer,
       this.onSearchChange
@@ -44,8 +49,7 @@ class PageController {
 
   init() {
     this._renderHeader();
-    render(this._container, this._sort.getElement(), `afterbegin`);
-
+    this._sort.init();
     render(this._container, this._filmContainer.getElement(), `beforeend`);
     render(
       this._filmContainer.getElement(),
@@ -61,10 +65,6 @@ class PageController {
       this._showMoreBtn.getElement(),
       `beforeend`
     );
-
-    this._sort
-      .getElement()
-      .addEventListener(`click`, evt => this._onSortLinkClick(evt));
   }
 
   _renderFilmCard(container, film) {
@@ -137,31 +137,22 @@ class PageController {
       return parseInt(a.rating, 10) - parseInt(b.rating, 10);
     });
   }
-  _onSortLinkClick(evt) {
-    evt.preventDefault();
 
-    if (evt.target.tagName !== `A`) {
-      return;
-    }
-    switch (evt.target.dataset.sortType) {
-      case `default`:
-        this._films = this._sortedByDefault(this._films);
-        this._renderFilmsList(this._films);
-        break;
-      case `date`:
-        this._films = this._sortedByDateFilms(this._films);
-        this._renderFilmsList(this._films);
-        break;
+  _onSortTypeChange(sortType) {
+    console.log({
+      sortType
+    });
 
-      case `rating`:
-        this._films = this._sortedByRatingFilms(this._films);
-        this._renderFilmsList(this._films);
-        break;
+    if (sortType === `default`) {
+      this._films = this._sortedByDefault(this._films);
+      this._renderFilmsList(this._films);
+    } else if (sortType === `date`) {
+      this._films = this._sortedByDateFilms(this._films);
+      this._renderFilmsList(this._films);
+    } else if (sortType === "rating") {
+      this._films = this._sortedByRatingFilms(this._films);
+      this._renderFilmsList(this._films);
     }
-  }
-  hide() {
-    this._filmContainer.getElement().classList.add(`visually-hidden`);
-    this._sort.getElement().classList.add(`visually-hidden`);
   }
 
   show() {
