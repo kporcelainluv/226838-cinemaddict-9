@@ -83,4 +83,10 @@ export class Comments extends AbstractComponent {
       emoji.addEventListener("click", callback);
     });
   }
+
+  updateSelectedEmojiUrl(newUrl) {
+    this.getElement().querySelector(
+      ".film-details__add-emoji-label img"
+    ).src = newUrl;
+  }
 }

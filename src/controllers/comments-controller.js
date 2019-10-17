@@ -17,9 +17,6 @@ export class CommentsController {
     this._onDataChange = onDataChange;
     this._comments = new Comments(film.comments);
 
-    this._emojiLabel = this._comments
-      .getElement()
-      .querySelectorAll(`.film-details__emoji-item`);
     this._currentEmoji = undefined;
 
     this.init = this.init.bind(this);
@@ -50,9 +47,6 @@ export class CommentsController {
         this._film = updatedFilm;
         this._unrenderCommentsSection();
         this._comments = new Comments(this._film);
-        this._emojiLabel = this._comments
-          .getElement()
-          .querySelectorAll(`.film-details__emoji-item`);
         this.init();
       });
     });
@@ -65,15 +59,10 @@ export class CommentsController {
 
     this._comments.addCallbackForEachEmojiOption(evt => {
       evt.preventDefault();
-
       const emojiId = evt.target.id;
-      this._currentEmoji = Emojis[emojiId];
 
-      this._popup
-        .getElement()
-        .querySelector(".film-details__add-emoji-label img").src = getEmojiUrl(
-        emojiId
-      );
+      this._currentEmoji = Emojis[emojiId];
+      this._comments.updateSelectedEmojiUrl(getEmojiUrl(emojiId));
     });
 
     const onAddComment = evt => {
@@ -100,9 +89,6 @@ export class CommentsController {
         this._unrenderCommentsSection();
         document.removeEventListener(`keydown`, onAddComment);
         this._comments = new Comments(this._film);
-        this._emojiLabel = this._comments
-          .getElement()
-          .querySelectorAll(`.film-details__emoji-item`);
         this.init();
       }
     };
