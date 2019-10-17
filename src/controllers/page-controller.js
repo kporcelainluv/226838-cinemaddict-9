@@ -85,7 +85,7 @@ class PageController {
 
     movieController.init();
     this._subscriptions.push(
-      movieController.setDefaultView.bind(movieController)
+      movieController.closePopup.bind(movieController)
     );
   }
 
@@ -97,6 +97,7 @@ class PageController {
   onChangeView() {
     this._subscriptions.forEach(subscription => subscription());
   }
+
   onDataChange(updatedFilm) {
     this._films = this._films.reduce((films, film) => {
       if (film.id === updatedFilm.id) {

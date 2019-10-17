@@ -3,8 +3,10 @@ import { Position, render, unrender } from "../components/utils";
 import { FilmCard } from "../components/filmCard";
 import { CommentsController } from "../controllers/comments-controller";
 
+const body = document.getElementsByTagName("body")[0];
+
 export class MovieController {
-  constructor(container, film, onDataChange, onChangeView) {
+  constructor(container, film, onDataChange, onTogglePopup) {
     this._film = film;
 
     this._filmCard = new FilmCard(this._film);
@@ -12,7 +14,7 @@ export class MovieController {
     this._container = container;
 
     this._onDataChange = onDataChange;
-    this._onChangeView = onChangeView;
+    this._onTogglePopup = onTogglePopup;
 
     this._commentsController = new CommentsController(
       this._popup,
@@ -20,15 +22,19 @@ export class MovieController {
       this._onDataChange.bind(this)
     );
 
-    this.setDefaultView = this.setDefaultView.bind(this);
+    this.closePopup = this.closePopup.bind(this);
+    this.openPopup = this.openPopup.bind(this);
   }
 
-  setDefaultView() {
-    const body = document.getElementsByTagName("body")[0];
+  closePopup() {
     if (body.contains(this._popup.getElement())) {
       unrender(this._popup.getElement());
       this._popup.removeElement();
     }
+  }
+
+  openPopup() {
+    render(body, this._popup.getElement(), "beforeend");
   }
 
   init() {
@@ -36,16 +42,14 @@ export class MovieController {
 
     const onEscKeyDown = evt => {
       if (evt.key === `Escape` || evt.key === `Esc`) {
-        unrender(this._popup.getElement());
-        this._popup.removeElement();
+        this.closePopup();
         document.removeEventListener(`keydown`, onEscKeyDown);
       }
     };
 
     this._filmCard.addCallbackOnClickCommentsBtn(() => {
-      this._onChangeView();
-      const body = document.getElementsByTagName("body")[0];
-      render(body, this._popup.getElement(), "beforeend");
+      this._onTogglePopup();
+      this.openPopup();
       this._commentsController.init();
       document.addEventListener(`keydown`, onEscKeyDown);
     });
@@ -54,7 +58,6 @@ export class MovieController {
       unrender(this._popup.getElement());
     });
 
-    //filmcard event listeners
     this._filmCard.addCallbackOnClickWatchlistBtn(evt => {
       const updatedFilm = {
         ...this._film,

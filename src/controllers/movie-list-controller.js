@@ -66,7 +66,7 @@ export class MovieListController {
 
     movieController.init();
     this._subscriptions.push(
-      movieController.setDefaultView.bind(movieController)
+      movieController.closePopup.bind(movieController)
     );
   }
 
