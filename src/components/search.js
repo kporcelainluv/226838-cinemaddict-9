@@ -1,5 +1,6 @@
 import { AbstractComponent } from "./abstractComponent";
-class Search extends AbstractComponent {
+
+export class Search extends AbstractComponent {
   constructor() {
     super();
   }
@@ -12,5 +13,10 @@ class Search extends AbstractComponent {
         <button class="search__reset" type="reset">Reset</button>
       </form>`;
   }
+
+  addCallbackOnInputChange(callback) {
+    this.getElement()
+      .querySelector(`input`)
+      .addEventListener(`keyup`, callback);
+  }
 }
-export { Search };

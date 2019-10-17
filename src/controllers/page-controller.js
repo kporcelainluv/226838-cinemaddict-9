@@ -27,7 +27,9 @@ class PageController {
     this._subscriptions = [];
     this._initialFilms = films;
     this._films = films;
+
     this._filmsListBlock = new DefaultFilmList();
+
     this._filmsListContainer = this._filmsListBlock
       .getElement()
       .querySelector(`.films-list__container`);
@@ -36,17 +38,16 @@ class PageController {
     this.onDataChange = this.onDataChange.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
     this.onChangeView = this.onChangeView.bind(this);
+
     this._topRatedBlock = new AdditionalFilmList(`Top Rated`);
     this._showMoreBtn = new ShowMoreButton();
     this._mostCommentedBlock = new AdditionalFilmList(`Most Commented`);
-    this._search = new Search(); //search input
     this._headerProfileRating = new ProfileRating();
     this._SearchController = new SearchController(
       this._headerContainer,
-      this._films,
-      this._search,
       this.onSearchChange
     );
+
     this._SearchController.init();
   }
 
@@ -84,9 +85,7 @@ class PageController {
     );
 
     movieController.init();
-    this._subscriptions.push(
-      movieController.closePopup.bind(movieController)
-    );
+    this._subscriptions.push(movieController.closePopup.bind(movieController));
   }
 
   _unrenderFilmList() {
@@ -183,7 +182,6 @@ class PageController {
     headerSearchHeading.className = `header__logo logo`;
     headerSearchHeading.innerHTML = `Cinemaddict`;
     render(this._headerContainer, headerSearchHeading, `afterbegin`);
-    render(this._headerContainer, this._search.getElement(), `beforeend`);
     render(
       this._headerContainer,
       this._headerProfileRating.getElement(),
