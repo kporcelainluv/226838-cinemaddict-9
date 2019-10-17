@@ -1,10 +1,12 @@
 import { AbstractComponent } from "./abstractComponent";
-class Popupcomments extends AbstractComponent {
-  constructor(film) {
+
+export class Comments extends AbstractComponent {
+  constructor(comments) {
     super();
-    this._comments = film.comments;
-    this._commentsLen = this._comments.length;
+    this._comments = comments;
+    this._commentsLen = comments.length;
   }
+
   getTemplate() {
     return `<section class="film-details__comments-wrap">
         <h3 class="film-details__comments-title">Comments <span class="film-details__comments-count">${
@@ -66,5 +68,3 @@ class Popupcomments extends AbstractComponent {
   `;
   }
 }
-
-export { Popupcomments };

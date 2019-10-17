@@ -1,29 +1,34 @@
-import { Popupcomments } from "../components/commentsComponent";
+import { Comments } from "../components/commentsComponent";
 import { render, unrender } from "../components/utils";
 
+const Emojis = {
+  "emoji-smile": "smile",
+  "emoji-sleeping": "sleeping",
+  "emoji-gpuke": "puke",
+  "emoji-angry": "angry"
+};
+
 class CommentsController {
-  constructor(popUp, film, onDataChange) {
-    this._popUpTemplate = popUp;
+  constructor(popup, film, onDataChange) {
+    this._popup = popup;
     this._film = film;
     this._onDataChange = onDataChange;
-    this._popupComments = new Popupcomments(this._film);
-    this.init = this.init.bind(this);
-    this._emojiLabel = this._popupComments
+    this._comments = new Comments(film.comments);
+
+    this._emojiLabel = this._comments
       .getElement()
       .querySelectorAll(`.film-details__emoji-item`);
-    this._form = this._popUpTemplate
-      .getElement()
-      .querySelector(".film-details__inner");
     this._currentEmoji = undefined;
+
+    this.init = this.init.bind(this);
   }
+
+  render(comments) {
+    unrender();
+  }
+
   init() {
-    const Emojis = {
-      "emoji-smile": "smile",
-      "emoji-sleeping": "sleeping",
-      "emoji-gpuke": "puke",
-      "emoji-angry": "angry"
-    };
-    const commentNodesList = this._popupComments
+    const commentNodesList = this._comments
       .getElement()
       .querySelectorAll(`.film-details__comment-delete`);
 
@@ -41,25 +46,25 @@ class CommentsController {
         this._onDataChange(updatedFilm);
         this._film = updatedFilm;
         this._unrenderCommentsSection();
-        this._popupComments = new Popupcomments(this._film);
-        this._emojiLabel = this._popupComments
+        this._comments = new Comments(this._film);
+        this._emojiLabel = this._comments
           .getElement()
           .querySelectorAll(`.film-details__emoji-item`);
         this.init();
       });
     });
 
-    const popupBottomContainer = this._popUpTemplate
+    const popupBottomContainer = this._popup
       .getElement()
       .querySelector(".form-details__bottom-container");
 
-    render(popupBottomContainer, this._popupComments.getElement(), "beforeend");
+    render(popupBottomContainer, this._comments.getElement(), "beforeend");
     // adding emoji
     for (let emoji of this._emojiLabel) {
       emoji.addEventListener("click", evt => {
         this._currentEmoji = Emojis[evt.target.id];
         evt.preventDefault();
-        this._popUpTemplate
+        this._popup
           .getElement()
           .querySelector(
             ".film-details__add-emoji-label img"
@@ -73,7 +78,7 @@ class CommentsController {
         (evt.keyCode === 13 && evt.metaKey)
       ) {
         const formData = new FormData(
-          this._popUpTemplate.getElement().querySelector(".film-details__inner")
+          this._popup.getElement().querySelector(".film-details__inner")
         );
         const newComment = {
           emoji: this._currentEmoji || `angry`,
@@ -90,14 +95,14 @@ class CommentsController {
         this._film = updatedFilm;
         this._unrenderCommentsSection();
         document.removeEventListener(`keydown`, onAddComment);
-        this._popupComments = new Popupcomments(this._film);
-        this._emojiLabel = this._popupComments
+        this._comments = new Comments(this._film);
+        this._emojiLabel = this._comments
           .getElement()
           .querySelectorAll(`.film-details__emoji-item`);
         this.init();
       }
     };
-    this._popupComments
+    this._comments
       .getElement()
       .querySelector(`.film-details__comment-input`)
       .addEventListener(`focus`, evt => {
@@ -106,8 +111,8 @@ class CommentsController {
       });
   }
   _unrenderCommentsSection() {
-    unrender(this._popupComments.getElement());
-    this._popupComments.removeElement();
+    unrender(this._comments.getElement());
+    this._comments.removeElement();
   }
 }
 export { CommentsController };
