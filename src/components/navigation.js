@@ -1,6 +1,6 @@
 import { AbstractComponent } from "./abstractComponent";
 
-class MainNav extends AbstractComponent {
+export class Navigation extends AbstractComponent {
   constructor() {
     super();
   }
@@ -14,5 +14,3 @@ class MainNav extends AbstractComponent {
   </nav>`;
   }
 }
-
-export { MainNav };

@@ -1,7 +1,7 @@
 import { render } from "./components/utils";
 import { PageController } from "./controllers/page-controller";
 import { Statistics } from "./components/statistics";
-import { MainNav } from "./components/mainFilter";
+import { Navigation } from "./components/navigation";
 import { mockFilms } from "./mockData";
 
 const headerSearchContainer = document.querySelector(`.header`);
@@ -9,7 +9,7 @@ const mainPageContainer = document.querySelector(`.main`);
 
 (() => {
   const statistics = new Statistics();
-  const mainNav = new MainNav();
+  const mainNav = new Navigation();
 
   statistics.getElement().classList.add(`visually-hidden`);
 

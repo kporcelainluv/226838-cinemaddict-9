@@ -5,7 +5,7 @@ import { DefaultFilmList } from "../components/default-film-list";
 import { FilmContainer } from "../components/film-containter";
 import { AdditionalFilmList } from "../components/additionalFilmBlocks";
 import { ShowMoreButton } from "../components/showMoreBtn";
-import { MainNav } from "../components/mainFilter";
+import { Navigation } from "../components/navigation";
 import { Search } from "../components/search";
 import { SearchResult } from "../components/searchResult";
 import { ProfileRating } from "../components/profileRating";
