@@ -1,12 +1,12 @@
 import { Popup } from "../components/popup";
 import { Position, render, unrender } from "../components/utils";
-import { Film } from "../components/film";
+import { FilmCard } from "../components/filmCard";
 import { CommentsController } from "../controllers/comments-controller";
 
 class MovieController {
   constructor(container, film, onDataChange, onChangeView) {
     this._film = film;
-    this._filmCard = new Film(this._film);
+    this._filmCard = new FilmCard(this._film);
     // TODO: remove popupTemplate
     this._popUpTemplate = new Popup(this._film);
     this._container = container;

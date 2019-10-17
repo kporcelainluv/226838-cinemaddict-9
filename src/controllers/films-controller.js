@@ -1,4 +1,4 @@
-import { Film } from "../components/film";
+import { FilmCard } from "../components/filmCard";
 import { Popup } from "../components/popup";
 import { render, unrender, Position } from "../components/utils";
 
@@ -17,7 +17,7 @@ class FilmsController {
   }
 
   _renderFilm(data) {
-    const filmCard = new Film(data).getElement();
+    const filmCard = new FilmCard(data).getElement();
     const popUpTemplate = new Popup(data).getElement();
 
     const onEscKeyDown = evt => {
