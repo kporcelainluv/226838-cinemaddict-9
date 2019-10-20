@@ -10,7 +10,12 @@ const filterFilms = (films, query) => {
 
 const sortByDefault = films => {
   return films.sort((a, b) => {
-    return b.id - a.id;
+    if (a.id > b.id) {
+      return 1;
+    } else if (a.id < b.id) {
+      return -1;
+    }
+    return 0;
   });
 };
 
