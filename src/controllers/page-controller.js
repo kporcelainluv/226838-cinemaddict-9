@@ -2,7 +2,6 @@ import { render, unrender } from "../components/utils";
 import { MovieController } from "../controllers/movie-controller";
 import { DefaultFilmList } from "../components/default-film-list";
 import { FilmContainer } from "../components/film-containter";
-import { ShowMoreButton } from "../components/showMoreBtn";
 import { ProfileRating } from "../components/profileRating";
 import { SearchController } from "./search-controller";
 import { SortController } from "./sort-controller";
@@ -15,8 +14,10 @@ const filterFilms = (films, query) => {
 
 class PageController {
   constructor(headerContainer, container, films) {
+    // TODO: remove header
     this._headerContainer = headerContainer;
     this._container = container;
+
     this._subscriptions = [];
     this._initialFilms = films;
     this._films = films;
@@ -32,7 +33,6 @@ class PageController {
     this.onSearchChange = this.onSearchChange.bind(this);
     this.onChangeView = this.onChangeView.bind(this);
 
-    this._showMoreBtn = new ShowMoreButton();
     this._headerProfileRating = new ProfileRating();
 
     this._sort = new SortController(
@@ -60,11 +60,6 @@ class PageController {
     this._films.forEach(film => {
       this._renderFilmCard(this._filmsListContainer, film);
     });
-    render(
-      this._filmContainer.getElement(),
-      this._showMoreBtn.getElement(),
-      `beforeend`
-    );
   }
 
   _renderFilmCard(container, film) {
