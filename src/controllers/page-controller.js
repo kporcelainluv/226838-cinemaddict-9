@@ -12,6 +12,24 @@ const filterFilms = (films, query) => {
   return films.filter(film => film.name.toLowerCase().includes(formattedQuery));
 };
 
+const sortByDefault = films => {
+  return films.sort((a, b) => {
+    return b.id - a.id;
+  });
+};
+
+const sortByDate = films => {
+  return films.sort((a, b) => {
+    return parseInt(a.year, 10) - parseInt(b.year, 10);
+  });
+};
+
+const sortByRating = films => {
+  return films.sort((a, b) => {
+    return parseInt(a.rating, 10) - parseInt(b.rating, 10);
+  });
+};
+
 class PageController {
   constructor(headerContainer, container, films) {
     // TODO: remove header
@@ -22,35 +40,37 @@ class PageController {
     this._initialFilms = films;
     this._films = films;
 
+    //
     this._filmsListBlock = new DefaultFilmList();
 
     this._filmsListContainer = this._filmsListBlock
       .getElement()
       .querySelector(`.films-list__container`);
     this._filmContainer = new FilmContainer();
+    //
 
-    this.onDataChange = this.onDataChange.bind(this);
+    this.onFilmUpdate = this.onFilmUpdate.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
-    this.onChangeView = this.onChangeView.bind(this);
+    this.onTogglePopup = this.onTogglePopup.bind(this);
 
-    this._headerProfileRating = new ProfileRating();
-
+    this._profile = new ProfileRating();
     this._sort = new SortController(
       this._container,
       this._onSortTypeChange.bind(this)
     );
-    this._SearchController = new SearchController(
+    this._search = new SearchController(
       this._headerContainer,
       this.onSearchChange
     );
-
-    this._SearchController.init();
   }
 
   init() {
+    this._search.init();
     this._renderHeader();
     this._sort.init();
+
     render(this._container, this._filmContainer.getElement(), `beforeend`);
+
     render(
       this._filmContainer.getElement(),
       this._filmsListBlock.getElement(),
@@ -66,8 +86,8 @@ class PageController {
     const movieController = new MovieController(
       container,
       film,
-      this.onDataChange,
-      this.onChangeView
+      this.onFilmUpdate,
+      this.onTogglePopup
     );
 
     movieController.init();
@@ -79,11 +99,11 @@ class PageController {
     this._filmsListBlock.removeElement();
   }
 
-  onChangeView() {
+  onTogglePopup() {
     this._subscriptions.forEach(subscription => subscription());
   }
 
-  onDataChange(updatedFilm) {
+  onFilmUpdate(updatedFilm) {
     this._films = this._films.reduce((films, film) => {
       if (film.id === updatedFilm.id) {
         return [...films, updatedFilm];
@@ -117,53 +137,26 @@ class PageController {
       this._renderFilmCard(this._filmsListContainer, film);
     });
   }
-  _sortedByDefault(films) {
-    return films.sort((a, b) => {
-      return b.id - a.id;
-    });
-  }
-  _sortedByDateFilms(films) {
-    return films.sort((a, b) => {
-      return parseInt(a.year, 10) - parseInt(b.year, 10);
-    });
-  }
-  _sortedByRatingFilms(films) {
-    return films.sort((a, b) => {
-      return parseInt(a.rating, 10) - parseInt(b.rating, 10);
-    });
-  }
 
   _onSortTypeChange(sortType) {
-    console.log({
-      sortType
-    });
-
     if (sortType === `default`) {
-      this._films = this._sortedByDefault(this._films);
+      this._films = sortByDefault(this._films);
       this._renderFilmsList(this._films);
     } else if (sortType === `date`) {
-      this._films = this._sortedByDateFilms(this._films);
+      this._films = sortByDate(this._films);
       this._renderFilmsList(this._films);
     } else if (sortType === "rating") {
-      this._films = this._sortedByRatingFilms(this._films);
+      this._films = sortByRating(this._films);
       this._renderFilmsList(this._films);
     }
   }
 
-  show() {
-    this._filmContainer.getElement().classList.remove(`visually-hidden`);
-    this._sort.getElement().classList.remove(`visually-hidden`);
-  }
   _renderHeader() {
     const headerSearchHeading = document.createElement(`h1`);
     headerSearchHeading.className = `header__logo logo`;
     headerSearchHeading.innerHTML = `Cinemaddict`;
     render(this._headerContainer, headerSearchHeading, `afterbegin`);
-    render(
-      this._headerContainer,
-      this._headerProfileRating.getElement(),
-      `beforeend`
-    );
+    render(this._headerContainer, this._profile.getElement(), `beforeend`);
   }
 }
 export { PageController };
