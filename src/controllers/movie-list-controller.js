@@ -1,7 +1,7 @@
 import { RENDER_POSITION } from "../consts";
 import { MovieController } from "./movie-controller";
 import { render, unrender } from "../utils";
-import { FilmContainer } from "../components/film-containter";
+import { FilmsContainer } from "../components/film-containter";
 
 import { AdditionalFilmList } from "../components/additionalFilmBlocks";
 import { DefaultFilmList } from "../components/default-film-list";

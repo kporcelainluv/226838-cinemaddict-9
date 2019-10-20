@@ -12,4 +12,8 @@ export class DefaultFilmList extends AbstractComponent {
       </section>
   `;
   }
+
+  getElementToRenderFilmsTo() {
+    return this.getElement().querySelector(`.films-list__container`);
+  }
 }

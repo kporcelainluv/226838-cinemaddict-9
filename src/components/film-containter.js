@@ -1,6 +1,6 @@
 import { AbstractComponent } from "./abstractComponent";
 
-class FilmContainer extends AbstractComponent {
+export class FilmsContainer extends AbstractComponent {
   constructor() {
     super();
   }
@@ -8,5 +8,3 @@ class FilmContainer extends AbstractComponent {
     return `<section class="films"></section>`;
   }
 }
-
-export { FilmContainer };

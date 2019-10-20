@@ -1,43 +1,74 @@
-import { FilmCard } from "../components/filmCard";
-import { Popup } from "../components/popup";
-import { render, unrender, Position } from "../utils";
+import { render, unrender } from "../utils";
+import { MovieController } from "./movie-controller";
+import { DefaultFilmList } from "../components/default-film-list";
+import { FilmsContainer } from "../components/film-containter";
 
-class FilmsController {
-  constructor(container, data) {
+export class FilmsController {
+  constructor({ container, films, onFilmUpdate }) {
     this._container = container;
-    this._data = data;
-    this._filmsListContainer = container.querySelector(
-      `.films-list__container`
-    );
-    this._body = document.getElementsByTagName(`body`)[0];
+    this._subscriptions = [];
+    this._films = films;
+
+    this._filmsContainer = new FilmsContainer();
+    this._defaultFilmList = new DefaultFilmList();
+
+    this._onFilmUpdate = onFilmUpdate;
+
+    this._onTogglePopup = this._onTogglePopup.bind(this);
   }
+
   init() {
-    render(this._container, this._filmsListContainer, Position.AFTERBEGIN);
-    this._renderFilm(this._data);
+    render(this._container, this._filmsContainer.getElement(), `beforeend`);
+
+    render(
+      this._filmsContainer.getElement(),
+      this._defaultFilmList.getElement(),
+      `beforeend`
+    );
+
+    this._films.forEach(film => {
+      this._renderFilmCard(
+        this._defaultFilmList.getElementToRenderFilmsTo(),
+        film
+      );
+    });
   }
 
-  _renderFilm(data) {
-    const filmCard = new FilmCard(data).getElement();
-    const popUpTemplate = new Popup(data).getElement();
+  renderFilms(films) {
+    this._unrenderFilmList();
 
-    const onEscKeyDown = evt => {
-      if (evt.key === `Escape` || evt.key === `Esc`) {
-        unrender(popUpTemplate);
-        document.removeEventListener(`keydown`, onEscKeyDown);
-      }
-    };
+    render(
+      this._filmsContainer.getElement(),
+      this._defaultFilmList.getElement(),
+      `afterbegin`
+    );
 
-    const commentsButton = filmCard.querySelector(`.film-card__comments`);
-    commentsButton.addEventListener(`click`, () => {
-      render(this._body, popUpTemplate, `beforeend`);
-      document.addEventListener(`keydown`, onEscKeyDown);
+    films.forEach(film => {
+      this._renderFilmCard(
+        this._defaultFilmList.getElementToRenderFilmsTo(),
+        film
+      );
     });
+  }
 
-    const closeButton = popUpTemplate.querySelector(`.film-details__close-btn`);
-    closeButton.addEventListener(`click`, () => {
-      unrender(popUpTemplate);
-    });
-    render(this._filmsListContainer, filmCard, Position.AFTERBEGIN);
+  _onTogglePopup() {
+    this._subscriptions.forEach(subscription => subscription());
+  }
+
+  _unrenderFilmList() {
+    unrender(this._defaultFilmList.getElement());
+    this._defaultFilmList.removeElement();
+  }
+
+  _renderFilmCard(container, film) {
+    const movieController = new MovieController(
+      container,
+      film,
+      this._onFilmUpdate,
+      this._onTogglePopup
+    );
+
+    movieController.init();
+    this._subscriptions.push(movieController.closePopup.bind(movieController));
   }
 }
-export { FilmsController };
