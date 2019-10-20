@@ -1,16 +1,42 @@
 import { AbstractComponent } from "./abstractComponent";
 
 export class Navigation extends AbstractComponent {
-  constructor() {
+  constructor(historyAmount, watchlistAmount, favoritesAmount) {
     super();
+    this._watchlistAmount = watchlistAmount;
+    this._historyAmount = historyAmount;
+    this._favoritesAmount = favoritesAmount;
   }
   getTemplate() {
     return `<nav class="main-navigation">
     <a href="#all" class="main-navigation__item main-navigation__item--active">All movies</a>
-    <a href="#watchlist" class="main-navigation__item">Watchlist <span class="main-navigation__item-count">13</span></a>
-    <a href="#history" class="main-navigation__item">History <span class="main-navigation__item-count">4</span></a>
-    <a href="#favorites" class="main-navigation__item">Favorites <span class="main-navigation__item-count">8</span></a>
+    <a href="#watchlist" class="main-navigation__item">Watchlist <span class="main-navigation__item-count">${this._watchlistAmount}</span></a>
+    <a href="#history" class="main-navigation__item">History <span class="main-navigation__item-count">${this._historyAmount}</span></a>
+    <a href="#favorites" class="main-navigation__item">Favorites <span class="main-navigation__item-count">${this._favoritesAmount}</span></a>
     <a href="#stats" class="main-navigation__item main-navigation__item--additional">Stats</a>
   </nav>`;
+  }
+  addCallbackOnNavigationItem(callback) {
+    const navItems = this.getElement().querySelectorAll(
+      `.main-navigation__item`
+    );
+    navItems.forEach(element => {
+      element.addEventListener("click", event =>
+        callback(event.target.getAttribute("href"))
+      );
+    });
+  }
+  makeBtnActive(hash) {
+    this.getElement()
+      .querySelector(`.main-navigation__item--active`)
+      .classList.remove(`main-navigation__item--active`);
+
+    const navTabs = this.getElement().querySelectorAll(
+      `.main-navigation__item`
+    );
+    const node = Array.from(navTabs).filter(
+      element => element.getAttribute("href") === hash
+    )[0];
+    node.classList.add(`main-navigation__item--active`);
   }
 }
