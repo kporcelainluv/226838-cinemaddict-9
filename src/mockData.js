@@ -18,9 +18,9 @@ export const mockFilms = [
     date: `04.05.1996`,
     runtime: `2h`,
     country: `usa`,
-    isWatchlist: false,
-    isWatched: false,
-    isFavorite: false,
+    isWatchlist: true,
+    isWatched: true,
+    isFavorite: true,
     comments: [
       {
         id: 0,
@@ -64,9 +64,9 @@ export const mockFilms = [
     date: `04.05.1996`,
     runtime: `2h`,
     country: `usa`,
-    isWatchlist: false,
-    isWatched: false,
-    isFavorite: false,
+    isWatchlist: true,
+    isWatched: true,
+    isFavorite: true,
     comments: [
       {
         id: 0,
@@ -110,9 +110,9 @@ export const mockFilms = [
     date: `04.05.1996`,
     runtime: `2h`,
     country: `usa`,
-    isWatchlist: false,
-    isWatched: false,
-    isFavorite: false,
+    isWatchlist: true,
+    isWatched: true,
+    isFavorite: true,
     comments: [
       {
         id: 0,
