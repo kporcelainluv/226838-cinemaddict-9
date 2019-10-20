@@ -46,12 +46,23 @@ const updateFilms = (films, updatedFilm) => {
   }, []);
 };
 
+const mergeFilms = (allFilms, updatedFilms) => {
+  return allFilms.map(film => {
+    const updateFilm = updatedFilms.find(f => f.id === film.id);
+    if (updateFilm) {
+      return updateFilm;
+    }
+    return film;
+  });
+};
+
 export class PageController {
   constructor(headerContainer, container, films) {
     this._container = container;
 
     this._films = films;
-    this._initialFilms = films;
+    this._allFilms = films;
+    this._currentTab = `all`;
 
     this._sortController = new SortController(
       this._container,
@@ -85,19 +96,27 @@ export class PageController {
       this._films = filterFilms(this._films, query);
       this._filmsController.renderFilms(this._films);
     } else if (query.length === 0) {
-      this._films = this._initialFilms;
+      this._films = this._allFilms;
       this._filmsController.renderFilms(this._films);
     }
   }
+
+  // TODO: add constant
   onNavigationChange(navTab) {
+    this._currentTab = navTab;
+
     if (navTab === `#all`) {
+      this._films = this._allFilms;
       this._filmsController.renderFilms(this._films);
     } else if (navTab === `#watchlist`) {
-      this._filmsController.renderFilms(getWatchlist(this._films));
+      this._films = getWatchlist(this._allFilms);
+      this._filmsController.renderFilms(this._films);
     } else if (navTab === `#history`) {
-      this._filmsController.renderFilms(getWatched(this._films));
+      this._films = getWatched(this._allFilms);
+      this._filmsController.renderFilms(this._films);
     } else if (navTab === `#favorites`) {
-      this._filmsController.renderFilms(getFavorite(this._films));
+      this._films = getFavorite(this._allFilms);
+      this._filmsController.renderFilms(this._films);
     }
     // else if (navTab === `#stats`) {
     // }
@@ -118,6 +137,8 @@ export class PageController {
 
   _onFilmUpdate(updatedFilm) {
     this._films = updateFilms(this._films, updatedFilm);
+    this._allFilms = mergeFilms(this._allFilms, this._films);
     this._filmsController.renderFilms(this._films);
+    this._navigationController.render(this._allFilms, this._currentTab);
   }
 }
