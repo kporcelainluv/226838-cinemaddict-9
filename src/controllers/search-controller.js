@@ -1,5 +1,5 @@
 import { Search } from "../components/search";
-import { render } from "../components/utils";
+import { render } from "../utils";
 
 export class SearchController {
   constructor(container, onSearchChange) {

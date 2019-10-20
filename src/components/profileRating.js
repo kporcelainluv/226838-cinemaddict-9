@@ -1,7 +1,8 @@
 import { AbstractComponent } from "./abstractComponent";
 
-class ProfileRating extends AbstractComponent {
-  constructor() {
+// TODO: add status to profile rating
+export class ProfileRating extends AbstractComponent {
+  constructor({ films }) {
     super();
   }
   getTemplate() {
@@ -11,4 +12,3 @@ class ProfileRating extends AbstractComponent {
   </section>`;
   }
 }
-export { ProfileRating };

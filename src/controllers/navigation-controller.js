@@ -1,4 +1,4 @@
-import { render } from "../components/utils";
+import { render } from "../utils";
 import { Navigation } from "../components/navigation";
 
 export class NavigationController {

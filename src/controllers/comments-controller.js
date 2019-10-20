@@ -1,5 +1,5 @@
 import { CommentsSection } from "../components/commentsComponent";
-import { render, unrender } from "../components/utils";
+import { render, unrender } from "../utils";
 
 const Emojis = {
   "emoji-smile": "smile",

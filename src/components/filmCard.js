@@ -1,7 +1,7 @@
 import moment from "moment";
 
 import { AbstractComponent } from "./abstractComponent";
-import { render } from "./utils";
+import { render } from "../utils";
 
 export class FilmCard extends AbstractComponent {
   constructor(data) {

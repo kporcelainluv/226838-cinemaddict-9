@@ -1,4 +1,4 @@
-import { render } from "../components/utils";
+import { render } from "../utils";
 import { Sort } from "../components/sort";
 
 export class SortController {

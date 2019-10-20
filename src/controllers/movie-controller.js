@@ -1,5 +1,5 @@
 import { Popup } from "../components/popup";
-import { Position, render, unrender } from "../components/utils";
+import { Position, render, unrender } from "../utils";
 import { FilmCard } from "../components/filmCard";
 import { CommentsController } from "../controllers/comments-controller";
 

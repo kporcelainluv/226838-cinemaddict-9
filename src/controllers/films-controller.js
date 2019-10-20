@@ -1,6 +1,6 @@
 import { FilmCard } from "../components/filmCard";
 import { Popup } from "../components/popup";
-import { render, unrender, Position } from "../components/utils";
+import { render, unrender, Position } from "../utils";
 
 class FilmsController {
   constructor(container, data) {

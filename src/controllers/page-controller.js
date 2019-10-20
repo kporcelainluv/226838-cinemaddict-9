@@ -1,10 +1,9 @@
-import { render, unrender } from "../components/utils";
+import { render, unrender } from "../utils";
 import { MovieController } from "../controllers/movie-controller";
 import { DefaultFilmList } from "../components/default-film-list";
 import { FilmContainer } from "../components/film-containter";
-import { ProfileRating } from "../components/profileRating";
-import { SearchController } from "./search-controller";
 import { SortController } from "./sort-controller";
+import { HeaderController } from "./header-controller";
 
 const filterFilms = (films, query) => {
   // TODO: remove symbols with regexp
@@ -30,7 +29,7 @@ const sortByRating = films => {
   });
 };
 
-class PageController {
+export class PageController {
   constructor(headerContainer, container, films) {
     // TODO: remove header
     this._headerContainer = headerContainer;
@@ -53,20 +52,18 @@ class PageController {
     this.onSearchChange = this.onSearchChange.bind(this);
     this.onTogglePopup = this.onTogglePopup.bind(this);
 
-    this._profile = new ProfileRating();
     this._sort = new SortController(
       this._container,
       this._onSortTypeChange.bind(this)
     );
-    this._search = new SearchController(
-      this._headerContainer,
-      this.onSearchChange
-    );
+    this._header = new HeaderController({
+      films: this._films,
+      onSearchChange: this.onSearchChange
+    });
   }
 
   init() {
-    this._search.init();
-    this._renderHeader();
+    this._header.init();
     this._sort.init();
 
     render(this._container, this._filmContainer.getElement(), `beforeend`);
@@ -145,18 +142,9 @@ class PageController {
     } else if (sortType === `date`) {
       this._films = sortByDate(this._films);
       this._renderFilmsList(this._films);
-    } else if (sortType === "rating") {
+    } else if (sortType === `rating`) {
       this._films = sortByRating(this._films);
       this._renderFilmsList(this._films);
     }
   }
-
-  _renderHeader() {
-    const headerSearchHeading = document.createElement(`h1`);
-    headerSearchHeading.className = `header__logo logo`;
-    headerSearchHeading.innerHTML = `Cinemaddict`;
-    render(this._headerContainer, headerSearchHeading, `afterbegin`);
-    render(this._headerContainer, this._profile.getElement(), `beforeend`);
-  }
 }
-export { PageController };
