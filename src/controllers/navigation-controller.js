@@ -1,41 +1,20 @@
 import { render } from "../utils";
 import { Navigation } from "../components/navigation";
 
-const countTabAmount = films => {
-  let historyAmount = [];
-  let watchlistAmount = [];
-  let favoriteAmount = [];
-
-  films.forEach(element => {
-    if (element.isWatched === true) {
-      historyAmount = [...historyAmount, element];
-    }
-    if (element.isWatchlist === true) {
-      watchlistAmount = [...watchlistAmount, element];
-    }
-    if (element.isFavorite === true) {
-      favoriteAmount = [...favoriteAmount, element];
-    }
-  });
-
-  return [historyAmount, watchlistAmount, favoriteAmount];
-};
+export const getWatched = films => films.filter(element => element.isWatched);
+export const getWatchlist = films => films.filter(element => element.isWatchlist);
+export const getFavorite = films => films.filter(element => element.isFavorite);
 
 export class NavigationController {
-  constructor(container, films) {
-    // this._onNavigationChange = onNavigationChange;
+  constructor(container, films, onNavigationChange) {
+    this._onNavigationChange = onNavigationChange;
     this._container = container;
     this._films = films;
-    [
-      this._historyAmount,
-      this._watchlistAmount,
-      this._favoriteAmount
-    ] = countTabAmount(this._films);
 
     this._navigation = new Navigation(
-      this._historyAmount.length,
-      this._watchlistAmount.length,
-      this._favoriteAmount.length
+      getWatched(this._films).length,
+      getWatchlist(this._films).length,
+      getFavorite(this._films).length
     );
   }
 
@@ -43,6 +22,7 @@ export class NavigationController {
     render(this._container, this._navigation.getElement(), "afterbegin");
     this._navigation.addCallbackOnNavigationItem(hash => {
       this._navigation.makeBtnActive(hash);
+      this._onNavigationChange(hash);
     });
   }
 }

@@ -1,7 +1,12 @@
 import { SortController } from "./sort-controller";
 import { HeaderController } from "./header-controller";
 import { FilmsController } from "./films-controller";
-import { NavigationController } from "./navigation-controller";
+import {
+  NavigationController,
+  getFavorite,
+  getWatched,
+  getWatchlist
+} from "./navigation-controller";
 
 const filterFilms = (films, query) => {
   // TODO: remove symbols with regexp
@@ -63,7 +68,8 @@ export class PageController {
     });
     this._navigationController = new NavigationController(
       this._container,
-      this._films
+      this._films,
+      this.onNavigationChange.bind(this)
     );
   }
 
@@ -82,6 +88,19 @@ export class PageController {
       this._films = this._initialFilms;
       this._filmsController.renderFilms(this._films);
     }
+  }
+  onNavigationChange(navTab) {
+    if (navTab === `#all`) {
+      this._filmsController.renderFilms(this._films);
+    } else if (navTab === `#watchlist`) {
+      this._filmsController.renderFilms(getWatchlist(this._films));
+    } else if (navTab === `#history`) {
+      this._filmsController.renderFilms(getWatched(this._films));
+    } else if (navTab === `#favorites`) {
+      this._filmsController.renderFilms(getFavorite(this._films));
+    }
+    // else if (navTab === `#stats`) {
+    // }
   }
 
   _onSortTypeChange(sortType) {
