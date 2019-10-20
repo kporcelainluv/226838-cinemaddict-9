@@ -7,7 +7,7 @@ import { AdditionalFilmList } from "../components/additionalFilmBlocks";
 import { DefaultFilmList } from "../components/default-film-list";
 
 const renderInside = (container, innerContainer) => {
-  render(container, innerContainer.getElement(), `beforeend`);
+  render(container, innerContainer.getElement(), `afterbegin`);
 };
 
 export class MovieListController {
@@ -65,9 +65,7 @@ export class MovieListController {
     );
 
     movieController.init();
-    this._subscriptions.push(
-      movieController.closePopup.bind(movieController)
-    );
+    this._subscriptions.push(movieController.closePopup.bind(movieController));
   }
 
   _onChangeView() {}

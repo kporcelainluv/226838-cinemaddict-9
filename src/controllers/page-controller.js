@@ -1,6 +1,7 @@
 import { SortController } from "./sort-controller";
 import { HeaderController } from "./header-controller";
 import { FilmsController } from "./films-controller";
+import { NavigationController } from "./navigation-controller";
 
 const filterFilms = (films, query) => {
   // TODO: remove symbols with regexp
@@ -60,11 +61,16 @@ export class PageController {
       films,
       onFilmUpdate: this._onFilmUpdate.bind(this)
     });
+    this._navigationController = new NavigationController(
+      this._container,
+      this._films
+    );
   }
 
   init() {
     this._headerController.init();
     this._sortController.init();
+    this._navigationController.init();
     this._filmsController.init();
   }
 
