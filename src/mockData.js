@@ -18,7 +18,7 @@ export const mockFilms = [
     date: `04.05.1996`,
     runtime: `2h`,
     country: `usa`,
-    isWatchlist: true,
+    isWatchlist: false,
     isWatched: true,
     isFavorite: true,
     comments: [
@@ -64,9 +64,9 @@ export const mockFilms = [
     date: `04.05.1996`,
     runtime: `2h`,
     country: `usa`,
-    isWatchlist: true,
+    isWatchlist: false,
     isWatched: true,
-    isFavorite: true,
+    isFavorite: false,
     comments: [
       {
         id: 0,
@@ -110,9 +110,193 @@ export const mockFilms = [
     date: `04.05.1996`,
     runtime: `2h`,
     country: `usa`,
-    isWatchlist: true,
+    isWatchlist: false,
     isWatched: true,
     isFavorite: true,
+    comments: [
+      {
+        id: 0,
+        text: "Absurd",
+        name: "Alison Cruze",
+        date: "19/10/2019 17:20",
+        emoji: "puke"
+      },
+      {
+        id: 1,
+        text: "Boring",
+        name: "Michelle Obama",
+        date: "19/12/2018 12:10",
+        emoji: "angry"
+      },
+      {
+        id: 2,
+        text: "Amusing",
+        name: "Sarrah Fergusson",
+        date: "29/02/2019 01:12",
+        emoji: "sleeping"
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: `Toy Story 4`,
+    genre: `thriller`,
+    year: `2019`,
+    time: `2h 10m`,
+    rating: `4`,
+    // poster: "popeye-meets-sinbad",
+    descriptionText: `YES!!!`,
+    ageRating: `18+`,
+    titleOriginal: `Toys`,
+    details: `Scary`,
+    personalRating: `7`,
+    director: `ksusha`,
+    writers: `yanis`,
+    actors: `polina`,
+    date: `04.05.1996`,
+    runtime: `2h`,
+    country: `usa`,
+    isWatchlist: true,
+    isWatched: false,
+    isFavorite: false,
+    comments: [
+      {
+        id: 0,
+        text: "Absurd",
+        name: "Alison Cruze",
+        date: "19/10/2019 17:20",
+        emoji: "puke"
+      },
+      {
+        id: 1,
+        text: "Boring",
+        name: "Michelle Obama",
+        date: "19/12/2018 12:10",
+        emoji: "angry"
+      },
+      {
+        id: 2,
+        text: "Amusing",
+        name: "Sarrah Fergusson",
+        date: "29/02/2019 01:12",
+        emoji: "sleeping"
+      }
+    ]
+  },
+  {
+    id: 4,
+    name: `The Dead Don’t Die`,
+    genre: `thriller`,
+    year: `2019`,
+    time: `2h 10m`,
+    rating: `9`,
+    // poster: "popeye-meets-sinbad",
+    descriptionText: `YES!!!`,
+    ageRating: `18+`,
+    titleOriginal: `Crazy`,
+    details: `Scary`,
+    personalRating: `7`,
+    director: `ksusha`,
+    writers: `yanis`,
+    actors: `polina`,
+    date: `04.05.1996`,
+    runtime: `2h`,
+    country: `usa`,
+    isWatchlist: true,
+    isWatched: false,
+    isFavorite: true,
+    comments: [
+      {
+        id: 0,
+        text: "Absurd",
+        name: "Alison Cruze",
+        date: "19/10/2019 17:20",
+        emoji: "puke"
+      },
+      {
+        id: 1,
+        text: "Boring",
+        name: "Michelle Obama",
+        date: "19/12/2018 12:10",
+        emoji: "angry"
+      },
+      {
+        id: 2,
+        text: "Amusing",
+        name: "Sarrah Fergusson",
+        date: "29/02/2019 01:12",
+        emoji: "sleeping"
+      }
+    ]
+  },
+  {
+    id: 4,
+    name: `Avengers: Endgame`,
+    genre: `thriller`,
+    year: `2019`,
+    time: `2h 10m`,
+    rating: `9`,
+    // poster: "popeye-meets-sinbad",
+    descriptionText: `YES!!!`,
+    ageRating: `18+`,
+    titleOriginal: `Crazy`,
+    details: `Scary`,
+    personalRating: `7`,
+    director: `ksusha`,
+    writers: `yanis`,
+    actors: `polina`,
+    date: `04.05.1996`,
+    runtime: `2h`,
+    country: `usa`,
+    isWatchlist: false,
+    isWatched: true,
+    isFavorite: false,
+    comments: [
+      {
+        id: 0,
+        text: "Absurd",
+        name: "Alison Cruze",
+        date: "19/10/2019 17:20",
+        emoji: "puke"
+      },
+      {
+        id: 1,
+        text: "Boring",
+        name: "Michelle Obama",
+        date: "19/12/2018 12:10",
+        emoji: "angry"
+      },
+      {
+        id: 2,
+        text: "Amusing",
+        name: "Sarrah Fergusson",
+        date: "29/02/2019 01:12",
+        emoji: "sleeping"
+      }
+    ]
+  },
+  {
+    id: 5,
+    name: `The Burial of Kojo`,
+    genre: `thriller`,
+    year: `2019`,
+    time: `2h 10m`,
+    rating: `1`,
+    // poster: "popeye-meets-sinbad",
+    descriptionText: `YES!!!`,
+    ageRating: `18+`,
+    titleOriginal: `Crazy`,
+    details: `Scary`,
+    personalRating: `7`,
+    director: `ksusha`,
+    writers: `yanis`,
+    actors: `polina`,
+    date: `04.05.1996`,
+    runtime: `2h`,
+    country: `usa`,
+    isWatchlist: true,
+    isWatched: false,
+    isFavorite: false,
     comments: [
       {
         id: 0,
