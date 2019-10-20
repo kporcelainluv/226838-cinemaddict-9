@@ -66,13 +66,13 @@ export class FilmCard extends AbstractComponent {
 
   addCallbackOnClickFavoriteBtn(callback) {
     this.getElement()
-      .querySelector(".film-card__controls-item--mark-as-watched")
+      .querySelector(".film-card__controls-item--favorite")
       .addEventListener("click", callback);
   }
 
   addCallbackOnClickHistoryBtn(callback) {
     this.getElement()
-      .querySelector(".film-card__controls-item--favorite")
+      .querySelector(".film-card__controls-item--mark-as-watched")
       .addEventListener("click", callback);
   }
 }
