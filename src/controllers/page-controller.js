@@ -9,6 +9,7 @@ import {
 } from "./navigation-controller";
 import { NAV_TAB, SORT_TYPE } from "../consts";
 import { SearchResultContoller } from "./search-result";
+import { StatsController } from "../controllers/stats-controller";
 
 const filterFilms = (films, query) => {
   // TODO: remove symbols with regexp
@@ -53,7 +54,7 @@ export class PageController {
     this._container = container;
     this._films = films;
     this._allFilms = films;
-    this._currentTab = `all`;   
+    this._currentTab = `all`;
 
     this._sortController = new SortController(
       this._container,
@@ -79,6 +80,8 @@ export class PageController {
       films: this._films,
       onFilmUpdate: this._onFilmUpdateSearchResult.bind(this)
     });
+
+    this._stats = new StatsController(this._container, this._films);
   }
 
   init() {
@@ -87,6 +90,7 @@ export class PageController {
     this._navigationController.init();
     this._filmsController.init();
     this._searchResultContoller.init();
+    this._stats.init();
   }
 
   _onSearchChange(query) {
@@ -111,19 +115,33 @@ export class PageController {
 
     if (navTab === NAV_TAB.ALL) {
       this._films = this._allFilms;
+      this._stats.unrender();
+      this._sortController.show();
+      this._filmsController.show();
       this._filmsController.render(this._films);
     } else if (navTab === NAV_TAB.WATCHLIST) {
+      this._stats.unrender();
+      this._sortController.show();
+      this._filmsController.show();
       this._films = getWatchlist(this._allFilms);
       this._filmsController.render(this._films);
     } else if (navTab === NAV_TAB.HISTORY) {
+      this._stats.unrender();
+      this._sortController.show();
+      this._filmsController.show();
       this._films = getWatched(this._allFilms);
       this._filmsController.render(this._films);
     } else if (navTab === NAV_TAB.FAVOTITES) {
+      this._stats.unrender();
+      this._sortController.show();
+      this._filmsController.show();
       this._films = getFavorite(this._allFilms);
       this._filmsController.render(this._films);
+    } else if (navTab === NAV_TAB.STATS) {
+      this._filmsController.hide();
+      this._sortController.hide();
+      this._stats.render();
     }
-    // else if (navTab === NAV_POSITION.STATS) {
-    // }
   }
 
   _onSortTypeChange(sortType) {
