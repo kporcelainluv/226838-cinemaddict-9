@@ -7,6 +7,7 @@ import {
   getWatched,
   getWatchlist
 } from "./navigation-controller";
+import { NAV_POSITION, SORT_TYPE } from "../consts";
 
 const filterFilms = (films, query) => {
   // TODO: remove symbols with regexp
@@ -101,35 +102,34 @@ export class PageController {
     }
   }
 
-  // TODO: add constant
   onNavigationChange(navTab) {
     this._currentTab = navTab;
 
-    if (navTab === `#all`) {
+    if (navTab === NAV_POSITION.ALL) {
       this._films = this._allFilms;
       this._filmsController.renderFilms(this._films);
-    } else if (navTab === `#watchlist`) {
+    } else if (navTab === NAV_POSITION.WATCHLIST) {
       this._films = getWatchlist(this._allFilms);
       this._filmsController.renderFilms(this._films);
-    } else if (navTab === `#history`) {
+    } else if (navTab === NAV_POSITION.HISTORY) {
       this._films = getWatched(this._allFilms);
       this._filmsController.renderFilms(this._films);
-    } else if (navTab === `#favorites`) {
+    } else if (navTab === NAV_POSITION.FAVOTITES) {
       this._films = getFavorite(this._allFilms);
       this._filmsController.renderFilms(this._films);
     }
-    // else if (navTab === `#stats`) {
+    // else if (navTab === NAV_POSITION.STATS) {
     // }
   }
 
   _onSortTypeChange(sortType) {
-    if (sortType === `default`) {
+    if (sortType === SORT_TYPE.DEFAULT) {
       this._films = sortByDefault(this._films);
       this._filmsController.renderFilms(this._films);
-    } else if (sortType === `date`) {
+    } else if (sortType === SORT_TYPE.DATE) {
       this._films = sortByDate(this._films);
       this._filmsController.renderFilms(this._films);
-    } else if (sortType === `rating`) {
+    } else if (sortType === SORT_TYPE.RATING) {
       this._films = sortByRating(this._films);
       this._filmsController.renderFilms(this._films);
     }

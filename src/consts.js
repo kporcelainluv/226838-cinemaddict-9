@@ -3,3 +3,17 @@ export const RENDER_POSITION = {
   TOP_RATED: `rated`,
   MOST_COMMENTED: `commented`
 };
+
+export const NAV_POSITION = {
+  ALL: `#all`,
+  HISTORY: `#history`,
+  WATCHLIST: `#watchlist`,
+  FAVOTITES: `#favorites`,
+  STATS: `#stats`
+};
+
+export const SORT_TYPE = {
+  DEFAULT: `default`,
+  DATE: `date`,
+  RATING: `rating`
+};
