@@ -1,20 +1,26 @@
-import { render, unrender } from "../utils";
-import { MovieController } from "./movie-controller";
+import { render } from "../utils";
 import { DefaultFilmList } from "../components/default-film-list";
 import { FilmsContainer } from "../components/film-containter";
+import { FilmListController } from "./film-list-controller";
 
 export class FilmsController {
   constructor({ container, films, onFilmUpdate }) {
     this._container = container;
     this._subscriptions = [];
-    this._films = films;
 
     this._filmsContainer = new FilmsContainer();
     this._defaultFilmList = new DefaultFilmList();
 
-    this._onFilmUpdate = onFilmUpdate;
-
     this._onTogglePopup = this._onTogglePopup.bind(this);
+    this._onRenderFilmCard = this._onRenderFilmCard.bind(this);
+
+    this._defaultFilmListController = new FilmListController({
+      container: this._defaultFilmList.getElementToRenderFilmsTo(),
+      films,
+      onFilmUpdate,
+      onTogglePopup: this._onTogglePopup,
+      onRenderFilmCard: this._onRenderFilmCard
+    });
   }
 
   init() {
@@ -26,49 +32,24 @@ export class FilmsController {
       `beforeend`
     );
 
-    this._films.forEach(film => {
-      this._renderFilmCard(
-        this._defaultFilmList.getElementToRenderFilmsTo(),
-        film
-      );
-    });
+    this._defaultFilmListController.init();
   }
 
-  renderFilms(films) {
+  render(films) {
     this._unrenderFilmList();
 
-    render(
-      this._filmsContainer.getElement(),
-      this._defaultFilmList.getElement(),
-      `afterbegin`
-    );
-
-    films.forEach(film => {
-      this._renderFilmCard(
-        this._defaultFilmList.getElementToRenderFilmsTo(),
-        film
-      );
-    });
+    this._defaultFilmListController.render(films);
   }
 
   _onTogglePopup() {
     this._subscriptions.forEach(subscription => subscription());
   }
 
-  _unrenderFilmList() {
-    unrender(this._defaultFilmList.getElement());
-    this._defaultFilmList.removeElement();
+  _onRenderFilmCard(closePopup) {
+    this._subscriptions.push(closePopup);
   }
 
-  _renderFilmCard(container, film) {
-    const movieController = new MovieController(
-      container,
-      film,
-      this._onFilmUpdate,
-      this._onTogglePopup
-    );
-
-    movieController.init();
-    this._subscriptions.push(movieController.closePopup.bind(movieController));
+  _unrenderFilmList() {
+    this._defaultFilmListController.unrender();
   }
 }
