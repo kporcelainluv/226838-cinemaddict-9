@@ -1,6 +1,6 @@
 import { AbstractComponent } from "./abstractComponent";
 
-export class SearchResult extends AbstractComponent {
+export class SearchResultHeading extends AbstractComponent {
   constructor(amount) {
     super();
     this._filmsAmount = amount;

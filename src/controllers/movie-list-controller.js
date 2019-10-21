@@ -5,7 +5,7 @@ import { FilmsContainer } from "../components/film-containter";
 
 import { AdditionalFilmList } from "../components/additionalFilmBlocks";
 import { DefaultFilmList } from "../components/default-film-list";
-import { SearchResult } from "../components/searchResult";
+import { SearchResultHeading } from "../components/searchResultHeading";
 import { EmptySearch } from "../components/emptySearch";
 
 // const renderInside = (container, innerContainer) => {
@@ -39,7 +39,7 @@ export class MovieListController {
 
     // this._container = this._parent.querySelector(".films-list__container");
 
-    this._searchResultHeading = new SearchResult(this._films.length);
+    this._searchResultHeading = new SearchResultHeading(this._films.length);
     this._emptySearch = new EmptySearch();
   }
 
@@ -88,7 +88,7 @@ export class MovieListController {
   addSearchResultHeading(films) {
     this.removeSearchResultHeading();
     if (films.length > 0) {
-      this._searchResultHeading = new SearchResult(films.length);
+      this._searchResultHeading = new SearchResultHeading(films.length);
       render(
         this._filmsContainer,
         this._searchResultHeading.getElement(),

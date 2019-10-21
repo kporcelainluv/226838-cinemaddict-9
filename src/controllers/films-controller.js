@@ -2,6 +2,8 @@ import { render } from "../utils";
 import { DefaultFilmList } from "../components/default-film-list";
 import { FilmsContainer } from "../components/film-containter";
 import { FilmListController } from "./film-list-controller";
+import { SearchResultHeading } from "../components/searchResultHeading";
+import { EmptySearch } from "../components/emptySearch";
 
 export class FilmsController {
   constructor({ container, films, onFilmUpdate }) {
@@ -51,5 +53,11 @@ export class FilmsController {
 
   _unrenderFilmList() {
     this._defaultFilmListController.unrender();
+  }
+  hide() {
+    this._filmsContainer.hide();
+  }
+  show() {
+    this._filmsContainer.show();
   }
 }

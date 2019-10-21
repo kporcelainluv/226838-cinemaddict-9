@@ -1,14 +1,11 @@
 import { AbstractComponent } from "./abstractComponent";
 
-export class FilmsContainer extends AbstractComponent {
+export class SearchResultContainer extends AbstractComponent {
   constructor() {
     super();
   }
   getTemplate() {
     return `<section class="films"></section>`;
-  }
-  getFilmContainer() {
-    this.getElement().querySelector(`.films`);
   }
   hide() {
     this.getElement().classList.add(`visually-hidden`);
