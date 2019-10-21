@@ -7,4 +7,7 @@ export class FilmsContainer extends AbstractComponent {
   getTemplate() {
     return `<section class="films"></section>`;
   }
+  getFilmContainer() {
+    this.getElement().querySelector(`.films`);
+  }
 }

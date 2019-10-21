@@ -38,4 +38,10 @@ export class NavigationController {
     this.init();
     this._navigation.makeBtnActive(tab);
   }
+  hide() {
+    this._navigation.hide();
+  }
+  show() {
+    this._navigation.show();
+  }
 }

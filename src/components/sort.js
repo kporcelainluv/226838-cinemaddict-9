@@ -30,4 +30,10 @@ export class Sort extends AbstractComponent {
     );
     sortBtns[index].classList.add(`sort__button--active`);
   }
+  hide() {
+    this.getElement().classList.add(`visually-hidden`);
+  }
+  show() {
+    this.getElement().classList.remove(`visually-hidden`);
+  }
 }

@@ -17,4 +17,10 @@ export class SortController {
       this._onSortChange(type);
     });
   }
+  hide() {
+    this._sort.hide();
+  }
+  show() {
+    this._sort.show();
+  }
 }

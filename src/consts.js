@@ -4,7 +4,7 @@ export const RENDER_POSITION = {
   MOST_COMMENTED: `commented`
 };
 
-export const NAV_POSITION = {
+export const NAV_TAB = {
   ALL: `#all`,
   HISTORY: `#history`,
   WATCHLIST: `#watchlist`,

@@ -39,4 +39,10 @@ export class Navigation extends AbstractComponent {
     )[0];
     node.classList.add(`main-navigation__item--active`);
   }
+  hide() {
+    this.getElement().classList.add(`visually-hidden`);
+  }
+  show() {
+    this.getElement().classList.remove(`visually-hidden`);
+  }
 }

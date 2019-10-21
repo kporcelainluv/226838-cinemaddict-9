@@ -1,13 +1,13 @@
 import { AbstractComponent } from "./abstractComponent";
 
 export class SearchResult extends AbstractComponent {
-  constructor(count) {
+  constructor(amount) {
     super();
-    this._result = count;
+    this._filmsAmount = amount;
   }
   getTemplate() {
     return `<div class="result">
-    <p class="result__text">Result <span class="result__count">${this._result}</span></p>
+    <p class="result__text">Result <span class="result__count">${this._filmsAmount}</span></p>
   </div>`;
   }
 }
