@@ -47,8 +47,8 @@ export class CommentsController {
   init() {
     this._commentsSection.addCallbackOnEachDeleteBtnClick(idx => {
       this._comments = [
-        ...this.comments.slice(0, idx),
-        ...this.comments.slice(idx + 1)
+        ...this._comments.slice(0, idx),
+        ...this._comments.slice(idx + 1)
       ];
       this._onCommentsChange(this._comments);
       this._rerenderComments();

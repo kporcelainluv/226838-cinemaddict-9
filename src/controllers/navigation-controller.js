@@ -1,10 +1,12 @@
 import { render, unrender } from "../utils";
 import { Navigation } from "../components/navigation";
 
-export const getWatched = films => films.filter(element => element.isWatched);
+export const getWatched = films =>
+  films.filter(element => element.user_details.already_watched);
 export const getWatchlist = films =>
-  films.filter(element => element.isWatchlist);
-export const getFavorite = films => films.filter(element => element.isFavorite);
+  films.filter(element => element.user_details.watchlist);
+export const getFavorite = films =>
+  films.filter(element => element.user_details.favorite);
 
 export class NavigationController {
   constructor(container, films, onNavigationChange) {

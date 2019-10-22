@@ -32,7 +32,16 @@ export const mockFilms = [
       watching_date: 1561829956785,
       favorite: true
     },
-    comments: ["173", "174", "175", "176"]
+    comments: [
+      {
+        id: "1",
+        author: "Ilya O'Reilly",
+        comment:
+          "a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.",
+        date: "2019-05-11T16:12:32.554Z",
+        emotion: "smile"
+      }
+    ]
   },
   {
     id: "1",
@@ -68,7 +77,16 @@ export const mockFilms = [
       watching_date: 1549820356785,
       favorite: false
     },
-    comments: ["177", "178", "179", "180"]
+    comments: [
+      {
+        id: "2",
+        author: "Ilya O'Reilly",
+        comment:
+          "a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.",
+        date: "2019-05-11T16:12:32.554Z",
+        emotion: "smile"
+      }
+    ]
   },
   {
     id: "2",
@@ -97,7 +115,16 @@ export const mockFilms = [
       watching_date: 1550597956785,
       favorite: false
     },
-    comments: ["181", "182", "183", "184", "185"]
+    comments: [
+      {
+        id: "3",
+        author: "Ilya O'Reilly",
+        comment:
+          "a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.",
+        date: "2019-05-11T16:12:32.554Z",
+        emotion: "smile"
+      }
+    ]
   },
   {
     id: "3",
@@ -131,7 +158,16 @@ export const mockFilms = [
       watching_date: 1547314756785,
       favorite: false
     },
-    comments: ["186", "187", "188"]
+    comments: [
+      {
+        id: "4",
+        author: "Ilya O'Reilly",
+        comment:
+          "a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.",
+        date: "2019-05-11T16:12:32.554Z",
+        emotion: "smile"
+      }
+    ]
   },
   {
     id: "4",
@@ -160,7 +196,16 @@ export const mockFilms = [
       watching_date: 1570815556785,
       favorite: false
     },
-    comments: ["189", "190", "191", "192"]
+    comments: [
+      {
+        id: "5",
+        author: "Ilya O'Reilly",
+        comment:
+          "a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.",
+        date: "2019-05-11T16:12:32.554Z",
+        emotion: "smile"
+      }
+    ]
   },
   {
     id: "5",
@@ -197,7 +242,16 @@ export const mockFilms = [
       watching_date: 1571679556785,
       favorite: false
     },
-    comments: ["193", "194", "195", "196", "197"]
+    comments: [
+      {
+        id: "6",
+        author: "Ilya O'Reilly",
+        comment:
+          "a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.",
+        date: "2019-05-11T16:12:32.554Z",
+        emotion: "smile"
+      }
+    ]
   },
   {
     id: "6",
@@ -231,7 +285,16 @@ export const mockFilms = [
       watching_date: null,
       favorite: false
     },
-    comments: ["198", "199", "200", "201", "202"]
+    comments: [
+      {
+        id: "7",
+        author: "Ilya O'Reilly",
+        comment:
+          "a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.",
+        date: "2019-05-11T16:12:32.554Z",
+        emotion: "smile"
+      }
+    ]
   },
   {
     id: "7",
@@ -264,7 +327,16 @@ export const mockFilms = [
       watching_date: 1560965956785,
       favorite: false
     },
-    comments: ["203", "204", "205"]
+    comments: [
+      {
+        id: "8",
+        author: "Ilya O'Reilly",
+        comment:
+          "a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.",
+        date: "2019-05-11T16:12:32.554Z",
+        emotion: "smile"
+      }
+    ]
   },
   {
     id: "8",
@@ -300,7 +372,16 @@ export const mockFilms = [
       watching_date: 1564508356785,
       favorite: false
     },
-    comments: ["206", "207", "208", "209", "210"]
+    comments: [
+      {
+        id: "9",
+        author: "Ilya O'Reilly",
+        comment:
+          "a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.",
+        date: "2019-05-11T16:12:32.554Z",
+        emotion: "smile"
+      }
+    ]
   },
   {
     id: "9",
@@ -329,7 +410,16 @@ export const mockFilms = [
       watching_date: 1571679556785,
       favorite: true
     },
-    comments: ["211", "212", "213"]
+    comments: [
+      {
+        id: "10",
+        author: "Ilya O'Reilly",
+        comment:
+          "a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.",
+        date: "2019-05-11T16:12:32.554Z",
+        emotion: "smile"
+      }
+    ]
   },
   {
     id: "10",
@@ -364,7 +454,16 @@ export const mockFilms = [
       watching_date: 1546364356785,
       favorite: false
     },
-    comments: ["214", "215", "216", "217", "218"]
+    comments: [
+      {
+        id: "11",
+        author: "Ilya O'Reilly",
+        comment:
+          "a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.",
+        date: "2019-05-11T16:12:32.554Z",
+        emotion: "smile"
+      }
+    ]
   },
   {
     id: "11",
@@ -399,7 +498,16 @@ export const mockFilms = [
       watching_date: 1550943556785,
       favorite: false
     },
-    comments: ["219", "220", "221", "222", "223"]
+    comments: [
+      {
+        id: "12",
+        author: "Ilya O'Reilly",
+        comment:
+          "a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.",
+        date: "2019-05-11T16:12:32.554Z",
+        emotion: "smile"
+      }
+    ]
   },
   {
     id: "12",
@@ -435,7 +543,16 @@ export const mockFilms = [
       watching_date: 1571679556785,
       favorite: false
     },
-    comments: ["224", "225", "226"]
+    comments: [
+      {
+        id: "13",
+        author: "Ilya O'Reilly",
+        comment:
+          "a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.",
+        date: "2019-05-11T16:12:32.554Z",
+        emotion: "smile"
+      }
+    ]
   },
   {
     id: "13",
@@ -464,7 +581,16 @@ export const mockFilms = [
       watching_date: null,
       favorite: false
     },
-    comments: ["227", "228", "229", "230", "231", "232"]
+    comments: [
+      {
+        id: "14",
+        author: "Ilya O'Reilly",
+        comment:
+          "a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.",
+        date: "2019-05-11T16:12:32.554Z",
+        emotion: "smile"
+      }
+    ]
   },
   {
     id: "14",
@@ -501,7 +627,16 @@ export const mockFilms = [
       watching_date: 1570124356785,
       favorite: false
     },
-    comments: ["233", "234", "235"]
+    comments: [
+      {
+        id: "15",
+        author: "Ilya O'Reilly",
+        comment:
+          "a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.",
+        date: "2019-05-11T16:12:32.554Z",
+        emotion: "smile"
+      }
+    ]
   },
   {
     id: "15",
@@ -537,7 +672,16 @@ export const mockFilms = [
       watching_date: 1569519556785,
       favorite: false
     },
-    comments: ["236", "237", "238"]
+    comments: [
+      {
+        id: "16",
+        author: "Ilya O'Reilly",
+        comment:
+          "a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.",
+        date: "2019-05-11T16:12:32.554Z",
+        emotion: "smile"
+      }
+    ]
   },
   {
     id: "16",
@@ -566,7 +710,16 @@ export const mockFilms = [
       watching_date: 1569260356785,
       favorite: false
     },
-    comments: ["239", "240", "241", "242"]
+    comments: [
+      {
+        id: "17",
+        author: "Ilya O'Reilly",
+        comment:
+          "a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.",
+        date: "2019-05-11T16:12:32.554Z",
+        emotion: "smile"
+      }
+    ]
   },
   {
     id: "17",
@@ -595,7 +748,16 @@ export const mockFilms = [
       watching_date: 1571679556785,
       favorite: false
     },
-    comments: ["243", "244", "245", "246", "247"]
+    comments: [
+      {
+        id: "18",
+        author: "Ilya O'Reilly",
+        comment:
+          "a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.",
+        date: "2019-05-11T16:12:32.554Z",
+        emotion: "smile"
+      }
+    ]
   },
   {
     id: "18",
@@ -630,7 +792,16 @@ export const mockFilms = [
       watching_date: 1570642756785,
       favorite: false
     },
-    comments: ["248", "249", "250", "251", "252"]
+    comments: [
+      {
+        id: "19",
+        author: "Ilya O'Reilly",
+        comment:
+          "a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.",
+        date: "2019-05-11T16:12:32.554Z",
+        emotion: "smile"
+      }
+    ]
   },
   {
     id: "19",
@@ -659,6 +830,15 @@ export const mockFilms = [
       watching_date: null,
       favorite: false
     },
-    comments: ["253", "254", "255", "256"]
+    comments: [
+      {
+        id: "20",
+        author: "Ilya O'Reilly",
+        comment:
+          "a film that changed my life, a true masterpiece, post-credit scene was just amazing omg.",
+        date: "2019-05-11T16:12:32.554Z",
+        emotion: "smile"
+      }
+    ]
   }
 ];

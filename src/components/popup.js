@@ -1,26 +1,41 @@
 import { AbstractComponent } from "./abstractComponent";
+
+import moment from "moment";
+
+const countRunTime = mins => {
+  const hours = Math.floor(mins / 60);
+  const minutes = mins - hours * 60;
+  return [hours, minutes];
+};
+
 class Popup extends AbstractComponent {
-  constructor(card) {
+  constructor(film) {
     super();
-    this._poster = card.poster;
-    this._ageRating = card.ageRating;
-    this._title = card.name;
-    this._titleOriginal = card.titleOriginal;
-    this._rating = card.rating;
-    this._details = card.details;
-    this._description = card.descriptionText;
-    this._isWatchlist = card.isWatchlist;
-    this._isWatched = card.isWatched;
-    this._isFavorite = card.isFavorite;
-    this._personalRating = card.personalRating;
-    this._director = card.director;
-    this._writers = card.writers;
-    this._actors = card.actors;
-    this._date = card.date;
-    this._runtime = card.runtime;
-    this._country = card.country;
-    this._comments = card.comments;
-    this._commentsLen = this._comments.length;
+    this._title = film.film_info.title;
+    this._alternativeTitle = film.film_info.alternative_title;
+    this._rating = film.film_info.total_rating;
+    this._poster = film.film_info.poster;
+    this._ageRating = film.film_info.age_rating;
+
+    this._director = film.film_info.director;
+    this._writers = film.film_info.writers;
+    this._actors = film.film_info.actors;
+    this._releaseDate = film.film_info.release.date;
+    this._releaseCountry = film.film_info.release.release_country;
+
+    this._runtime = countRunTime(film.film_info.runtime);
+    [this._hours, this._minutes] = this._runtime;
+
+    this._genre = film.film_info.genre;
+    this._descriptionText = film.film_info.description;
+
+    this._personalRating = film.user_details.personal_rating;
+    this._isWatchlist = film.user_details.watchlist;
+    this._isWatched = film.user_details.already_watched;
+    this._isFavorite = film.user_details.favorite;
+    this._watchingDate = film.user_details.watching_date;
+
+    this._comments = film.comments.length;
   }
 
   getTemplate() {
@@ -32,7 +47,7 @@ class Popup extends AbstractComponent {
         </div>
         <div class="film-details__info-wrap">
           <div class="film-details__poster">
-            <img class="film-details__poster-img" src="images/posters/made-for-each-other.png" alt="">
+            <img class="film-details__poster-img" src="${this._poster}" alt="">
 
             <p class="film-details__age">${this._ageRating}+</p>
           </div>
@@ -42,7 +57,7 @@ class Popup extends AbstractComponent {
               <div class="film-details__title-wrap">
                 <h3 class="film-details__title">${this._title}</h3>
                 <p class="film-details__title-original">Original: ${
-                  this._titleOriginal
+                  this._alternativeTitle
                 }</p>
               </div>
 
@@ -52,37 +67,38 @@ class Popup extends AbstractComponent {
             </div>
             <table class="film-details__table">
               <tr class="film-details__row">
-                <td class="film-details__term">${this._director}</td>
+                <td class="film-details__term">Director</td>
                 <td class="film-details__cell">${this._director}</td>
               </tr>
               <tr class="film-details__row">
-                <td class="film-details__term">${this._director}</td>
-                <td class="film-details__cell">${this._director}</td>
+                <td class="film-details__term">Writers</td>
+                <td class="film-details__cell">${this._writers}</tr>
+              <tr class="film-details__row">
+                <td class="film-details__term">Actors</td>
+                <td class="film-details__cell">${this._actors}</tr>
+              <tr class="film-details__row">
+                <td class="film-details__term">Release Date</td>
+                <td class="film-details__cell">${moment(
+                  this._releaseDate
+                ).format("YYYY")}</td>
               </tr>
               <tr class="film-details__row">
-                <td class="film-details__term">${this._director}</td>
-                <td class="film-details__cell">${this._director}</td>
+                <td class="film-details__term">Runtime</td>
+                <td class="film-details__cell">${this._hours}h
+                ${this._minutes}m</td>
               </tr>
               <tr class="film-details__row">
-                <td class="film-details__term">${this._director}</td>
-                <td class="film-details__cell">${this._director}</td>
+                <td class="film-details__term">Country</td>
+                <td class="film-details__cell">${this._releaseCountry}</td>
               </tr>
               <tr class="film-details__row">
-                <td class="film-details__term">${this._director}</td>
-                <td class="film-details__cell">${this._director}</td>
-              </tr>
-              <tr class="film-details__row">
-                <td class="film-details__term">${this._director}</td>
-                <td class="film-details__cell">${this._director}</td>
-              </tr>
-              <tr class="film-details__row">
-                <td class="film-details__term">${this._details}</td>
-                <td class="film-details__cell">${this._details}</td>
+                <td class="film-details__term">Genres</td>
+                <td class="film-details__cell">${this._genre}</td>
               </tr>
             </table>
 
             <p class="film-details__film-description">
-              ${this._description}
+              ${this._descriptionText}
             </p>
           </div>
         </div>
@@ -115,7 +131,9 @@ class Popup extends AbstractComponent {
 
         <div class="film-details__user-score">
           <div class="film-details__user-rating-poster">
-            <img src="images/posters/made-for-each-other.png" alt="film-poster" class="film-details__user-rating-img">
+            <img src="${
+              this._poster
+            }" alt="film-poster" class="film-details__user-rating-img">
           </div>
 
           <section class="film-details__user-rating-inner">
