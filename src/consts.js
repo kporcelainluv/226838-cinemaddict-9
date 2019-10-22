@@ -17,3 +17,11 @@ export const SORT_TYPE = {
   DATE: `date`,
   RATING: `rating`
 };
+
+export const FILTER_SORT_TYPE = {
+  ALL: `all`,
+  TODAY: `today`,
+  WEEK: `week`,
+  MONTH: `month`,
+  YEAR: `year`
+};

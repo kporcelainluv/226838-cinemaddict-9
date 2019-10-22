@@ -88,9 +88,10 @@ export class PageController {
     this._headerController.init();
     this._sortController.init();
     this._navigationController.init();
-    this._filmsController.init();
+    // this._filmsController.init();
     this._searchResultContoller.init();
     this._stats.init();
+    this._stats.render();
   }
 
   _onSearchChange(query) {

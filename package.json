@@ -20,6 +20,7 @@
     "node": "10"
   },
   "dependencies": {
+    "date-fns": "^2.6.0",
     "moment": "^2.24.0"
   }
 }
