@@ -24,7 +24,7 @@ export class UserRankController {
     return rank;
   }
 
-  renderRank() {
+  render() {
     this.unrender();
     this._rank = this.getStatsRank(this._films);
 
@@ -38,7 +38,9 @@ export class UserRankController {
     }
   }
   unrender() {
-    unrender(this._statsRank.getElement());
-    this._statsRank.removeElement();
+    if (this._container.getElement().contains(this._statsRank.getElement())) {
+      unrender(this._statsRank.getElement());
+      this._statsRank.removeElement();
+    }
   }
 }

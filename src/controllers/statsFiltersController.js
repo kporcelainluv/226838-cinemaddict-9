@@ -1,5 +1,5 @@
 import { StatsFilters } from "../components/statsFilters";
-import { render } from "../utils";
+import { render, unrender } from "../utils";
 
 export class StatsFiltersController {
   constructor(container) {
@@ -16,7 +16,16 @@ export class StatsFiltersController {
   }
   getPressedTabName() {
     this._statsFilters.onAddListenersOnFilters(evt => {
-      console.log(evt.target);
+      console.log(evt.target.value);
+      const activeStatsTab = evt.target.value;
     });
+  }
+  unrender() {
+    if (
+      this._container.getElement().contains(this._statsFilters.getElement())
+    ) {
+      unrender(this._statsFilters.getElement());
+      this._statsFilters.removeElement();
+    }
   }
 }

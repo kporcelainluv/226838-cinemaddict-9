@@ -22,7 +22,7 @@ export class StatsController {
   }
 
   render() {
-    this._rankController.renderRank();
+    this._rankController.render();
     this._filters.render();
   }
   unrender() {
