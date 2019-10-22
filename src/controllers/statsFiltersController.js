@@ -12,9 +12,9 @@ export class StatsFiltersController {
       this._statsFilters.getElement(),
       "beforeend"
     );
-    this.onAddListeners();
+    this.getPressedTabName();
   }
-  onAddListeners() {
+  getPressedTabName() {
     this._statsFilters.onAddListenersOnFilters(evt => {
       console.log(evt.target);
     });
