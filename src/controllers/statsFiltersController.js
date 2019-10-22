@@ -18,6 +18,7 @@ export class StatsFiltersController {
     this._statsFilters.onAddListenersOnFilters(evt => {
       console.log(evt.target.value);
       const activeStatsTab = evt.target.value;
+      return activeStatsTab;
     });
   }
   unrender() {

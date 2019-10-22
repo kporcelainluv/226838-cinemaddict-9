@@ -1,34 +1,68 @@
+import { isAfter, isBefore, addYears, addMonths, addWeeks, startOfToday } from "date-fns";
+
 import { render } from "../utils";
 import { StatisticsSection } from "../components/statisticsSection";
 import { UserRankController } from "./userRankController";
 import { StatsFiltersController } from "./statsFiltersController";
 import { StatsListController } from "../controllers/statsListController";
-import { FILTER_SORT_TYPE } from "../consts";
+import { STATS_FILTER_TYPE } from "../consts";
 
 const moment = require("moment");
 
-const getFilterType = filter => {
-  const week = moment().subtract(7, "days")._d;
-  const month = moment().subtract(1, "month")._d;
-  const year = moment().subtract(1, "year")._d;
+const x = [
+  today,
+  addWeeks(today, -1),
+  addMonths(today, -1),
+  addYears(today, -1)
+];
 
-  if (filter === FILTER_SORT_TYPE.ALL) {
+const getDateByFilterType = filterType => {
+  const weekAgo = moment().subtract(7, "days")._d;
+  const monthAgo = moment().subtract(1, "month")._d;
+  const yearAgo = moment().subtract(1, "year")._d;
+
+  if (filterType === STATS_FILTER_TYPE.ALL) {
     return new Date(null);
   }
-  if (filter === FILTER_SORT_TYPE.WEEK) {
-    return week;
+  if (filterType === STATS_FILTER_TYPE.WEEK) {
+    return weekAgo;
   }
-  if (filter === FILTER_SORT_TYPE.MONTH) {
-    return month;
+  if (filterType === STATS_FILTER_TYPE.MONTH) {
+    return monthAgo;
   }
-  if (filter === FILTER_SORT_TYPE.YEAR) {
-    return year;
+  if (filterType === STATS_FILTER_TYPE.YEAR) {
+    return yearAgo;
+  }
+};
+
+const getDateByFilterType = filterType => {
+  const today = new Date();
+
+  if (filterType === STATS_FILTER_TYPE.ALL) {
+    return addYears(today, -100);
+  } else if (filterType === STATS_FILTER_TYPE.YEAR) {
+    return addYears(today, -1);
+  } else if (filterType === STATS_FILTER_TYPE.MONTH) {
+    return addMonths(today, -1);
+  } else if (filterType === STATS_FILTER_TYPE.WEEK) {
+    return addWeeks(today, -1);
+  } else if (filterType === STATS_FILTER_TYPE.TODAY) {
+    return startOfToday();
   }
 };
 
 const getFilmsByFilter = (films, filter) => {
+  const date = getDateByFilterType(filter);
+  return films.filter(film => {
+    const watchDate = film.user_details.watching_date;
+    return isAfter(watchDate, date);
+  });
+};
+
+// TODO: check between func
+const getFilmsByFilter = (films, filter) => {
   const today = new Date();
-  const filterDate = getFilterType(filter);
+  const filterDate = getDateByFilterType(filter);
   return films.filter(film => {
     const watchDate = film.user_details.watching_date;
     return moment(new Date(watchDate)).isBetween(filterDate, today);
@@ -53,7 +87,10 @@ export class StatsController {
 
   init() {
     render(this._container, this._statisticsSection.getElement(), "beforeend");
-    const filteredFilms = getFilmsByFilter(this._films, FILTER_SORT_TYPE.TODAY);
+    const filteredFilms = getFilmsByFilter(
+      this._films,
+      STATS_FILTER_TYPE.TODAY
+    );
     console.log(filteredFilms);
   }
 

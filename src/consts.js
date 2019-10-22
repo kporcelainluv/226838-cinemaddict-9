@@ -18,8 +18,8 @@ export const SORT_TYPE = {
   RATING: `rating`
 };
 
-export const FILTER_SORT_TYPE = {
-  ALL: `all`,
+export const STATS_FILTER_TYPE = {
+  ALL: `all-time`,
   TODAY: `today`,
   WEEK: `week`,
   MONTH: `month`,
