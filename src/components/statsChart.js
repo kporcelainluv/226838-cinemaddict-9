@@ -13,19 +13,25 @@ export class StatsChart extends AbstractComponent {
       <canvas class="statistic__chart" width="1000"></canvas>
    </div>`;
   }
-  createChart() {
+  createChart({ genres }) {
+    if (genres === 0) {
+      return "";
+    }
+    const [keys, vals] = genres;
+
     const ctx = this.getElement()
       .querySelector(".statistic__chart")
       .getContext("2d");
-    const chart = new Chart(ctx, {
+
+    new Chart(ctx, {
       plugins: [ChartDataLabels],
       type: `horizontalBar`,
       data: {
-        labels: Object.keys([1, 2, 3, 4, 5]),
+        labels: keys,
         datasets: [
           {
             backgroundColor: `#FBE44D`,
-            data: Object.values([1, 2, 3, 4, 5])
+            data: vals
           }
         ]
       },
@@ -40,7 +46,7 @@ export class StatsChart extends AbstractComponent {
             font: {
               family: `Open Sans`,
               weight: `bold`,
-              size: 16
+              size: 24
             }
           }
         },
@@ -52,12 +58,12 @@ export class StatsChart extends AbstractComponent {
                 beginAtZero: true,
                 display: true,
                 fontColor: `#ffffff`,
-                fontSize: 16,
+                fontSize: 24,
                 padding: 100
               },
               maxBarThickness: 40,
               barPercentage: 1.0,
-              categoryPercentage: 1.0,
+              categoryPercentage: 0.9,
               gridLines: {
                 display: false,
                 drawBorder: false
@@ -85,7 +91,7 @@ export class StatsChart extends AbstractComponent {
         },
         layout: {
           padding: {
-            left: 100
+            left: 40
           }
         },
         animation: {

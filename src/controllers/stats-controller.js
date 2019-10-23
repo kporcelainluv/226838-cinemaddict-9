@@ -46,6 +46,7 @@ export class StatsController {
     this._summaryData = summaryData;
     this._statsSummary.updateSummaryData(summaryData);
     this._statsSummary.render();
+    this._chart.renderChart(this._summaryData);
   }
 
   render() {
@@ -53,7 +54,6 @@ export class StatsController {
     this._filters.render();
     this._statsSummary.render();
     this._chart.render();
-    this._chart.renderChart(this._summaryData);
   }
   unrender() {
     this._rankController.unrender();

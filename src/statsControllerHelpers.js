@@ -1,6 +1,6 @@
-import {STATS_FILTER_TYPE} from "./consts";
-import {addMonths, addWeeks, addYears, isAfter, startOfToday} from "date-fns";
-import {countHoursAndMins} from "./utils";
+import { STATS_FILTER_TYPE } from "./consts";
+import { addMonths, addWeeks, addYears, isAfter, startOfToday } from "date-fns";
+import { countHoursAndMins } from "./utils";
 
 const getDateByFilterType = filterType => {
   const today = new Date();
@@ -47,6 +47,17 @@ export const getDataForSummary = films => {
 
     return acc;
   }, {});
+  const sortedGenres = Object.entries(genres).sort((a, b) => {
+    if (a[1] > b[1]) {
+      return -1;
+    } else if (a[1] < b[1]) {
+      return 1;
+    }
+    return 0;
+  });
+  const keys = sortedGenres.map(elm => elm[0]);
+  const vals = sortedGenres.map(elm => elm[1]);
+
   const topGenre = Object.entries(genres).sort((a, b) => {
     if (a[1] > b[1]) {
       return -1;
@@ -56,5 +67,5 @@ export const getDataForSummary = films => {
     return 0;
   })[0][0];
 
-  return { watched, hours, minutes, genres, topGenre };
+  return { watched, hours, minutes, genres: [keys, vals], topGenre };
 };
