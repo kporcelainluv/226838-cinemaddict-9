@@ -1,7 +1,4 @@
-const Position = {
-  AFTERBEGIN: `afterbegin`,
-  BEFOREEND: `beforeend`
-};
+import { Position } from "./consts";
 
 const createElement = template => {
   const newElement = document.createElement(`div`);
@@ -25,4 +22,10 @@ const unrender = element => {
     element.remove();
   }
 };
-export { createElement, render, unrender, Position };
+
+const countHoursAndMins = mins => {
+  const hours = Math.floor(mins / 60);
+  const minutes = mins - hours * 60;
+  return [hours, minutes];
+};
+export { createElement, render, unrender, countHoursAndMins };

@@ -25,3 +25,8 @@ export const STATS_FILTER_TYPE = {
   MONTH: `month`,
   YEAR: `year`
 };
+
+export const Position = {
+  AFTERBEGIN: `afterbegin`,
+  BEFOREEND: `beforeend`
+};
