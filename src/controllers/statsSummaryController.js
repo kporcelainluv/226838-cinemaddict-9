@@ -2,19 +2,15 @@ import { render, unrender } from "../utils";
 import { StatsSummary } from "../components/statsSummary";
 
 export class StatsSummaryController {
-  constructor(container, summaryData) {
+  constructor(container) {
     this._container = container;
-    this._summaryData = summaryData;
-    this._statsList = new StatsSummary(this._summaryData);
+    this._statsList = new StatsSummary({});
   }
 
-  updateSummaryData(summaryData) {
-    this._summaryData = summaryData;
-  }
-
-  render() {
+  render(summaryData) {
     this.unrender();
-    this._statsList = new StatsSummary(this._summaryData);
+
+    this._statsList = new StatsSummary(summaryData);
     render(
       this._container.getElement(),
       this._statsList.getElement(),

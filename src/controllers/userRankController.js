@@ -2,40 +2,32 @@ import { StatsRank } from "../components/statsRank";
 import { render, unrender } from "../utils";
 
 export class UserRankController {
-  constructor(container, films) {
+  constructor(container) {
     this._container = container;
-    this._films = films;
-    this._rank = undefined;
-
     this._statsRank = new StatsRank(null);
   }
 
-  getStatsRank(films) {
+  getStatsRank(watchedAmount) {
     let rank = ``;
-    if (films.length === 0) {
-      rank = null;
-    } else if (films.length < 10) {
+    if (watchedAmount < 10) {
       rank = `novice`;
-    } else if (films.length < 20) {
+    } else if (watchedAmount < 20) {
       rank = `fan`;
-    } else if (films.length >= 20) {
+    } else if (watchedAmount >= 20) {
       rank = `movie buff`;
     }
     return rank;
   }
 
-  render() {
+  render({ watched }) {
     this.unrender();
-    this._rank = this.getStatsRank(this._films);
 
-    if (this._rank !== null) {
-      this._statsRank = new StatsRank(this._rank);
-      render(
-        this._container.getElement(),
-        this._statsRank.getElement(),
-        "afterbegin"
-      );
-    }
+    this._statsRank = new StatsRank(this.getStatsRank(watched));
+    render(
+      this._container.getElement(),
+      this._statsRank.getElement(),
+      "afterbegin"
+    );
   }
   unrender() {
     if (this._container.getElement().contains(this._statsRank.getElement())) {

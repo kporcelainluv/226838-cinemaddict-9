@@ -12,52 +12,42 @@ export class StatsController {
   constructor(container, films) {
     this._container = container;
     this._films = films;
-    this._activeTab = STATS_FILTER_TYPE.ALL;
-    this._summaryData = "";
+    this._filteredFilmsData = "";
 
-    this._statisticsSection = new StatisticsSection();
-    this._rankController = new UserRankController(
-      this._statisticsSection,
-      films
-    );
+    this._statsSection = new StatisticsSection();
+    this._rankController = new UserRankController(this._statsSection);
 
     this._filters = new StatsFiltersController(
-      this._statisticsSection,
+      this._statsSection,
       this.onTabChange.bind(this)
     );
 
-    this._statsSummary = new StatsSummaryController(
-      this._statisticsSection,
-      {}
-    );
-    this._chart = new StatsChartController(this._statisticsSection);
+    this._statsSummary = new StatsSummaryController(this._statsSection);
+    this._chart = new StatsChartController(this._statsSection);
   }
 
   init() {
-    render(this._container, this._statisticsSection.getElement(), "beforeend");
-    this.onTabChange(this._activeTab);
+    render(this._container, this._statsSection.getElement(), "beforeend");
   }
 
   onTabChange(activeTab) {
-    this._activeTab = activeTab;
-    const summaryData = getDataForSummary(
-      getFilmsByFilter(this._films, this._activeTab)
+    this._filteredFilmsData = getDataForSummary(
+      getFilmsByFilter(this._films, activeTab)
     );
-    this._summaryData = summaryData;
-    this._statsSummary.updateSummaryData(summaryData);
-    this._statsSummary.render();
-    this._chart.renderChart(this._summaryData);
+
+    this._statsSummary.render(this._filteredFilmsData);
+    this._chart.render(this._filteredFilmsData);
+    this._rankController.render(this._filteredFilmsData);
   }
 
   render() {
-    this._rankController.render();
     this._filters.render();
-    this._statsSummary.render();
-    this._chart.render();
+    this.onTabChange(STATS_FILTER_TYPE.ALL);
   }
   unrender() {
     this._rankController.unrender();
     this._filters.unrender();
     this._statsSummary.unrender();
+    this._chart.unrender();
   }
 }

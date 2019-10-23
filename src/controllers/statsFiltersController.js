@@ -7,6 +7,13 @@ export class StatsFiltersController {
     this._statsFilters = new StatsFilters();
     this.onTabChange = onTabChange;
   }
+
+  getActiveTab() {
+    this._statsFilters.onAddListenersOnFilters(evt => {
+      this.onTabChange(evt.target.value);
+    });
+  }
+
   render() {
     render(
       this._container.getElement(),
@@ -15,11 +22,7 @@ export class StatsFiltersController {
     );
     this.getActiveTab();
   }
-  getActiveTab() {
-    this._statsFilters.onAddListenersOnFilters(evt => {
-      this.onTabChange(evt.target.value);
-    });
-  }
+
   unrender() {
     if (
       this._container.getElement().contains(this._statsFilters.getElement())

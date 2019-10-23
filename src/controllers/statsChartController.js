@@ -7,20 +7,14 @@ export class StatsChartController {
     this._chart = new StatsChart();
   }
 
-  render() {
+  render(summaryData) {
+    this.unrender();
+
+    this._chart = new StatsChart();
+    this._chart.createChart(summaryData);
     render(this._container.getElement(), this._chart.getElement(), "beforeend");
   }
   unrender() {
-    unrender(this._chart.getElement());
-    this._chart.removeElement();
-  }
-  renderChart(summaryData) {
-    this.unrenderChart();
-    this._chart = new StatsChart();
-    this._chart.createChart(summaryData);
-    this.render();
-  }
-  unrenderChart() {
     unrender(this._chart.getElement());
     this._chart.removeElement();
   }
