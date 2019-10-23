@@ -1,5 +1,6 @@
 import { Popup } from "../components/popup";
-import { Position, render, unrender } from "../utils";
+import { render, unrender } from "../utils";
+import { POSITION } from "../consts";
 import { FilmCard } from "../components/filmCard";
 import { CommentsController } from "../controllers/comments-controller";
 
@@ -46,7 +47,7 @@ export class MovieController {
   }
 
   init() {
-    render(this._container, this._filmCard.getElement(), Position.AFTERBEGIN);
+    render(this._container, this._filmCard.getElement(), POSITION.AFTERBEGIN);
 
     const onEscKeyDown = evt => {
       if (evt.key === `Escape` || evt.key === `Esc`) {

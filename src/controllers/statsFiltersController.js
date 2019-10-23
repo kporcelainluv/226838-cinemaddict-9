@@ -2,9 +2,10 @@ import { StatsFilters } from "../components/statsFilters";
 import { render, unrender } from "../utils";
 
 export class StatsFiltersController {
-  constructor(container) {
+  constructor(container, onTabChange) {
     this._container = container;
     this._statsFilters = new StatsFilters();
+    this.onTabChange = onTabChange;
   }
   render() {
     render(
@@ -12,13 +13,11 @@ export class StatsFiltersController {
       this._statsFilters.getElement(),
       "beforeend"
     );
-    this.getPressedTabName();
+    this.getActiveTab();
   }
-  getPressedTabName() {
+  getActiveTab() {
     this._statsFilters.onAddListenersOnFilters(evt => {
-      console.log(evt.target.value);
-      const activeStatsTab = evt.target.value;
-      return activeStatsTab;
+      this.onTabChange(evt.target.value);
     });
   }
   unrender() {

@@ -26,7 +26,7 @@ export const STATS_FILTER_TYPE = {
   YEAR: `year`
 };
 
-export const Position = {
+export const POSITION = {
   AFTERBEGIN: `afterbegin`,
   BEFOREEND: `beforeend`
 };

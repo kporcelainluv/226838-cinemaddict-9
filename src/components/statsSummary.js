@@ -1,9 +1,12 @@
 import { AbstractComponent } from "./abstractComponent";
 
-export class StatsList extends AbstractComponent {
-  constructor() {
+export class StatsSummary extends AbstractComponent {
+  constructor({ watched, hours, minutes, genres, topGenre }) {
     super();
-    this._filmsAmount = 10;
+    this._filmsAmount = watched;
+    this._hours = hours;
+    this._minutes = minutes;
+    this._topGenre = topGenre;
   }
 
   getTemplate() {
@@ -17,13 +20,13 @@ export class StatsList extends AbstractComponent {
   <li class="statistic__text-item">
     <h4 class="statistic__item-title">Total duration</h4>
     <p class="statistic__item-text">
-      130 <span class="statistic__item-description">h</span> 22
+      ${this._minutes} <span class="statistic__item-description">h</span> ${this._minutes}
       <span class="statistic__item-description">m</span>
     </p>
   </li>
   <li class="statistic__text-item">
     <h4 class="statistic__item-title">Top genre</h4>
-    <p class="statistic__item-text">Sci-Fi</p>
+    <p class="statistic__item-text">${this._topGenre}</p>
   </li>
 </ul>;`;
   }

@@ -1,12 +1,6 @@
 import { AbstractComponent } from "./abstractComponent";
-
+import { countHoursAndMins } from "../utils";
 import moment from "moment";
-
-const countRunTime = mins => {
-  const hours = Math.floor(mins / 60);
-  const minutes = mins - hours * 60;
-  return [hours, minutes];
-};
 
 class Popup extends AbstractComponent {
   constructor(film) {
@@ -23,8 +17,7 @@ class Popup extends AbstractComponent {
     this._releaseDate = film.film_info.release.date;
     this._releaseCountry = film.film_info.release.release_country;
 
-    this._runtime = countRunTime(film.film_info.runtime);
-    [this._hours, this._minutes] = this._runtime;
+    [this._hours, this._minutes] = countHoursAndMins(film.film_info.runtime);
 
     this._genre = film.film_info.genre;
     this._descriptionText = film.film_info.description;

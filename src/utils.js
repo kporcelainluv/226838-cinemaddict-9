@@ -1,4 +1,4 @@
-import { Position } from "./consts";
+import { POSITION } from "./consts";
 
 const createElement = template => {
   const newElement = document.createElement(`div`);
@@ -8,10 +8,10 @@ const createElement = template => {
 
 const render = (container, element, place) => {
   switch (place) {
-    case Position.AFTERBEGIN:
+    case POSITION.AFTERBEGIN:
       container.prepend(element);
       break;
-    case Position.BEFOREEND:
+    case POSITION.BEFOREEND:
       container.append(element);
       break;
   }

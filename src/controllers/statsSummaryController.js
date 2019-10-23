@@ -1,12 +1,20 @@
 import { render, unrender } from "../utils";
-import { StatsList } from "../components/statsList";
+import { StatsSummary } from "../components/statsSummary";
 
-export class StatsListController {
-  constructor(container) {
+export class StatsSummaryController {
+  constructor(container, summaryData) {
     this._container = container;
-    this._statsList = new StatsList();
+    this._summaryData = summaryData;
+    this._statsList = new StatsSummary(this._summaryData);
   }
+
+  updateSummaryData(summaryData) {
+    this._summaryData = summaryData;
+  }
+
   render() {
+    this.unrender();
+    this._statsList = new StatsSummary(this._summaryData);
     render(
       this._container.getElement(),
       this._statsList.getElement(),
