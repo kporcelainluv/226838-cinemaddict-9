@@ -34,7 +34,6 @@ export class StatsController {
     this._filteredFilmsData = getDataForSummary(
       getFilmsByFilter(this._films, activeTab)
     );
-
     this._statsSummary.render(this._filteredFilmsData);
     this._chart.render(this._filteredFilmsData);
     this._rankController.render(this._filteredFilmsData);

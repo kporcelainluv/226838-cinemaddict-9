@@ -18,6 +18,7 @@ const getDateByFilterType = filterType => {
   }
   return false;
 };
+
 export const getFilmsByFilter = (films, filterType) => {
   const date = getDateByFilterType(filterType);
   return films.filter(film => {
@@ -25,13 +26,17 @@ export const getFilmsByFilter = (films, filterType) => {
     return isAfter(watchDate, date);
   });
 };
+
+export const getFilmsDuration = () => null
+
+
 export const getDataForSummary = films => {
   if (films.length === 0) {
     return { watched: 0, hours: 0, minutes: 0, genres: 0, topGenre: 0 };
   }
   const watched = films.length;
   const duration = films.reduce((acc, elm) => {
-    return (acc += elm.film_info.runtime);
+    return acc + elm.film_info.runtime;
   }, 0);
   const [hours, minutes] = countHoursAndMins(duration);
 
@@ -58,14 +63,7 @@ export const getDataForSummary = films => {
   const keys = sortedGenres.map(elm => elm[0]);
   const vals = sortedGenres.map(elm => elm[1]);
 
-  const topGenre = Object.entries(genres).sort((a, b) => {
-    if (a[1] > b[1]) {
-      return -1;
-    } else if (a[1] < b[1]) {
-      return 1;
-    }
-    return 0;
-  })[0][0];
+  const topGenre = sortedGenres[0][0];
 
   return { watched, hours, minutes, genres: [keys, vals], topGenre };
 };
