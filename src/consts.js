@@ -30,3 +30,9 @@ export const POSITION = {
   AFTERBEGIN: `afterbegin`,
   BEFOREEND: `beforeend`
 };
+export const METHODS = {
+  GET: `GET`,
+  POST: `POST`,
+  PUT: `PUT`,
+  DELETE: `DELETE`
+};
