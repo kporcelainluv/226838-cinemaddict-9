@@ -1,3 +1,4 @@
+import moment from "moment";
 import { AbstractComponent } from "./abstractComponent";
 
 export class CommentsSection extends AbstractComponent {
@@ -17,13 +18,19 @@ export class CommentsSection extends AbstractComponent {
         ${this._comments.reduce((acc, comment) => {
           acc += `<li class="film-details__comment">
             <span class="film-details__comment-emoji">
-              <img src="./images/emoji/${comment.emotion}.png" width="55" height="55" alt="emoji">
+              <img src="./images/emoji/${
+                comment.emotion
+              }.png" width="55" height="55" alt="emoji">
             </span>
             <div>
               <p class="film-details__comment-text">${comment.text}</p>
               <p class="film-details__comment-info">
-                <span class="film-details__comment-author">${comment.author}</span>
-                <span class="film-details__comment-day">${comment.date}</span>
+                <span class="film-details__comment-author">${
+                  comment.author
+                }</span>
+                <span class="film-details__comment-day">${moment(
+                  comment.date
+                ).format("YY/MM/DD HH: MM")}</span>
                 <button class="film-details__comment-delete">Delete</button>
               </p>
             </div>

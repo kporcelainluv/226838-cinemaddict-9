@@ -1,6 +1,7 @@
 import moment from "moment";
 
 import { AbstractComponent } from "./abstractComponent";
+import { countHoursAndMins } from "../utils";
 
 export class FilmCard extends AbstractComponent {
   constructor(film) {
@@ -17,7 +18,8 @@ export class FilmCard extends AbstractComponent {
     this._releaseDate = film.film_info.release.date;
     this._releaseCountry = film.film_info.release.country;
 
-    this._runtime = film.film_info.runtime;
+    [this._hours, this._minutes] = countHoursAndMins(film.film_info.runtime);
+
     this._genre = film.film_info.genre;
     this._descriptionText = film.film_info.description;
 
@@ -38,7 +40,8 @@ export class FilmCard extends AbstractComponent {
             <span class="film-card__year">${moment(this._releaseDate).format(
               "YYYY"
             )}</span>
-            <span class="film-card__duration">${this._runtime}</span>
+            <span class="film-card__duration">${this._hours}h
+                ${this._minutes}m</span>
             <span class="film-card__genre">${this._genre}</span>
           </p>
           <img src="${this._poster}" alt="" class="film-card__poster">
