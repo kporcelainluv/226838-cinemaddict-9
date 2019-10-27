@@ -23,7 +23,7 @@ export class CommentsSection extends AbstractComponent {
               }.png" width="55" height="55" alt="emoji">
             </span>
             <div>
-              <p class="film-details__comment-text">${comment.text}</p>
+              <p class="film-details__comment-text">${comment.comment}</p>
               <p class="film-details__comment-info">
                 <span class="film-details__comment-author">${
                   comment.author

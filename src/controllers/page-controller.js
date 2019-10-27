@@ -54,7 +54,7 @@ export class PageController {
     this._container = container;
     this._films = films;
     this._allFilms = films;
-    this._currentTab = `all`;
+    this._currentTab = NAV_TAB.ALL;
 
     this._sortController = new SortController(
       this._container,
@@ -83,8 +83,6 @@ export class PageController {
 
     this._stats = new StatsController(this._container, this._films);
   }
-
-
 
   init() {
     this._headerController.init();
