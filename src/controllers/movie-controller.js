@@ -9,6 +9,8 @@ const body = document.getElementsByTagName("body")[0];
 export class MovieController {
   constructor(container, film, onFilmChange, onTogglePopup) {
     this._film = film;
+    this._filmId = film.id;
+    console.log("checking id", this._film.id);
     this._container = container;
 
     this._onFilmChange = onFilmChange;

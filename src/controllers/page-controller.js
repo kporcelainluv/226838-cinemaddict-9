@@ -84,6 +84,8 @@ export class PageController {
     this._stats = new StatsController(this._container, this._films);
   }
 
+
+
   init() {
     this._headerController.init();
     this._sortController.init();

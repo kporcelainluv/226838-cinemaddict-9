@@ -9,18 +9,6 @@ const END_POINT = `https://htmlacademy-es-9.appspot.com/cinemaddict`;
 
 const api = new API({ endPoint: END_POINT, authorization: AUTHORIZATION });
 
-const onDataChange = () => {
-  switch (actionType) {
-    case `delete`:
-      api
-        .deleteTask({
-          id: update.id
-        })
-        .then(() => api.getTasks())
-        .then(tasks => boardController.show(tasks));
-      break;
-  }
-};
 
 api.getFilms().then(movies => {
   const page = new PageController(
@@ -30,3 +18,16 @@ api.getFilms().then(movies => {
   );
   page.init();
 });
+
+// const onDataChange = () => {
+//   switch (actionType) {
+//     case `delete`:
+//       api
+//         .deleteTask({
+//           id: update.id
+//         })
+//         .then(() => api.getTasks())
+//         .then(tasks => boardController.show(tasks));
+//       break;
+//   }
+// };

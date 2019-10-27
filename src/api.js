@@ -21,14 +21,15 @@ export class API {
   getFilms() {
     return this._load({ url: `movies` }).then(toJSON);
   }
+  getComments(id) {
+    return this._load({ url: `comments/${id}` }).then(toJSON);
+  }
 
   createComment({}) {}
 
-  updateFilm({}) {}
-
   deleteComment({ id }) {}
 
-  deleteFilm({ id }) {}
+  updateFilm({}) {}
 
   _load({ url, method = METHODS.GET, body = null, headers = new Headers() }) {
     headers.append("Content-Type", "application/json");
