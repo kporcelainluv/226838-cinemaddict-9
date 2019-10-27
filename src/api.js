@@ -41,6 +41,16 @@ export class API {
     }).then(toJSON);
   }
 
+  _send(url, body) {
+    return load({
+      url: url,
+      endpoint: this._endPoint,
+      authorization: this._authorization,
+      method: METHODS.PUT,
+      body: body
+    }).then(toJSON);
+  }
+
   async getFilms() {
     const films = await this._load(`movies`);
 
@@ -54,14 +64,10 @@ export class API {
       films[i].comments = allFilmsComments[i];
     }
 
-    console.log(films);
-
     return films;
   }
 
-  createComment({}) {}
-
-  deleteComment({ id }) {}
-
-  updateFilm({}) {}
+  updateFilm({ id, data }) {
+    return this._send(`movies/${id}`, JSON.stringify(data));
+  }
 }
