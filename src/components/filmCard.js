@@ -72,6 +72,17 @@ export class FilmCard extends AbstractComponent {
     commentsBtn.addEventListener(`click`, callback);
   }
 
+  addCallbackOnClickPoster(callback) {
+    const poster = this.getElement().querySelector(`.film-card__poster`);
+    poster.style.cursor = "pointer";
+    poster.addEventListener(`click`, callback);
+  }
+  addCallbackOnClickTitle(callback) {
+    const title = this.getElement().querySelector(`.film-card__title`);
+    title.style.cursor = "pointer";
+    title.addEventListener(`click`, callback);
+  }
+
   addCallbackOnClickWatchlistBtn(callback) {
     this.getElement()
       .querySelector(".film-card__controls-item--add-to-watchlist")

@@ -63,6 +63,19 @@ export class MovieController {
       document.addEventListener(`keydown`, onEscKeyDown);
     });
 
+    this._filmCard.addCallbackOnClickPoster(() => {
+      this._onTogglePopup();
+      this.openPopup();
+      this._comments.init();
+      document.addEventListener(`keydown`, onEscKeyDown);
+    });
+    this._filmCard.addCallbackOnClickTitle(() => {
+      this._onTogglePopup();
+      this.openPopup();
+      this._comments.init();
+      document.addEventListener(`keydown`, onEscKeyDown);
+    });
+
     this._popup.addCallBackOnClosingBtn(() => {
       unrender(this._popup.getElement());
     });
