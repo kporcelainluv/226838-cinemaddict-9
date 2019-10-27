@@ -30,13 +30,19 @@ const sortByDefault = films => {
 
 const sortByDate = films => {
   return films.sort((a, b) => {
-    return parseInt(a.year, 10) - parseInt(b.year, 10);
+    return (
+      parseInt(a.film_info.release.date, 10) -
+      parseInt(b.film_info.release.date, 10)
+    );
   });
 };
 
 const sortByRating = films => {
   return films.sort((a, b) => {
-    return parseInt(a.rating, 10) - parseInt(b.rating, 10);
+    return (
+      parseInt(a.film_info.total_rating, 10) -
+      parseInt(b.film_info.total_rating, 10)
+    );
   });
 };
 
@@ -52,7 +58,7 @@ const updateFilms = (films, updatedFilm) => {
 export class PageController {
   constructor(headerContainer, container, films) {
     this._container = container;
-    this._films = films;
+    this._films = sortByDefault(films);
     this._allFilms = films;
     this._currentTab = NAV_TAB.ALL;
 
