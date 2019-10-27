@@ -12,9 +12,10 @@ import { SearchResultContoller } from "./search-result";
 import { StatsController } from "../controllers/stats-controller";
 
 const filterFilms = (films, query) => {
-  // TODO: remove symbols with regexp
-  const formattedQuery = query.toLowerCase();
-  return films.filter(film => film.name.toLowerCase().includes(formattedQuery));
+  const formattedQuery = query.toLowerCase().replace(/[^A-Z0-9]+/gi, "");
+  return films.filter(film =>
+    film.film_info.title.toLowerCase().includes(formattedQuery)
+  );
 };
 
 const sortByDefault = films => {
