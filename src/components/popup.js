@@ -19,7 +19,8 @@ class Popup extends AbstractComponent {
 
     [this._hours, this._minutes] = countHoursAndMins(film.film_info.runtime);
 
-    this._genre = film.film_info.genre;
+    this._genre = this._createGenresString(film.film_info.genre);
+
     this._descriptionText = film.film_info.description;
 
     this._personalRating = film.user_details.personal_rating;
@@ -31,6 +32,28 @@ class Popup extends AbstractComponent {
     this._comments = film.comments.length;
   }
 
+  _createGenresString(genres) {
+    if (genres.length === 0) {
+      return "";
+    }
+    if (genres.length === 1) {
+      return genres;
+    }
+    return genres.reduce((acc, elm, index, arr) => {
+      if (index === arr.length - 1) {
+        return acc + elm;
+      }
+      return acc + elm + `, `;
+    }, ``);
+  }
+  _getGenresTag(genres) {
+    if (genres.length === 0) {
+      return ``;
+    } else if (genres.length === 1) {
+      return `Genre`;
+    }
+    return `Genres`;
+  }
   getTemplate() {
     return `<section class="film-details">
     <form class="film-details__inner" action="" method="get">
@@ -85,8 +108,12 @@ class Popup extends AbstractComponent {
                 <td class="film-details__cell">${this._releaseCountry}</td>
               </tr>
               <tr class="film-details__row">
-                <td class="film-details__term">Genres</td>
-                <td class="film-details__cell">${this._genre}</td>
+                <td class="film-details__term">${this._getGenresTag(
+                  this._genre
+                )}</td>
+                <td class="film-details__cell">${
+                  this._genre.length === 0 ? `` : this._genre
+                }</td>
               </tr>
             </table>
 
