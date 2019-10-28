@@ -14,5 +14,9 @@ export class SearchController {
     this._search.addCallbackOnInputChange(evt => {
       this._onSearchChange(evt.target.value);
     });
+
+    this._search.addCallBackOnClearButton(() => {
+      this._onSearchChange("");
+    });
   }
 }

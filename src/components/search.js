@@ -19,4 +19,9 @@ export class Search extends AbstractComponent {
       .querySelector(`input`)
       .addEventListener(`keyup`, callback);
   }
+  addCallBackOnClearButton(callback) {
+    this.getElement()
+      .querySelector(`.search__reset`)
+      .addEventListener(`click`, callback);
+  }
 }
