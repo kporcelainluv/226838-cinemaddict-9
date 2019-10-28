@@ -83,7 +83,10 @@ export class MovieController {
     this._filmCard.addCallbackOnClickWatchlistBtn(evt => {
       const updatedFilm = {
         ...this._film,
-        isWatchlist: !this._film.isWatchlist
+        user_details: {
+          ...this._film.user_details,
+          watchlist: !this._film.user_details.watchlist
+        }
       };
       this._onFilmChange(updatedFilm);
     });
@@ -91,7 +94,10 @@ export class MovieController {
     this._filmCard.addCallbackOnClickHistoryBtn(evt => {
       const updatedFilm = {
         ...this._film,
-        isWatched: !this._film.isWatched
+        user_details: {
+          ...this._film.user_details,
+          already_watched: !this._film.user_details.already_watched
+        }
       };
       this._onFilmChange(updatedFilm);
     });
@@ -99,7 +105,10 @@ export class MovieController {
     this._filmCard.addCallbackOnClickFavoriteBtn(evt => {
       const updatedFilm = {
         ...this._film,
-        isFavorite: !this._film.isFavorite
+        user_details: {
+          ...this._film.user_details,
+          favorite: !this._film.user_details.favorite
+        }
       };
       this._onFilmChange(updatedFilm);
     });
@@ -107,7 +116,10 @@ export class MovieController {
     this._popup.addCallbackOnClickHistoryBtn(evt => {
       const updatedFilm = {
         ...this._film,
-        isWatched: !this._film.isWatched
+        user_details: {
+          ...this._film.user_details,
+          already_watched: !this._film.user_details.already_watched
+        }
       };
       this._onFilmChange(updatedFilm);
       this._film = updatedFilm;
@@ -118,7 +130,10 @@ export class MovieController {
     this._popup.addCallbackOnClickWatchlistBtn(evt => {
       const updatedFilm = {
         ...this._film,
-        isWatchlist: !this._film.isWatchlist
+        user_details: {
+          ...this._film.user_details,
+          watchlist: !this._film.user_details.watchlist
+        }
       };
       this._onFilmChange(updatedFilm);
       this._film = updatedFilm;
@@ -127,7 +142,10 @@ export class MovieController {
     this._popup.addCallbackOnClickFavoriteBtn(evt => {
       const updatedFilm = {
         ...this._film,
-        isFavorite: !this._film.isFavorite
+        user_details: {
+          ...this._film.user_details,
+          favorite: !this._film.user_details.favorite
+        }
       };
       this._onFilmChange(updatedFilm);
       this._film = updatedFilm;
