@@ -27,12 +27,11 @@ export const getFilmsByFilter = (films, filterType) => {
   });
 };
 
-export const getFilmsDuration = () => null
-
+export const getFilmsDuration = () => null;
 
 export const getDataForSummary = films => {
   if (films.length === 0) {
-    return { watched: 0, hours: 0, minutes: 0, genres: 0, topGenre: 0 };
+    return { watched: 0, hours: 0, minutes: 0, genres: [], topGenre: "—" };
   }
   const watched = films.length;
   const duration = films.reduce((acc, elm) => {
