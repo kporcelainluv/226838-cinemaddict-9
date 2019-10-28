@@ -12,7 +12,7 @@ import { SearchResultContoller } from "./search-result";
 import { StatsController } from "../controllers/stats-controller";
 
 const filterFilms = (films, query) => {
-  const formattedQuery = query.toLowerCase().replace(/[^A-Z0-9]+/gi, "");
+  const formattedQuery = query.toLowerCase().replace(/[^A-Z0-9]+/gi, ``);
   return films.filter(film =>
     film.film_info.title.toLowerCase().includes(formattedQuery)
   );
@@ -173,6 +173,7 @@ export class PageController {
 
   _onFilmUpdate(updatedFilm) {
     this._films = updateFilms(this._films, updatedFilm);
+
     this._allFilms = updateFilms(this._allFilms, updatedFilm);
     this._filmsController.render(this._films);
     this._navigationController.render(this._allFilms, this._currentTab);
