@@ -30,7 +30,7 @@ export class CommentsSection extends AbstractComponent {
                 }</span>
                 <span class="film-details__comment-day">${moment(
                   comment.date
-                ).format("YY/MM/DD HH: MM")}</span>
+                ).format("YY/MM/DD HH:MM")}</span>
                 <button class="film-details__comment-delete">Delete</button>
               </p>
             </div>
