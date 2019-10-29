@@ -1,5 +1,6 @@
 import { PageController } from "./controllers/page-controller";
 import { API } from "./api";
+import { mockFilms } from "./mockData";
 
 const headerSearchContainer = document.querySelector(`.header`);
 const mainPageContainer = document.querySelector(`.main`);
@@ -17,6 +18,12 @@ api.getFilms().then(movies => {
   );
   page.init();
 });
+// const page = new PageController(
+//   headerSearchContainer,
+//   mainPageContainer,
+//   mockFilms
+// );
+// page.init();
 
 const onDataChange = (actionType, update) => {
   switch (actionType) {

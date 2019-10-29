@@ -2,7 +2,7 @@ import { AbstractComponent } from "./abstractComponent";
 import { countHoursAndMins } from "../utils";
 import moment from "moment";
 
-class Popup extends AbstractComponent {
+export class Popup extends AbstractComponent {
   constructor(film) {
     super();
     this._title = film.film_info.title;
@@ -28,7 +28,6 @@ class Popup extends AbstractComponent {
     this._isWatched = film.user_details.already_watched;
     this._isFavorite = film.user_details.favorite;
     this._watchingDate = film.user_details.watching_date;
-
     this._comments = film.comments.length;
   }
 
@@ -161,19 +160,20 @@ class Popup extends AbstractComponent {
 
             <p class="film-details__user-rating-feelings">How you feel it?</p>
             <div class="film-details__user-rating-score">
-      ${new Array(10)
-        .fill()
-        .map(
-          (_, id) => `
+      ${new Array(9)
+        .fill(0)
+        .map((_, id) => {
+          const v = id + 1;
+          return `
                 <input type="radio" name="score"
                   class="film-details__user-rating-input visually-hidden"
-                  value="${id}"
-    id="rating-${id}"
-      ${Number(this._personalRating) === id ? `checked` : ``}
+                  ${v === this._personalRating ? "checked" : ""}
+                  value="${v}"
+    id="rating-${v}"}
     >
-    <label class="film-details__user-rating-label" for="rating-${id}">${id}</label>
-    `
-        )
+    <label class="film-details__user-rating-label" for="rating-${v}">${v}</label>
+    `;
+        })
         .join(` `)}</div>
           </section>
         </div>
@@ -208,13 +208,32 @@ class Popup extends AbstractComponent {
       .querySelector(".film-details__control-label--watched")
       .addEventListener("click", callback);
   }
-
+  toggleRatingButton(callback) {
+    this.getElement()
+      .querySelectorAll(".film-details__user-rating-input")
+      .forEach(elm => elm.addEventListener("click", callback));
+  }
   toggleRatingSection() {
     this.getElement()
       .querySelector(`.form-details__middle-container`)
       .classList.toggle(`visually-hidden`);
   }
+  addCallbackOnRatingUndo(callback) {
+    this.getElement()
+      .querySelector(`.film-details__watched-reset`)
+      .addEventListener("click", callback);
+  }
 
+  getWatchedBtnUnchecked() {
+    this.getElement().querySelectorAll(
+      `.film-details__control-input`
+    )[1].checked = false;
+  }
+  checkButton(id) {
+    this.getElement().querySelectorAll(`.film-details__user-rating-input`)[
+      id
+    ].checked = true;
+  }
   getCommentsContainer() {
     return this.getElement().querySelector(".form-details__bottom-container");
   }
@@ -223,4 +242,3 @@ class Popup extends AbstractComponent {
     return this.getElement().querySelector(".film-details__inner");
   }
 }
-export { Popup };

@@ -139,12 +139,42 @@ export class MovieController {
       this._film = updatedFilm;
     });
 
+    this._popup.addCallbackOnRatingUndo(() => {
+      const updatedFilm = {
+        ...this._film,
+        user_details: {
+          ...this._film.user_details,
+          already_watched: !this._film.user_details.already_watched
+        }
+      };
+      this._onFilmChange(updatedFilm);
+      this._film = updatedFilm;
+
+      this._popup.toggleRatingSection();
+      this._popup.getWatchedBtnUnchecked();
+    });
+
     this._popup.addCallbackOnClickFavoriteBtn(evt => {
       const updatedFilm = {
         ...this._film,
         user_details: {
           ...this._film.user_details,
           favorite: !this._film.user_details.favorite
+        }
+      };
+      this._onFilmChange(updatedFilm);
+      this._film = updatedFilm;
+    });
+
+    this._popup.toggleRatingButton(evt => {
+      evt.target.checked = true;
+
+      const personalRating = evt.target.value;
+      const updatedFilm = {
+        ...this._film,
+        user_details: {
+          ...this._film.user_details,
+          personal_rating: Number(personalRating)
         }
       };
       this._onFilmChange(updatedFilm);
