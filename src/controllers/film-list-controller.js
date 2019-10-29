@@ -10,12 +10,14 @@ export class FilmListController {
     onTogglePopup,
     onRenderFilmCard,
     onClickShowMore,
+    filmsAmount,
     type
   }) {
     this._container = container;
     this._films = films;
     console.log(this._films);
     this._type = type;
+    this._filmsAmount = filmsAmount;
 
     this._onFilmUpdate = onFilmUpdate;
     this._onTogglePopup = onTogglePopup;
@@ -28,7 +30,8 @@ export class FilmListController {
     this._films.forEach(film => {
       this._renderFilmCard(this._container, film);
     });
-    if (this._type === `default`) {
+
+    if (this._type === `default` && this._films.length < this._filmsAmount) {
       render(this._container, this._showMoreBtn.getElement(), "beforeend");
       this._showMoreBtn.onClickShowMore(this._onClickShowMore);
     }
@@ -40,7 +43,8 @@ export class FilmListController {
     films.forEach(film => {
       this._renderFilmCard(this._container, film);
     });
-    if (this._type === `default`) {
+    console.log(this._films.length, this._filmsAmount);
+    if (this._type === `default` && this._films.length < this._filmsAmount) {
       render(this._container, this._showMoreBtn.getElement(), "beforeend");
       this._showMoreBtn.onClickShowMore(this._onClickShowMore);
     }

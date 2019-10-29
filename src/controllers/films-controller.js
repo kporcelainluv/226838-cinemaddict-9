@@ -4,7 +4,7 @@ import { FilmsContainer } from "../components/film-containter";
 import { FilmListController } from "./film-list-controller";
 
 export class FilmsController {
-  constructor({ container, films, onFilmUpdate, onClickShowMore }) {
+  constructor({ container, films, onFilmUpdate, onClickShowMore, filmsAmount }) {
     this._container = container;
     this._subscriptions = [];
 
@@ -20,7 +20,7 @@ export class FilmsController {
       onFilmUpdate,
       onTogglePopup: this._onTogglePopup,
       onRenderFilmCard: this._onRenderFilmCard,
-      onClickShowMore,
+      onClickShowMore,filmsAmount,
       type: `default`
     });
   }

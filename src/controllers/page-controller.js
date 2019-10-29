@@ -60,6 +60,8 @@ export class PageController {
   constructor(headerContainer, container, films) {
     this._container = container;
     this._perPage = 5;
+    this._filmsAmoung = films.length;
+
     this._films = sortByDefault(films).slice(0, this._perPage);
     this._allFilms = sortByDefault(films);
     this._currentTab = NAV_TAB.ALL;
@@ -76,7 +78,8 @@ export class PageController {
       container: this._container,
       films: this._films,
       onFilmUpdate: this._onFilmUpdate.bind(this),
-      onClickShowMore: this._onClickShowMore.bind(this)
+      onClickShowMore: this._onClickShowMore.bind(this),
+      filmsAmount: this._filmsAmoung
     });
     this._navigationController = new NavigationController(
       this._container,
