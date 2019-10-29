@@ -2,6 +2,34 @@ import { MovieController } from "./movie-controller";
 import { ShowMoreButton } from "../components/showMoreBtn";
 import { render } from "../utils";
 
+const getTopRatedFilms = films => {
+  return films
+    .sort((a, b) => {
+      if (a.film_info.total_rating > b.film_info.total_rating) {
+        return -1;
+      }
+      if (a.film_info.total_rating < b.film_info.total_rating) {
+        return 1;
+      }
+      return 0;
+    })
+    .slice(0, 2);
+};
+
+const getMostCommentedFilms = films => {
+  return films
+    .sort((a, b) => {
+      if (a.comments > b.comments) {
+        return -1;
+      }
+      if (a.comments < b.comments) {
+        return 1;
+      }
+      return 0;
+    })
+    .slice(0, 2);
+};
+
 export class FilmListController {
   constructor({
     container,
@@ -16,7 +44,7 @@ export class FilmListController {
     this._container = container;
     this._films = films;
     this._type = type;
-    this._filmsAmount = filmsAmount;
+    this._filmsAmount = filmsAmount || 0;
 
     this._onFilmUpdate = onFilmUpdate;
     this._onTogglePopup = onTogglePopup;
@@ -26,11 +54,24 @@ export class FilmListController {
   }
 
   init() {
-    this._films.forEach(film => {
-      this._renderFilmCard(this._container, film);
-    });
+    if (this._type === `rated`) {
+      this._films = getTopRatedFilms(this._films);
+      this._films.forEach(film => {
+        this._renderFilmCard(this._container, film);
+      });
+    }
+
+    if (this._type === `commented`) {
+      this._films = getMostCommentedFilms(this._films);
+      this._films.forEach(film => {
+        this._renderFilmCard(this._container, film);
+      });
+    }
 
     if (this._type === `default` && this._films.length < this._filmsAmount) {
+      this._films.forEach(film => {
+        this._renderFilmCard(this._container, film);
+      });
       render(this._container, this._showMoreBtn.getElement(), "beforeend");
       this._showMoreBtn.onClickShowMore(this._onClickShowMore);
     }
@@ -38,10 +79,24 @@ export class FilmListController {
 
   render(films) {
     this.unrender();
-    films.forEach(film => {
-      this._renderFilmCard(this._container, film);
-    });
+    if (this._type === `rated`) {
+      this._films = getTopRatedFilms(films);
+      this._films.forEach(film => {
+        this._renderFilmCard(this._container, film);
+      });
+    }
+
+    if (this._type === `commented`) {
+      this._films = getMostCommentedFilms(films);
+      this._films.forEach(film => {
+        this._renderFilmCard(this._container, film);
+      });
+    }
+
     if (this._type === `default` && films.length < this._filmsAmount) {
+      films.forEach(film => {
+        this._renderFilmCard(this._container, film);
+      });
       render(this._container, this._showMoreBtn.getElement(), "beforeend");
       this._showMoreBtn.onClickShowMore(this._onClickShowMore);
     }

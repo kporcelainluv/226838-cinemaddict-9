@@ -11,4 +11,7 @@ export class AdditionalFilmList extends AbstractComponent {
       <div class="films-list__container"></div>
         </section>`;
   }
+  getElementToRenderFilmsTo() {
+    return this.getElement().querySelector(`.films-list__container`);
+  }
 }
