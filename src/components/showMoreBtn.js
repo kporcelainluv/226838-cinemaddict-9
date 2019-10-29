@@ -7,5 +7,8 @@ class ShowMoreButton extends AbstractComponent {
   getTemplate() {
     return `<button class="films-list__show-more">Show more</button>`;
   }
+  onClickShowMore(callback) {
+    this.getElement().addEventListener("click", callback);
+  }
 }
 export { ShowMoreButton };

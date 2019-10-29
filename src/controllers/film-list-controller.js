@@ -1,4 +1,6 @@
 import { MovieController } from "./movie-controller";
+import { ShowMoreButton } from "../components/showMoreBtn";
+import { render } from "../utils";
 
 export class FilmListController {
   constructor({
@@ -6,20 +8,30 @@ export class FilmListController {
     films,
     onFilmUpdate,
     onTogglePopup,
-    onRenderFilmCard
+    onRenderFilmCard,
+    onClickShowMore,
+    type
   }) {
     this._container = container;
     this._films = films;
+    console.log(this._films);
+    this._type = type;
 
     this._onFilmUpdate = onFilmUpdate;
     this._onTogglePopup = onTogglePopup;
+    this._onClickShowMore = onClickShowMore;
     this._onRenderFilmCard = onRenderFilmCard;
+    this._showMoreBtn = new ShowMoreButton();
   }
 
   init() {
     this._films.forEach(film => {
       this._renderFilmCard(this._container, film);
     });
+    if (this._type === `default`) {
+      render(this._container, this._showMoreBtn.getElement(), "beforeend");
+      this._showMoreBtn.onClickShowMore(this._onClickShowMore);
+    }
   }
 
   render(films) {
@@ -28,6 +40,10 @@ export class FilmListController {
     films.forEach(film => {
       this._renderFilmCard(this._container, film);
     });
+    if (this._type === `default`) {
+      render(this._container, this._showMoreBtn.getElement(), "beforeend");
+      this._showMoreBtn.onClickShowMore(this._onClickShowMore);
+    }
   }
 
   unrender() {

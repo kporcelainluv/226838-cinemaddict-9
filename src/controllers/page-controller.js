@@ -59,8 +59,9 @@ const updateFilms = (films, updatedFilm) => {
 export class PageController {
   constructor(headerContainer, container, films) {
     this._container = container;
-    this._films = sortByDefault(films);
-    this._allFilms = films;
+    this._perPage = 5;
+    this._films = sortByDefault(films).slice(0, this._perPage);
+    this._allFilms = sortByDefault(films);
     this._currentTab = NAV_TAB.ALL;
 
     this._sortController = new SortController(
@@ -68,27 +69,28 @@ export class PageController {
       this._onSortTypeChange.bind(this)
     );
     this._headerController = new HeaderController({
-      films,
+      films: this._allFilms,
       onSearchChange: this._onSearchChange.bind(this)
     });
     this._filmsController = new FilmsController({
       container: this._container,
-      films,
-      onFilmUpdate: this._onFilmUpdate.bind(this)
+      films: this._films,
+      onFilmUpdate: this._onFilmUpdate.bind(this),
+      onClickShowMore: this._onClickShowMore.bind(this)
     });
     this._navigationController = new NavigationController(
       this._container,
-      this._films,
+      this._allFilms,
       this.onNavigationChange.bind(this)
     );
 
     this._searchResultContoller = new SearchResultContoller({
       container: this._container,
-      films: this._films,
+      films: this._allFilms,
       onFilmUpdate: this._onFilmUpdateSearchResult.bind(this)
     });
 
-    this._stats = new StatsController(this._container, this._films);
+    this._stats = new StatsController(this._container, this._allFilms);
   }
 
   init() {
@@ -102,7 +104,7 @@ export class PageController {
 
   _onSearchChange(query) {
     if (query.length > 3) {
-      this._films = filterFilms(this._films, query);
+      this._films = filterFilms(this._allFilms, query);
       this._filmsController.hide();
       this._sortController.hide();
       this._navigationController.hide();
@@ -177,5 +179,11 @@ export class PageController {
     this._allFilms = updateFilms(this._allFilms, updatedFilm);
     this._filmsController.render(this._films);
     this._navigationController.render(this._allFilms, this._currentTab);
+  }
+
+  _onClickShowMore() {
+    this._perPage += 5;
+    this._films = this._allFilms.slice(0, this._perPage);
+    this._filmsController.render(this._films);
   }
 }

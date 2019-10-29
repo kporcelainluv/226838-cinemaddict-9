@@ -47,7 +47,7 @@ export class MovieController {
   }
 
   init() {
-    render(this._container, this._filmCard.getElement(), POSITION.AFTERBEGIN);
+    render(this._container, this._filmCard.getElement(), POSITION.BEFOREEND);
 
     const onEscKeyDown = evt => {
       if (evt.key === `Escape` || evt.key === `Esc`) {
