@@ -1,3 +1,5 @@
+import { difference } from "ramda";
+
 import { SortController } from "./sort-controller";
 import { HeaderController } from "./header-controller";
 import { FilmsController } from "./films-controller";
@@ -7,7 +9,7 @@ import {
   getWatched,
   getWatchlist
 } from "./navigation-controller";
-import { NAV_TAB, SORT_TYPE } from "../consts";
+import { NAV_TAB, SORT_TYPE, UPDATE_TYPE } from "../consts";
 import { SearchResultContoller } from "./search-result";
 import { StatsController } from "../controllers/stats-controller";
 
@@ -57,8 +59,9 @@ const updateFilms = (films, updatedFilm) => {
 };
 
 export class PageController {
-  constructor(headerContainer, container, films) {
+  constructor(headerContainer, container, films, api) {
     this._container = container;
+    this._api = api;
     this._perPage = 5;
     this._filmsAmoung = films.length;
 
@@ -176,12 +179,46 @@ export class PageController {
     this._searchResultContoller.render(this._films);
   }
 
-  _onFilmUpdate(updatedFilm) {
-    this._films = updateFilms(this._films, updatedFilm);
+  _onFilmUpdate(updatedFilm, updateType) {
+    const rerender = newFilm => {
+      this._films = updateFilms(this._films, newFilm);
+      this._allFilms = updateFilms(this._allFilms, newFilm);
 
-    this._allFilms = updateFilms(this._allFilms, updatedFilm);
-    this._filmsController.render(this._films);
-    this._navigationController.render(this._allFilms, this._currentTab);
+      this._filmsController.render(this._films);
+      this._navigationController.render(this._allFilms, this._currentTab);
+    };
+
+    if (updateType === UPDATE_TYPE.DELETE_COMMENT) {
+      const deletedComment = difference(
+        this._films.find(f => f.id === updatedFilm.id).comments,
+        updatedFilm.comments
+      )[0];
+      return this._api
+        .deleteComment({ comment: deletedComment })
+        .then(() => rerender(updatedFilm))
+        .catch(console.log);
+    } else if (updateType === UPDATE_TYPE.UPDATE_USER_INFO) {
+      return this._api
+        .updateFilm({ film: updatedFilm })
+        .then(() => rerender(updatedFilm))
+        .catch(console.log);
+    } else if (updateType === UPDATE_TYPE.CREATE_COMMENT) {
+      const createdComment = difference(
+        updatedFilm.comments,
+        this._films.find(f => f.id === updatedFilm.id).comments
+      )[0];
+      return this._api
+        .createComment({
+          film: updatedFilm,
+          comment: createdComment
+        })
+        .then(({ comments }) => {
+          updatedFilm.comments = comments;
+          // console.log(comments);
+          rerender(updatedFilm);
+        })
+        .catch(console.log);
+    }
   }
 
   _onClickShowMore() {

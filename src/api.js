@@ -1,4 +1,4 @@
-import { METHODS } from "./consts";
+import { METHOD } from "./consts";
 
 const checkStatus = response => {
   if (response.status >= 200 && response.status < 300) {
@@ -12,19 +12,31 @@ const toJSON = response => {
   return response.json();
 };
 
-const load = ({
+const fetchWrapper = ({
   url,
-  method = METHODS.GET,
+  method = METHOD.GET,
   body = null,
-  headers = new Headers(),
   endpoint,
   authorization
 }) => {
-  headers.append("Content-Type", "application/json");
-  headers.append("Authorization", authorization);
+  const headers = {
+    "Content-Type": "application/json",
+    Authorization: authorization
+  };
   return fetch(`${endpoint}/${url}`, { method, body, headers }).then(
     checkStatus
   );
+};
+
+const formatFilmData = film => {
+  return {
+    ...film,
+    comments: film.comments.map(c => c.id),
+    user_details: {
+      ...film.user_details,
+      watching_date: new Date()
+    }
+  };
 };
 
 export class API {
@@ -33,30 +45,50 @@ export class API {
     this._authorization = authorization;
   }
 
-  _load(url) {
-    return load({
-      url: url,
+  _get(url) {
+    return fetchWrapper({
+      url,
       endpoint: this._endPoint,
-      authorization: this._authorization
+      authorization: this._authorization,
+      method: METHOD.GET
     }).then(toJSON);
   }
 
-  _send(url, body) {
-    return load({
-      url: url,
+  _update(url, body) {
+    return fetchWrapper({
+      url,
       endpoint: this._endPoint,
       authorization: this._authorization,
-      method: METHODS.PUT,
-      body: body
+      method: METHOD.PUT,
+      body
     }).then(toJSON);
+  }
+
+  _create(url, body) {
+    return fetchWrapper({
+      url,
+      endpoint: this._endPoint,
+      authorization: this._authorization,
+      method: METHOD.POST,
+      body
+    }).then(toJSON);
+  }
+
+  _delete(url) {
+    return fetchWrapper({
+      url,
+      endpoint: this._endPoint,
+      authorization: this._authorization,
+      method: METHOD.DELETE
+    });
   }
 
   async getFilms() {
-    const films = await this._load(`movies`);
+    const films = await this._get(`movies`);
 
     const commentsPromises = films
       .map(f => f.id)
-      .map(id => this._load(`comments/${id}`));
+      .map(id => this._get(`comments/${id}`));
 
     const allFilmsComments = await Promise.all(commentsPromises);
 
@@ -67,7 +99,21 @@ export class API {
     return films;
   }
 
-  updateFilm({ id, data }) {
-    return this._send(`movies/${id}`, JSON.stringify(data));
+  updateFilm({ film }) {
+    return this._update(
+      `movies/${film.id}`,
+      JSON.stringify(formatFilmData(film))
+    );
+    // return Promise.resolve(null);
+  }
+
+  createComment({ film, comment }) {
+    console.log("create comment");
+    return this._create(`comments/${film.id}`, JSON.stringify(comment));
+  }
+
+  deleteComment({ comment }) {
+    console.log("delete comment");
+    return this._delete(`comments/${comment.id}`);
   }
 }

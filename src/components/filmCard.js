@@ -86,18 +86,27 @@ export class FilmCard extends AbstractComponent {
   addCallbackOnClickWatchlistBtn(callback) {
     this.getElement()
       .querySelector(".film-card__controls-item--add-to-watchlist")
-      .addEventListener("click", callback);
+      .addEventListener("click", evt => {
+        evt.preventDefault();
+        callback(evt);
+      });
   }
 
   addCallbackOnClickFavoriteBtn(callback) {
     this.getElement()
       .querySelector(".film-card__controls-item--favorite")
-      .addEventListener("click", callback);
+      .addEventListener("click", evt => {
+        evt.preventDefault();
+        callback(evt);
+      });
   }
 
   addCallbackOnClickHistoryBtn(callback) {
     this.getElement()
       .querySelector(".film-card__controls-item--mark-as-watched")
-      .addEventListener("click", callback);
+      .addEventListener("click", evt => {
+        evt.preventDefault();
+        callback(evt);
+      });
   }
 }

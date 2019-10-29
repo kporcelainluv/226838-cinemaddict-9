@@ -1,5 +1,6 @@
 import { CommentsSection } from "../components/commentsComponent";
 import { render, unrender } from "../utils";
+import { UPDATE_TYPE } from "../consts";
 
 const Emojis = {
   "emoji-smile": "smile",
@@ -50,7 +51,7 @@ export class CommentsController {
         ...this._comments.slice(0, idx),
         ...this._comments.slice(idx + 1)
       ];
-      this._onCommentsChange(this._comments);
+      this._onCommentsChange(this._comments, UPDATE_TYPE.DELETE_COMMENT);
       this._rerenderComments();
     });
 
@@ -72,14 +73,14 @@ export class CommentsController {
         const formData = new FormData(this._popup.getFormElement());
 
         const newComment = {
-          emoji: this._currentEmoji || `angry`,
-          text: formData.get(`comment`),
-          name: "You",
+          emotion: this._currentEmoji || `angry`,
+          comment: formData.get(`comment`),
+          author: "",
           date: new Date().toISOString().slice(0, 10)
         };
 
         this._comments = [...this._comments, newComment];
-        this._onCommentsChange(this._comments);
+        this._onCommentsChange(this._comments, UPDATE_TYPE.CREATE_COMMENT);
 
         document.removeEventListener(`keydown`, onAddComment);
         this._rerenderComments();

@@ -30,9 +30,16 @@ export const POSITION = {
   AFTERBEGIN: `afterbegin`,
   BEFOREEND: `beforeend`
 };
-export const METHODS = {
+
+export const METHOD = {
   GET: `GET`,
   POST: `POST`,
   PUT: `PUT`,
   DELETE: `DELETE`
+};
+
+export const UPDATE_TYPE = {
+  UPDATE_USER_INFO: "UPDATE_USER_INFO",
+  CREATE_COMMENT: "CREATE_COMMENT",
+  DELETE_COMMENT: "DELETE_COMMENT"
 };
