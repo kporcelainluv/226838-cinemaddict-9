@@ -195,13 +195,13 @@ export class PageController {
       )[0];
       return this._api
         .deleteComment({ comment: deletedComment })
-        .then(() => rerender(updatedFilm))
-        .catch(console.log);
+        .then(() => rerender(updatedFilm));
+      // .catch(console.log);
     } else if (updateType === UPDATE_TYPE.UPDATE_USER_INFO) {
       return this._api
         .updateFilm({ film: updatedFilm })
-        .then(() => rerender(updatedFilm))
-        .catch(console.log);
+        .then(() => rerender(updatedFilm));
+      // .catch(console.log);
     } else if (updateType === UPDATE_TYPE.CREATE_COMMENT) {
       const createdComment = difference(
         updatedFilm.comments,
@@ -216,8 +216,8 @@ export class PageController {
           updatedFilm.comments = comments;
           // console.log(comments);
           rerender(updatedFilm);
-        })
-        .catch(console.log);
+        });
+      // .catch(console.log);
     }
   }
 

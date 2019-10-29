@@ -15,7 +15,6 @@ export class FilmListController {
   }) {
     this._container = container;
     this._films = films;
-    console.log(this._films);
     this._type = type;
     this._filmsAmount = filmsAmount;
 
@@ -39,12 +38,10 @@ export class FilmListController {
 
   render(films) {
     this.unrender();
-
     films.forEach(film => {
       this._renderFilmCard(this._container, film);
     });
-    console.log(this._films.length, this._filmsAmount);
-    if (this._type === `default` && this._films.length < this._filmsAmount) {
+    if (this._type === `default` && films.length < this._filmsAmount) {
       render(this._container, this._showMoreBtn.getElement(), "beforeend");
       this._showMoreBtn.onClickShowMore(this._onClickShowMore);
     }

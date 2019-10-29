@@ -6,8 +6,6 @@ export class CommentsSection extends AbstractComponent {
     super();
     this._comments = comments;
     this._commentsLen = comments.length;
-
-    console.log(this._comments);
   }
 
   getTemplate() {
