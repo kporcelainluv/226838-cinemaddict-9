@@ -3,6 +3,9 @@ import { ShowMoreButton } from "../components/showMoreBtn";
 import { render } from "../utils";
 
 const getTopRatedFilms = films => {
+  if (films.every(film => film.film_info.total_rating === 0)) {
+    return false;
+  }
   return films
     .sort((a, b) => {
       if (a.film_info.total_rating > b.film_info.total_rating) {
@@ -17,6 +20,9 @@ const getTopRatedFilms = films => {
 };
 
 const getMostCommentedFilms = films => {
+  if (films.every(film => film.comments.length === 0)) {
+    return false;
+  }
   return films
     .sort((a, b) => {
       if (a.comments > b.comments) {
@@ -55,10 +61,9 @@ export class FilmListController {
 
   init() {
     if (this._type === `rated`) {
-      console.log("rated", this._films);
       this._films = getTopRatedFilms(this._films);
 
-      if (this._films.length > 0) {
+      if (this._films) {
         this._films.forEach(film => {
           this._renderFilmCard(this._container, film);
         });
@@ -66,9 +71,8 @@ export class FilmListController {
     }
 
     if (this._type === `commented`) {
-      console.log("comm", this._films);
       this._films = getMostCommentedFilms(this._films);
-      if (this._films.length > 0) {
+      if (this._films) {
         this._films.forEach(film => {
           this._renderFilmCard(this._container, film);
         });
@@ -89,7 +93,7 @@ export class FilmListController {
     this.unrender();
     if (this._type === `rated`) {
       this._films = getTopRatedFilms(films);
-      if (this._films.length > 0) {
+      if (this._films) {
         this._films.forEach(film => {
           this._renderFilmCard(this._container, film);
         });
@@ -98,7 +102,7 @@ export class FilmListController {
 
     if (this._type === `commented`) {
       this._films = getMostCommentedFilms(films);
-      if (this._films.length > 0) {
+      if (this._films) {
         this._films.forEach(film => {
           this._renderFilmCard(this._container, film);
         });
