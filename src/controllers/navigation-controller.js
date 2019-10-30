@@ -13,15 +13,21 @@ export class NavigationController {
     this._onNavigationChange = onNavigationChange;
     this._container = container;
     this._films = films;
+    this._navigation = new Navigation(0, 0, 0);
+  }
+  init() {
+    render(this._container, this._navigation.getElement(), "afterbegin");
+  }
+  initWithFilms(films) {
+    unrender(this._navigation.getElement());
+    this._navigation.removeElement();
 
     this._navigation = new Navigation(
-      getWatched(this._films).length,
-      getWatchlist(this._films).length,
-      getFavorite(this._films).length
+      getWatched(films).length,
+      getWatchlist(films).length,
+      getFavorite(films).length
     );
-  }
 
-  init() {
     render(this._container, this._navigation.getElement(), "afterbegin");
     this._navigation.addCallbackOnNavigationItem(hash => {
       this._navigation.makeBtnActive(hash);

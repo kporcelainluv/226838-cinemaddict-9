@@ -3,7 +3,7 @@ import { difference } from "ramda";
 import { SortController } from "./sort-controller";
 import { HeaderController } from "./header-controller";
 import { FilmsController } from "./films-controller";
-import { Loading } from "../components/loading";
+import { FooterController } from "./footer-controller";
 import {
   NavigationController,
   getFavorite,
@@ -13,7 +13,6 @@ import {
 import { NAV_TAB, SORT_TYPE, UPDATE_TYPE } from "../consts";
 import { SearchResultContoller } from "./search-result";
 import { StatsController } from "../controllers/stats-controller";
-import { render } from "../utils";
 
 const filterFilms = (films, query) => {
   const formattedQuery = query.toLowerCase().replace(/[^A-Z0-9]+/gi, ``);
@@ -98,19 +97,24 @@ export class PageController {
     });
 
     this._stats = new StatsController(this._container, this._allFilms);
+    this._footer = new FooterController(this._allFilms);
   }
 
   init() {
     this._headerController.init();
-    this._sortController.init();
-    this._navigationController.init();
     this._filmsController.init();
-    this._searchResultContoller.init();
-    this._stats.init();
+    this._navigationController.init();
+    this._sortController.init();
   }
 
   initWithFilms(films) {
-    this._filmsController.initWithFilms(films);
+    this._films = films;
+    this._filmsController.initWithFilms(sortByDefault(films));
+    this._headerController.initProfileStats(films);
+    this._navigationController.initWithFilms(films);
+    this._searchResultContoller.init();
+    this._stats.init();
+    this._footer.init(films);
   }
 
   _onSearchChange(query) {
@@ -138,7 +142,6 @@ export class PageController {
       this._stats.unrender();
       this._sortController.show();
       this._filmsController.show();
-      console.log(this._films);
       this._filmsController.render(this._films);
     } else if (navTab === NAV_TAB.WATCHLIST) {
       this._stats.unrender();

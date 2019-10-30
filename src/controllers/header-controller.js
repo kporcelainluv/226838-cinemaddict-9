@@ -30,8 +30,8 @@ const createHeading = () => {
 
 export class HeaderController {
   constructor({ films, onSearchChange }) {
-    this._profileStats = getStatsRank(countWatchedFilms(films));
-    this._profile = new ProfileRating(this._profileStats);
+    this._films = films;
+
     this._search = new SearchController(headerElement, onSearchChange);
   }
 
@@ -39,6 +39,11 @@ export class HeaderController {
     const heading = createHeading();
     this._search.init();
     render(headerElement, heading, `afterbegin`);
+  }
+
+  initProfileStats(films) {
+    this._profileStats = getStatsRank(countWatchedFilms(films));
+    this._profile = new ProfileRating(this._profileStats);
     render(headerElement, this._profile.getElement(), `beforeend`);
   }
 }

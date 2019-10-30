@@ -12,7 +12,10 @@ const api = new API({ endPoint: END_POINT, authorization: AUTHORIZATION });
 const page = new PageController(
   headerSearchContainer,
   mainPageContainer,
+  [],
   api
 );
 page.init();
-api.getFilms().then(films => page.initWithFilms(films));
+api.getFilms().then(films => {
+  page.initWithFilms(films);
+});
