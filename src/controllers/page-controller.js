@@ -3,6 +3,7 @@ import { difference } from "ramda";
 import { SortController } from "./sort-controller";
 import { HeaderController } from "./header-controller";
 import { FilmsController } from "./films-controller";
+import { Loading } from "../components/loading";
 import {
   NavigationController,
   getFavorite,
@@ -12,6 +13,7 @@ import {
 import { NAV_TAB, SORT_TYPE, UPDATE_TYPE } from "../consts";
 import { SearchResultContoller } from "./search-result";
 import { StatsController } from "../controllers/stats-controller";
+import { render } from "../utils";
 
 const filterFilms = (films, query) => {
   const formattedQuery = query.toLowerCase().replace(/[^A-Z0-9]+/gi, ``);
@@ -79,7 +81,6 @@ export class PageController {
     });
     this._filmsController = new FilmsController({
       container: this._container,
-      films: this._films,
       onFilmUpdate: this._onFilmUpdate.bind(this),
       onClickShowMore: this._onClickShowMore.bind(this),
       filmsAmount: this._filmsAmoung
@@ -106,6 +107,10 @@ export class PageController {
     this._filmsController.init();
     this._searchResultContoller.init();
     this._stats.init();
+  }
+
+  initWithFilms(films) {
+    this._filmsController.initWithFilms(films);
   }
 
   _onSearchChange(query) {
