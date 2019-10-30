@@ -38,6 +38,7 @@ export class Navigation extends AbstractComponent {
     const node = Array.from(navTabs).filter(
       element => element.getAttribute("href") === hash
     )[0];
+    console.log(hash);
     node.classList.add(`main-navigation__item--active`);
   }
   hide() {

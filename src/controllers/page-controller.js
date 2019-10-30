@@ -129,10 +129,11 @@ export class PageController {
     this._currentTab = navTab;
 
     if (navTab === NAV_TAB.ALL) {
-      this._films = this._allFilms;
+      this._films = this._allFilms.slice(0, this._perPage);
       this._stats.unrender();
       this._sortController.show();
       this._filmsController.show();
+      console.log(this._films);
       this._filmsController.render(this._films);
     } else if (navTab === NAV_TAB.WATCHLIST) {
       this._stats.unrender();

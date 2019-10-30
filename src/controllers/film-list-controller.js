@@ -79,13 +79,15 @@ export class FilmListController {
       }
     }
 
-    if (this._type === `default` && this._films.length < this._filmsAmount) {
+    if (this._type === `default`) {
       console.log("def", this._films);
       this._films.forEach(film => {
         this._renderFilmCard(this._container, film);
       });
-      render(this._container, this._showMoreBtn.getElement(), "beforeend");
-      this._showMoreBtn.onClickShowMore(this._onClickShowMore);
+      if (this._films.length < this._filmsAmount) {
+        render(this._container, this._showMoreBtn.getElement(), "beforeend");
+        this._showMoreBtn.onClickShowMore(this._onClickShowMore);
+      }
     }
   }
 
@@ -109,12 +111,14 @@ export class FilmListController {
       }
     }
 
-    if (this._type === `default` && films.length < this._filmsAmount) {
+    if (this._type === `default`) {
       films.forEach(film => {
         this._renderFilmCard(this._container, film);
       });
-      render(this._container, this._showMoreBtn.getElement(), "beforeend");
-      this._showMoreBtn.onClickShowMore(this._onClickShowMore);
+      if (films.length < this._filmsAmount) {
+        render(this._container, this._showMoreBtn.getElement(), "beforeend");
+        this._showMoreBtn.onClickShowMore(this._onClickShowMore);
+      }
     }
   }
 
