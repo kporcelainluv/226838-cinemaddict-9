@@ -13,24 +13,26 @@ export class SearchResultContoller {
     this._searchResultHeading = new SearchResultHeading(0);
     this._emptySearch = new EmptySearch();
 
+    this._onFilmUpdate = onFilmUpdate;
     this._onTogglePopup = this._onTogglePopup.bind(this);
     this._onRenderFilmCard = this._onRenderFilmCard.bind(this);
 
-    this._filmListController = new FilmListController({
-      container: this._searchResultContainer.getElement(),
-      films,
-      onFilmUpdate,
-      onTogglePopup: this._onTogglePopup,
-      onRenderFilmCard: this._onRenderFilmCard
-    });
+    this._filmListController = undefined;
   }
 
-  init() {
+  init(films) {
     render(
       this._container,
       this._searchResultContainer.getElement(),
       `beforeend`
     );
+    this._filmListController = new FilmListController({
+      container: this._searchResultContainer.getElement(),
+      films,
+      onFilmUpdate: this._onFilmUpdate,
+      onTogglePopup: this._onTogglePopup,
+      onRenderFilmCard: this._onRenderFilmCard
+    });
   }
 
   render(films) {
@@ -43,6 +45,8 @@ export class SearchResultContoller {
         this._searchResultHeading.getElement(),
         "afterbegin"
       );
+      console.log({ films });
+      console.log(this._filmListController);
       this._filmListController.render(films);
     } else {
       render(

@@ -26,7 +26,8 @@ export class StatsController {
     this._chart = new StatsChartController(this._statsSection);
   }
 
-  init() {
+  init(films) {
+    this._films = films;
     render(this._container, this._statsSection.getElement(), "beforeend");
   }
 

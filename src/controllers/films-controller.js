@@ -6,7 +6,7 @@ import { AdditionalFilmList } from "../components/additionalFilmBlocks";
 import { Loading } from "../components/loading";
 
 export class FilmsController {
-  constructor({ container, onFilmUpdate, onClickShowMore, filmsAmount }) {
+  constructor({ container, onFilmUpdate, onClickShowMore }) {
     this._container = container;
     this._subscriptions = [];
     this._filmsContainer = new FilmsContainer();
@@ -20,7 +20,6 @@ export class FilmsController {
     this._onRenderFilmCard = this._onRenderFilmCard.bind(this);
     this._onFilmUpdate = onFilmUpdate;
     this._onClickShowMore = onClickShowMore;
-    this._filmsAmount = filmsAmount;
   }
 
   init() {
@@ -32,7 +31,7 @@ export class FilmsController {
     );
   }
 
-  initWithFilms(films) {
+  initWithFilms(films, allfilms) {
     this._defaultFilmListController = new FilmListController({
       container: this._defaultFilmList.getElementToRenderFilmsTo(),
       films,
@@ -40,7 +39,7 @@ export class FilmsController {
       onTogglePopup: this._onTogglePopup,
       onRenderFilmCard: this._onRenderFilmCard,
       onClickShowMore: this._onClickShowMore,
-      filmsAmount: this._filmsAmount,
+      filmsAmount: allfilms.length,
       type: `default`
     });
 

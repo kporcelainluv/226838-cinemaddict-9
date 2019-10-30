@@ -64,7 +64,6 @@ export class PageController {
     this._container = container;
     this._api = api;
     this._perPage = 5;
-    this._filmsAmoung = films.length;
 
     this._films = sortByDefault(films).slice(0, this._perPage);
     this._allFilms = sortByDefault(films);
@@ -81,8 +80,7 @@ export class PageController {
     this._filmsController = new FilmsController({
       container: this._container,
       onFilmUpdate: this._onFilmUpdate.bind(this),
-      onClickShowMore: this._onClickShowMore.bind(this),
-      filmsAmount: this._filmsAmoung
+      onClickShowMore: this._onClickShowMore.bind(this)
     });
     this._navigationController = new NavigationController(
       this._container,
@@ -103,18 +101,20 @@ export class PageController {
   init() {
     this._headerController.init();
     this._filmsController.init();
-    this._navigationController.init();
     this._sortController.init();
+    this._navigationController.init();
   }
 
   initWithFilms(films) {
-    this._films = films;
-    this._filmsController.initWithFilms(sortByDefault(films));
-    this._headerController.initProfileStats(films);
-    this._navigationController.initWithFilms(films);
-    this._searchResultContoller.init();
-    this._stats.init();
-    this._footer.init(films);
+    this._films = sortByDefault(films).slice(0, this._perPage);
+    this._allFilms = sortByDefault(films);
+
+    this._filmsController.initWithFilms(this._films, this._allFilms);
+    this._headerController.initProfileStats(this._allFilms);
+    this._navigationController.initWithFilms(this._allFilms);
+    this._searchResultContoller.init(this._allFilms);
+    this._stats.init(this._allFilms);
+    this._footer.init(this._allFilms);
   }
 
   _onSearchChange(query) {
