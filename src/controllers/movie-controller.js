@@ -88,7 +88,9 @@ export class MovieController {
           watchlist: !this._film.user_details.watchlist
         }
       };
-      this._onFilmChange(updatedFilm, UPDATE_TYPE.UPDATE_USER_INFO);
+      this._onFilmChange(updatedFilm, {
+        updateType: UPDATE_TYPE.UPDATE_USER_INFO
+      });
     });
 
     this._filmCard.addCallbackOnClickHistoryBtn(evt => {
@@ -99,7 +101,9 @@ export class MovieController {
           already_watched: !this._film.user_details.already_watched
         }
       };
-      this._onFilmChange(updatedFilm, UPDATE_TYPE.UPDATE_USER_INFO);
+      this._onFilmChange(updatedFilm, {
+        updateType: UPDATE_TYPE.UPDATE_USER_INFO
+      });
     });
 
     this._filmCard.addCallbackOnClickFavoriteBtn(evt => {
@@ -110,7 +114,9 @@ export class MovieController {
           favorite: !this._film.user_details.favorite
         }
       };
-      this._onFilmChange(updatedFilm, UPDATE_TYPE.UPDATE_USER_INFO);
+      this._onFilmChange(updatedFilm, {
+        updateType: UPDATE_TYPE.UPDATE_USER_INFO
+      });
     });
 
     this._popup.addCallbackOnClickHistoryBtn(evt => {
@@ -121,7 +127,9 @@ export class MovieController {
           already_watched: !this._film.user_details.already_watched
         }
       };
-      this._onFilmChange(updatedFilm, UPDATE_TYPE.UPDATE_USER_INFO);
+      this._onFilmChange(updatedFilm, {
+        updateType: UPDATE_TYPE.UPDATE_USER_INFO
+      });
       this._film = updatedFilm;
 
       this._popup.toggleRatingSection();
@@ -135,7 +143,9 @@ export class MovieController {
           watchlist: !this._film.user_details.watchlist
         }
       };
-      this._onFilmChange(updatedFilm, UPDATE_TYPE.UPDATE_USER_INFO);
+      this._onFilmChange(updatedFilm, {
+        updateType: UPDATE_TYPE.UPDATE_USER_INFO
+      });
       this._film = updatedFilm;
     });
 
@@ -147,7 +157,9 @@ export class MovieController {
           already_watched: !this._film.user_details.already_watched
         }
       };
-      this._onFilmChange(updatedFilm, UPDATE_TYPE.UPDATE_USER_INFO);
+      this._onFilmChange(updatedFilm, {
+        updateType: UPDATE_TYPE.UPDATE_USER_INFO
+      });
       this._film = updatedFilm;
 
       this._popup.toggleRatingSection();
@@ -162,7 +174,9 @@ export class MovieController {
           favorite: !this._film.user_details.favorite
         }
       };
-      this._onFilmChange(updatedFilm, UPDATE_TYPE.UPDATE_USER_INFO);
+      this._onFilmChange(updatedFilm, {
+        updateType: UPDATE_TYPE.UPDATE_USER_INFO
+      });
       this._film = updatedFilm;
     });
 
@@ -177,7 +191,9 @@ export class MovieController {
           personal_rating: Number(personalRating)
         }
       };
-      this._onFilmChange(updatedFilm, UPDATE_TYPE.UPDATE_USER_INFO);
+      this._onFilmChange(updatedFilm, {
+        updateType: UPDATE_TYPE.UPDATE_USER_INFO
+      });
       this._film = updatedFilm;
     });
   }

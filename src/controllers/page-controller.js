@@ -180,7 +180,9 @@ export class PageController {
     this._searchResultContoller.render(this._films);
   }
 
-  _onFilmUpdate(updatedFilm, updateType) {
+  _onFilmUpdate(updatedFilm, meta) {
+    const { updateType, onSuccess } = meta;
+
     const rerender = newFilm => {
       this._films = updateFilms(this._films, newFilm);
       this._allFilms = updateFilms(this._allFilms, newFilm);
@@ -196,7 +198,8 @@ export class PageController {
       )[0];
       return this._api
         .deleteComment({ comment: deletedComment })
-        .then(() => rerender(updatedFilm));
+        .then(() => rerender(updatedFilm))
+        .then(() => onSuccess());
       // .catch(console.log);
     } else if (updateType === UPDATE_TYPE.UPDATE_USER_INFO) {
       return this._api
@@ -215,7 +218,7 @@ export class PageController {
         })
         .then(({ comments }) => {
           updatedFilm.comments = comments;
-          // console.log(comments);
+          onSuccess(comments);
           rerender(updatedFilm);
         });
       // .catch(console.log);

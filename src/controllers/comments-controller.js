@@ -39,20 +39,28 @@ export class CommentsController {
     this._commentsSection.removeElement();
   }
 
-  _rerenderComments() {
+  _rerenderComments(comments) {
     this._unrenderComments();
-    this._commentsSection = new CommentsSection(this._comments);
+    this._commentsSection = new CommentsSection(comments);
     this.init();
   }
 
   init() {
     this._commentsSection.addCallbackOnEachDeleteBtnClick(idx => {
+      // change btn title
+      // disable btn
       this._comments = [
         ...this._comments.slice(0, idx),
         ...this._comments.slice(idx + 1)
       ];
-      this._onCommentsChange(this._comments, UPDATE_TYPE.DELETE_COMMENT);
-      this._rerenderComments();
+      this._onCommentsChange(this._comments, {
+        updateType: UPDATE_TYPE.DELETE_COMMENT,
+        onSuccess: () => {
+          this._rerenderComments(this._comments);
+          // enable btn
+          // change btn title
+        }
+      });
     });
 
     this._renderComments();
@@ -80,10 +88,13 @@ export class CommentsController {
         };
 
         this._comments = [...this._comments, newComment];
-        this._onCommentsChange(this._comments, UPDATE_TYPE.CREATE_COMMENT);
-
-        document.removeEventListener(`keydown`, onAddComment);
-        this._rerenderComments();
+        this._onCommentsChange(this._comments, {
+          updateType: UPDATE_TYPE.CREATE_COMMENT,
+          onSuccess: comments => {
+            document.removeEventListener(`keydown`, onAddComment);
+            this._rerenderComments(comments);
+          }
+        });
       }
     };
 
