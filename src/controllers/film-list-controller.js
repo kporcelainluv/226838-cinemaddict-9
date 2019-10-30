@@ -55,20 +55,28 @@ export class FilmListController {
 
   init() {
     if (this._type === `rated`) {
+      console.log("rated", this._films);
       this._films = getTopRatedFilms(this._films);
-      this._films.forEach(film => {
-        this._renderFilmCard(this._container, film);
-      });
+
+      if (this._films.length > 0) {
+        this._films.forEach(film => {
+          this._renderFilmCard(this._container, film);
+        });
+      }
     }
 
     if (this._type === `commented`) {
+      console.log("comm", this._films);
       this._films = getMostCommentedFilms(this._films);
-      this._films.forEach(film => {
-        this._renderFilmCard(this._container, film);
-      });
+      if (this._films.length > 0) {
+        this._films.forEach(film => {
+          this._renderFilmCard(this._container, film);
+        });
+      }
     }
 
     if (this._type === `default` && this._films.length < this._filmsAmount) {
+      console.log("def", this._films);
       this._films.forEach(film => {
         this._renderFilmCard(this._container, film);
       });
@@ -81,16 +89,20 @@ export class FilmListController {
     this.unrender();
     if (this._type === `rated`) {
       this._films = getTopRatedFilms(films);
-      this._films.forEach(film => {
-        this._renderFilmCard(this._container, film);
-      });
+      if (this._films.length > 0) {
+        this._films.forEach(film => {
+          this._renderFilmCard(this._container, film);
+        });
+      }
     }
 
     if (this._type === `commented`) {
       this._films = getMostCommentedFilms(films);
-      this._films.forEach(film => {
-        this._renderFilmCard(this._container, film);
-      });
+      if (this._films.length > 0) {
+        this._films.forEach(film => {
+          this._renderFilmCard(this._container, film);
+        });
+      }
     }
 
     if (this._type === `default` && films.length < this._filmsAmount) {
