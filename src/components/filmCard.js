@@ -14,7 +14,7 @@ export class FilmCard extends AbstractComponent {
     [this._hours, this._minutes] = countHoursAndMins(film.film_info.runtime);
 
     this._genres = film.film_info.genre;
-    this._genre = this._genres[0] || "";
+    this._genre = this._genres[0] || ``;
     this._descriptionText = this._updateDescriptionText(
       film.film_info.description
     );
@@ -26,7 +26,7 @@ export class FilmCard extends AbstractComponent {
     this._comments = film.comments.length;
   }
   _updateDescriptionText(text) {
-    if (text.split("").length > 139) {
+    if (text.split(``).length > 140) {
       return text.slice(0, 139) + `...`;
     }
     return text;
