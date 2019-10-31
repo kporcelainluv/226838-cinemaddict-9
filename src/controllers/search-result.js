@@ -45,8 +45,6 @@ export class SearchResultContoller {
         this._searchResultHeading.getElement(),
         "afterbegin"
       );
-      console.log({ films });
-      console.log(this._filmListController);
       this._filmListController.render(films);
     } else {
       render(

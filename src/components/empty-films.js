@@ -1,5 +1,5 @@
 import { AbstractComponent } from "./abstractComponent";
-export class Loading extends AbstractComponent {
+export class EmptyFilms extends AbstractComponent {
   constructor() {
     super();
   }

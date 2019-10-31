@@ -8,7 +8,6 @@ const AUTHORIZATION = `Basic eo0w590ik29889a=${Math.random()}`;
 const END_POINT = `https://htmlacademy-es-9.appspot.com/cinemaddict`;
 
 const api = new API({ endPoint: END_POINT, authorization: AUTHORIZATION });
-
 const page = new PageController(
   headerSearchContainer,
   mainPageContainer,
@@ -16,6 +15,10 @@ const page = new PageController(
   api
 );
 page.init();
+
 api.getFilms().then(films => {
+  if (films.length === 0) {
+    page.renderEmptyFilmList();
+  }
   page.initWithFilms(films);
 });

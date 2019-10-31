@@ -116,6 +116,9 @@ export class PageController {
     this._stats.init(this._allFilms);
     this._footer.init(this._allFilms);
   }
+  renderEmptyFilmList() {
+    this._filmsController.renderEmptyFilms();
+  }
 
   _onSearchChange(query) {
     if (query.length > 3) {

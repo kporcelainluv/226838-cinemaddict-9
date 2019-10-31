@@ -1,9 +1,10 @@
-import { render } from "../utils";
+import { render, unrender } from "../utils";
 import { DefaultFilmList } from "../components/default-film-list";
 import { FilmsContainer } from "../components/film-containter";
 import { FilmListController } from "./film-list-controller";
 import { AdditionalFilmList } from "../components/additionalFilmBlocks";
 import { Loading } from "../components/loading";
+import { EmptyFilms } from "../components/empty-films";
 
 export class FilmsController {
   constructor({ container, onFilmUpdate, onClickShowMore }) {
@@ -15,6 +16,7 @@ export class FilmsController {
     this._topRatedList = new AdditionalFilmList(`Top Rated`);
     this._mostCommentedList = new AdditionalFilmList(`Most Commented`);
     this._loadingComponent = new Loading();
+    this._emptyFilmsComponent = new EmptyFilms();
 
     this._onTogglePopup = this._onTogglePopup.bind(this);
     this._onRenderFilmCard = this._onRenderFilmCard.bind(this);
@@ -32,6 +34,9 @@ export class FilmsController {
   }
 
   initWithFilms(films, allfilms) {
+    unrender(this._loadingComponent.getElement());
+    this._loadingComponent.removeElement();
+
     this._defaultFilmListController = new FilmListController({
       container: this._defaultFilmList.getElementToRenderFilmsTo(),
       films,
@@ -90,6 +95,15 @@ export class FilmsController {
     this._defaultFilmListController.render(films);
     this._ratedFilmListController.render(films);
     this._commentedFilmListController.render(films);
+  }
+  renderEmptyFilms() {
+    unrender(this._loadingComponent.getElement());
+    this._loadingComponent.removeElement();
+    render(
+      this._filmsContainer.getElement(),
+      this._emptyFilmsComponent.getElement(),
+      `beforeend`
+    );
   }
 
   _onTogglePopup() {
