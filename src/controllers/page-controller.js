@@ -215,7 +215,11 @@ export class PageController {
     } else if (updateType === UPDATE_TYPE.UPDATE_USER_INFO) {
       return this._api
         .updateFilm({ film: updatedFilm })
-        .then(() => rerender(updatedFilm));
+        .then(() => {
+          onSuccess();
+          rerender(updatedFilm);
+        })
+        .catch(() => onError());
     } else if (updateType === UPDATE_TYPE.CREATE_COMMENT) {
       const createdComment = difference(
         updatedFilm.comments,

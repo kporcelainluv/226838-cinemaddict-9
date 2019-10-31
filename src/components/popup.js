@@ -208,11 +208,6 @@ export class Popup extends AbstractComponent {
       .querySelector(".film-details__control-label--watched")
       .addEventListener("click", callback);
   }
-  toggleRatingButton(callback) {
-    this.getElement()
-      .querySelectorAll(".film-details__user-rating-input")
-      .forEach(elm => elm.addEventListener("click", callback));
-  }
   toggleRatingSection() {
     this.getElement()
       .querySelector(`.form-details__middle-container`)
@@ -240,5 +235,46 @@ export class Popup extends AbstractComponent {
 
   getFormElement() {
     return this.getElement().querySelector(".film-details__inner");
+  }
+  toggleRatingButton(callback) {
+    this.getElement()
+      .querySelectorAll(`.film-details__user-rating-input`)
+      .forEach(elm => elm.addEventListener(`click`, callback));
+  }
+  disableForm() {
+    this.getElement()
+      .querySelectorAll(`.film-details__user-rating-input`)
+      .forEach(elm => (elm.disabled = true));
+  }
+  enableForm() {
+    this.getElement()
+      .querySelectorAll(`.film-details__user-rating-input`)
+      .forEach(elm => (elm.disabled = false));
+  }
+  shakePopup() {
+    const form = this.getFormElement();
+    form.style.animation = `shake 0.6s`;
+    setTimeout(() => {
+      form.style.animation = ``;
+    }, 600);
+  }
+  addRedBackgroundToBtn(elm) {
+    const allLabels = this.getElement().querySelectorAll(
+      `.film-details__user-rating-label`
+    );
+    Array.from(allLabels).forEach(label => {
+      if (label.htmlFor === `rating-${elm.value}`) {
+        label.classList.add("film-details__user-rating-label--error");
+      }
+    });
+  }
+  removeErrorFromBtns() {
+    Array.from(
+      this.getElement().querySelectorAll(`.film-details__user-rating-label`)
+    ).forEach(elm => {
+      if (elm.classList.contains("film-details__user-rating-label--error")) {
+        elm.classList.toggle("film-details__user-rating-label--error");
+      }
+    });
   }
 }

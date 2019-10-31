@@ -181,9 +181,12 @@ export class MovieController {
     });
 
     this._popup.toggleRatingButton(evt => {
+      this._popup.disableForm();
+      this._popup.removeErrorFromBtns();
       evt.target.checked = true;
 
       const personalRating = evt.target.value;
+      console.log({ personalRating });
       const updatedFilm = {
         ...this._film,
         user_details: {
@@ -192,7 +195,15 @@ export class MovieController {
         }
       };
       this._onFilmChange(updatedFilm, {
-        updateType: UPDATE_TYPE.UPDATE_USER_INFO
+        updateType: UPDATE_TYPE.UPDATE_USER_INFO,
+        onSuccess: () => {
+          this._popup.enableForm();
+        },
+        onError: () => {
+          this._popup.shakePopup();
+          this._popup.enableForm();
+          this._popup.addRedBackgroundToBtn(evt.target);
+        }
       });
       this._film = updatedFilm;
     });
