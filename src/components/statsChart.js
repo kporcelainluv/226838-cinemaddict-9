@@ -13,8 +13,8 @@ export class StatsChart extends AbstractComponent {
       <canvas class="statistic__chart" width="1000"></canvas>
    </div>`;
   }
-  createChart({ genres }) {
-    if (genres === 0) {
+  createChart(genres) {
+    if (genres.length === 0) {
       return "";
     }
     const [keys, vals] = genres;

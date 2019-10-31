@@ -1,5 +1,5 @@
 import { StatsRank } from "../components/statsRank";
-import { render, unrender } from "../utils";
+import { render, unrender, getWatchedFilms } from "../utils";
 
 export class UserRankController {
   constructor(container) {
@@ -19,14 +19,15 @@ export class UserRankController {
     return rank;
   }
 
-  render({ watched }) {
+  render(films) {
+    const watched = getWatchedFilms(films);
     this.unrender();
 
     this._statsRank = new StatsRank(this.getStatsRank(watched));
     render(
       this._container.getElement(),
       this._statsRank.getElement(),
-      "afterbegin"
+      `afterbegin`
     );
   }
   unrender() {

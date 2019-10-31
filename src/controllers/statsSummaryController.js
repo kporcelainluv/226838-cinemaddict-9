@@ -1,4 +1,10 @@
-import { render, unrender } from "../utils";
+import {
+  render,
+  unrender,
+  getWatchedFilms,
+  getHoursAndMins,
+  getTopGenre
+} from "../utils";
 import { StatsSummary } from "../components/statsSummary";
 
 export class StatsSummaryController {
@@ -7,14 +13,17 @@ export class StatsSummaryController {
     this._statsList = new StatsSummary({});
   }
 
-  render(summaryData) {
+  render(films) {
     this.unrender();
+    const topGenre = getTopGenre(films);
+    const watchedFilms = getWatchedFilms(films);
+    const [hours, mins] = getHoursAndMins(films);
 
-    this._statsList = new StatsSummary(summaryData);
+    this._statsList = new StatsSummary(watchedFilms, hours, mins, topGenre);
     render(
       this._container.getElement(),
       this._statsList.getElement(),
-      "beforeend"
+      `beforeend`
     );
   }
 

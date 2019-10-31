@@ -1,5 +1,5 @@
 import { StatsChart } from "../components/statsChart";
-import { render, unrender } from "../utils";
+import { render, unrender, getGenresByKeysVals } from "../utils";
 
 export class StatsChartController {
   constructor(container) {
@@ -7,11 +7,11 @@ export class StatsChartController {
     this._chart = new StatsChart();
   }
 
-  render(summaryData) {
+  render(films) {
     this.unrender();
 
     this._chart = new StatsChart();
-    this._chart.createChart(summaryData);
+    this._chart.createChart(getGenresByKeysVals(films));
     render(this._container.getElement(), this._chart.getElement(), "beforeend");
   }
   unrender() {

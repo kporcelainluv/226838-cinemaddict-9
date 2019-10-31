@@ -18,7 +18,7 @@ export class StatsFiltersController {
     render(
       this._container.getElement(),
       this._statsFilters.getElement(),
-      "beforeend"
+      `beforeend`
     );
     this.getActiveTab();
   }

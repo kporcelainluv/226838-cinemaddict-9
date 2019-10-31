@@ -1,7 +1,7 @@
 import { AbstractComponent } from "./abstractComponent";
 
 export class StatsSummary extends AbstractComponent {
-  constructor({ watched, hours, minutes, genres, topGenre }) {
+  constructor(watched, hours, minutes, topGenre) {
     super();
     this._filmsAmount = watched;
     this._hours = hours;

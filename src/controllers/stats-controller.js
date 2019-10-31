@@ -4,15 +4,13 @@ import { StatsFiltersController } from "./statsFiltersController";
 import { StatsSummaryController } from "./statsSummaryController";
 import { StatsChartController } from "./statsChartController";
 
-import { getDataForSummary, getFilmsByFilter } from "../statsControllerHelpers";
-import { render } from "../utils";
+import { render, getFilmsByFilter } from "../utils";
 import { STATS_FILTER_TYPE } from "../consts";
 
 export class StatsController {
   constructor(container, films) {
     this._container = container;
     this._films = films;
-    this._filteredFilmsData = "";
 
     this._statsSection = new StatisticsSection();
     this._rankController = new UserRankController(this._statsSection);
@@ -32,12 +30,10 @@ export class StatsController {
   }
 
   onTabChange(activeTab) {
-    this._filteredFilmsData = getDataForSummary(
-      getFilmsByFilter(this._films, activeTab)
-    );
-    this._statsSummary.render(this._filteredFilmsData);
-    this._chart.render(this._filteredFilmsData);
-    this._rankController.render(this._filteredFilmsData);
+    const filteredFilms = getFilmsByFilter(this._films, activeTab);
+    this._statsSummary.render(filteredFilms);
+    this._chart.render(filteredFilms);
+    this._rankController.render(filteredFilms);
   }
 
   render() {
