@@ -30,13 +30,13 @@ export class CommentsSection extends AbstractComponent {
                 }</span>
                 <span class="film-details__comment-day">${moment(
                   comment.date
-                ).format("YY/MM/DD HH:MM")}</span>
+                ).format(`YY/MM/DD HH:MM`)}</span>
                 <button class="film-details__comment-delete">Delete</button>
               </p>
             </div>
           </li>`;
           return acc;
-        }, "")}
+        }, ``)}
         </ul>
 
         <div class="film-details__new-comment">
@@ -87,13 +87,13 @@ export class CommentsSection extends AbstractComponent {
     );
 
     Array.from(emojiOptions).forEach(emoji => {
-      emoji.addEventListener("click", callback);
+      emoji.addEventListener(`click`, callback);
     });
   }
 
   updateSelectedEmojiUrl(newUrl) {
     this.getElement().querySelector(
-      ".film-details__add-emoji-label img"
+      `.film-details__add-emoji-label img`
     ).src = newUrl;
   }
 
@@ -103,10 +103,25 @@ export class CommentsSection extends AbstractComponent {
     );
 
     Array.from(commentList).forEach((comment, idx) => {
-      comment.addEventListener("click", evt => {
+      comment.addEventListener(`click`, evt => {
         evt.preventDefault();
         callback(idx);
       });
     });
+  }
+  changeHeadingOnBtnClick(state, idx) {
+    if (state === `deleting`) {
+      const button = this.getElement().querySelectorAll(
+        `.film-details__comment-delete`
+      )[idx];
+      button.innerHTML = `Deleting...`;
+      button.disabled = true;
+    } else {
+      const button = this.getElement().querySelectorAll(
+        `.film-details__comment-delete`
+      )[idx];
+      button.innerHTML = `Delete`;
+      button.disabled = false;
+    }
   }
 }

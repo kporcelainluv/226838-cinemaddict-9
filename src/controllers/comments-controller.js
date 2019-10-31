@@ -47,18 +47,19 @@ export class CommentsController {
 
   init() {
     this._commentsSection.addCallbackOnEachDeleteBtnClick(idx => {
-      // change btn title
-      // disable btn
+      this._commentsSection.changeHeadingOnBtnClick(`deleting`, idx);
       this._comments = [
         ...this._comments.slice(0, idx),
         ...this._comments.slice(idx + 1)
       ];
+      this._renderComments();
       this._onCommentsChange(this._comments, {
         updateType: UPDATE_TYPE.DELETE_COMMENT,
         onSuccess: () => {
           this._rerenderComments(this._comments);
-          // enable btn
-          // change btn title
+        },
+        onError: () => {
+          this._commentsSection.changeHeadingOnBtnClick(`delete`, idx);
         }
       });
     });

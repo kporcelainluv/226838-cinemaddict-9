@@ -192,7 +192,7 @@ export class PageController {
   }
 
   _onFilmUpdate(updatedFilm, meta) {
-    const { updateType, onSuccess } = meta;
+    const { updateType, onSuccess, onError } = meta;
 
     const rerender = newFilm => {
       this._films = updateFilms(this._films, newFilm);
@@ -210,8 +210,8 @@ export class PageController {
       return this._api
         .deleteComment({ comment: deletedComment })
         .then(() => rerender(updatedFilm))
-        .then(() => onSuccess());
-      // .catch(console.log);
+        .then(() => onSuccess())
+        .catch(() => onError());
     } else if (updateType === UPDATE_TYPE.UPDATE_USER_INFO) {
       return this._api
         .updateFilm({ film: updatedFilm })
