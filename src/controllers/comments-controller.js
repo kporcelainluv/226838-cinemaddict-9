@@ -79,21 +79,31 @@ export class CommentsController {
         (evt.ctrlKey && evt.keyCode === 13) ||
         (evt.keyCode === 13 && evt.metaKey)
       ) {
+        this._commentsSection.toggleRedErrorWrap(`remove`);
+
         const formData = new FormData(this._popup.getFormElement());
 
         const newComment = {
           emotion: this._currentEmoji || `angry`,
           comment: formData.get(`comment`),
-          author: "",
+          author: ``,
           date: new Date().toISOString().slice(0, 10)
         };
 
+        this._commentsSection.disableCommentsSection();
         this._comments = [...this._comments, newComment];
         this._onCommentsChange(this._comments, {
           updateType: UPDATE_TYPE.CREATE_COMMENT,
           onSuccess: comments => {
+            this._commentsSection.enableCommentsSection();
             document.removeEventListener(`keydown`, onAddComment);
             this._rerenderComments(comments);
+          },
+          onError: () => {
+            this._commentsSection.disableCommentsSection();
+            this._commentsSection.shakeTextarea();
+            this._commentsSection.enableCommentsSection();
+            this._commentsSection.toggleRedErrorWrap(`add`);
           }
         });
       }

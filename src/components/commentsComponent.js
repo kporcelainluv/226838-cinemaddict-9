@@ -110,18 +110,46 @@ export class CommentsSection extends AbstractComponent {
     });
   }
   changeHeadingOnBtnClick(state, idx) {
+    const button = this.getElement().querySelectorAll(
+      `.film-details__comment-delete`
+    )[idx];
+
     if (state === `deleting`) {
-      const button = this.getElement().querySelectorAll(
-        `.film-details__comment-delete`
-      )[idx];
       button.innerHTML = `Deleting...`;
       button.disabled = true;
     } else {
-      const button = this.getElement().querySelectorAll(
-        `.film-details__comment-delete`
-      )[idx];
       button.innerHTML = `Delete`;
       button.disabled = false;
+    }
+  }
+  disableCommentsSection() {
+    this.getElement().querySelector(
+      `.film-details__comment-input`
+    ).disabled = true;
+  }
+  enableCommentsSection() {
+    this.getElement().querySelector(
+      `.film-details__comment-input`
+    ).disabled = false;
+  }
+  shakeTextarea() {
+    const textarea = this.getElement().querySelector(
+      `.film-details__comment-input`
+    );
+    textarea.style.animation = `shake 0.6s`;
+    setTimeout(() => {
+      textarea.style.animation = ``;
+    }, 600);
+  }
+  toggleRedErrorWrap(state) {
+    const textarea = this.getElement().querySelector(
+      `.film-details__comment-input`
+    );
+    if (state === `add`) {
+      textarea.style.border = `2px solid red`;
+    }
+    if (state === `remove`) {
+      textarea.style.border = ``;
     }
   }
 }

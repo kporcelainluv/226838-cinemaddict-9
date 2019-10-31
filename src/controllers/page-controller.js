@@ -216,7 +216,6 @@ export class PageController {
       return this._api
         .updateFilm({ film: updatedFilm })
         .then(() => rerender(updatedFilm));
-      // .catch(console.log);
     } else if (updateType === UPDATE_TYPE.CREATE_COMMENT) {
       const createdComment = difference(
         updatedFilm.comments,
@@ -231,8 +230,8 @@ export class PageController {
           updatedFilm.comments = comments;
           onSuccess(comments);
           rerender(updatedFilm);
-        });
-      // .catch(console.log);
+        })
+        .catch(() => onError());
     }
   }
 
