@@ -8,6 +8,16 @@ const AUTHORIZATION = `Basic eo0w590ik29889a=${Math.random()}`;
 const END_POINT = `https://htmlacademy-es-9.appspot.com/cinemaddict`;
 
 const api = new API({ endPoint: END_POINT, authorization: AUTHORIZATION });
+
+navigator.serviceWorker
+  .register(`./sw.js`)
+  .then(reg => {
+    console.log("worked", reg.scope);
+  })
+  .catch(error => {
+    console.log("failed", error);
+  });
+
 const page = new PageController(
   headerSearchContainer,
   mainPageContainer,
