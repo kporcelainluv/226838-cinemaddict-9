@@ -1,40 +1,7 @@
 import { MovieController } from "./movie-controller";
 import { ShowMoreButton } from "../components/showMoreBtn";
 import { render } from "../utils";
-
-const getTopRatedFilms = films => {
-  if (films.every(film => film.film_info.total_rating === 0)) {
-    return false;
-  }
-  return films
-    .sort((a, b) => {
-      if (a.film_info.total_rating > b.film_info.total_rating) {
-        return -1;
-      }
-      if (a.film_info.total_rating < b.film_info.total_rating) {
-        return 1;
-      }
-      return 0;
-    })
-    .slice(0, 2);
-};
-
-const getMostCommentedFilms = films => {
-  if (films.every(film => film.comments.length === 0)) {
-    return false;
-  }
-  return films
-    .sort((a, b) => {
-      if (a.comments > b.comments) {
-        return -1;
-      }
-      if (a.comments < b.comments) {
-        return 1;
-      }
-      return 0;
-    })
-    .slice(0, 2);
-};
+import { PER_PAGE } from "../consts";
 
 export class FilmListController {
   constructor({
@@ -43,82 +10,36 @@ export class FilmListController {
     onFilmUpdate,
     onTogglePopup,
     onRenderFilmCard,
-    onClickShowMore,
-    filmsAmount,
-    type
   }) {
     this._container = container;
     this._films = films;
-    this._type = type;
-    this._filmsAmount = filmsAmount || 0;
+    this._filmsDisplayed = 5;
 
     this._onFilmUpdate = onFilmUpdate;
     this._onTogglePopup = onTogglePopup;
-    this._onClickShowMore = onClickShowMore;
     this._onRenderFilmCard = onRenderFilmCard;
     this._showMoreBtn = new ShowMoreButton();
   }
 
   init() {
-    if (this._type === `rated`) {
-      this._films = getTopRatedFilms(this._films);
-
-      if (this._films) {
-        this._films.forEach(film => {
-          this._renderFilmCard(this._container, film);
-        });
-      }
-    }
-
-    if (this._type === `commented`) {
-      this._films = getMostCommentedFilms(this._films);
-      if (this._films) {
-        this._films.forEach(film => {
-          this._renderFilmCard(this._container, film);
-        });
-      }
-    }
-
-    if (this._type === `default`) {
-      this._films.forEach(film => {
-        this._renderFilmCard(this._container, film);
-      });
-      if (this._films.length < this._filmsAmount) {
-        render(this._container, this._showMoreBtn.getElement(), "beforeend");
-        this._showMoreBtn.onClickShowMore(this._onClickShowMore);
-      }
-    }
+    this.render(this._films);
   }
 
   render(films) {
     this.unrender();
 
-    if (this._type === `rated`) {
-      this._films = getTopRatedFilms(films);
-      if (this._films) {
-        this._films.forEach(film => {
-          this._renderFilmCard(this._container, film);
-        });
-      }
-    } else if (this._type === `commented`) {
-      this._films = getMostCommentedFilms(films);
-      if (this._films) {
-        this._films.forEach(film => {
-          this._renderFilmCard(this._container, film);
-        });
-      }
-    } else if (this._type === `default`) {
-      films.forEach(film => {
-        this._renderFilmCard(this._container, film);
-      });
-      if (films.length < this._filmsAmount) {
-        render(this._container, this._showMoreBtn.getElement(), "beforeend");
-        this._showMoreBtn.onClickShowMore(this._onClickShowMore);
-      }
-    } else {
-      films.forEach(film => {
-        this._renderFilmCard(this._container, film);
-      });
+    films.slice(0, this._filmsDisplayed).forEach(film => {
+      this._renderFilmCard(this._container, film);
+    });
+
+    if (films.length > this._filmsDisplayed) {
+      render(this._container, this._showMoreBtn.getElement(), "beforeend");
+      const callback = () => {
+        this._filmsDisplayed += PER_PAGE;
+        this.render(this._films);
+        this._showMoreBtn.removeOnShowMoreCallback(callback);
+      };
+      this._showMoreBtn.onClickShowMore(callback);
     }
   }
 

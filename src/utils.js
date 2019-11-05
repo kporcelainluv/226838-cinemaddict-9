@@ -58,6 +58,7 @@ export const getFilmsByFilter = (films, filterType) => {
 export const getWatchedFilms = films => {
   return films.length;
 };
+
 export const getHoursAndMins = films => {
   const duration = films.reduce((acc, elm) => {
     return acc + elm.film_info.runtime;
@@ -65,6 +66,7 @@ export const getHoursAndMins = films => {
   const [hours, minutes] = countHoursAndMins(duration);
   return [hours, minutes];
 };
+
 const getSortedGenres = films => {
   const genres = films.reduce((acc, elm) => {
     const genresList = elm.film_info.genre;
@@ -88,6 +90,7 @@ const getSortedGenres = films => {
     return 0;
   });
 };
+
 export const getGenresByKeysVals = films => {
   const genres = getSortedGenres(films);
 
@@ -99,4 +102,38 @@ export const getGenresByKeysVals = films => {
 export const getTopGenre = films => {
   const genres = getSortedGenres(films);
   return genres[0][0];
+};
+
+export const getTopRatedFilms = films => {
+  if (films.every(film => film.film_info.total_rating === 0)) {
+    return false;
+  }
+  return films
+    .sort((a, b) => {
+      if (a.film_info.total_rating > b.film_info.total_rating) {
+        return -1;
+      }
+      if (a.film_info.total_rating < b.film_info.total_rating) {
+        return 1;
+      }
+      return 0;
+    })
+    .slice(0, 2);
+};
+
+export const getMostCommentedFilms = films => {
+  if (films.every(film => film.comments.length === 0)) {
+    return false;
+  }
+  return films
+    .sort((a, b) => {
+      if (a.comments > b.comments) {
+        return -1;
+      }
+      if (a.comments < b.comments) {
+        return 1;
+      }
+      return 0;
+    })
+    .slice(0, 2);
 };

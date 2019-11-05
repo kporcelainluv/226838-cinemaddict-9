@@ -63,9 +63,9 @@ export class PageController {
   constructor(headerContainer, container, films, api) {
     this._container = container;
     this._api = api;
-    this._perPage = 5;
 
-    this._films = sortByDefault(films).slice(0, this._perPage);
+    // TODO remove allFilms or films
+    this._films = sortByDefault(films);
     this._allFilms = sortByDefault(films);
     this._currentTab = NAV_TAB.ALL;
 
@@ -79,8 +79,7 @@ export class PageController {
     });
     this._filmsController = new FilmsController({
       container: this._container,
-      onFilmUpdate: this._onFilmUpdate.bind(this),
-      onClickShowMore: this._onClickShowMore.bind(this)
+      onFilmUpdate: this._onFilmUpdate.bind(this)
     });
     this._navigationController = new NavigationController(
       this._container,
@@ -106,10 +105,10 @@ export class PageController {
   }
 
   initWithFilms(films) {
-    this._films = sortByDefault(films).slice(0, this._perPage);
+    this._films = sortByDefault(films);
     this._allFilms = sortByDefault(films);
 
-    this._filmsController.initWithFilms(this._films, this._allFilms);
+    this._filmsController.initWithFilms(this._films);
     this._headerController.initProfileStats(this._allFilms);
     this._navigationController.initWithFilms(this._allFilms);
     this._searchResultContoller.init(this._allFilms);
@@ -141,7 +140,7 @@ export class PageController {
     this._currentTab = navTab;
 
     if (navTab === NAV_TAB.ALL) {
-      this._films = this._allFilms.slice(0, this._perPage);
+      this._films = this._allFilms;
       this._stats.unrender();
       this._sortController.show();
       this._filmsController.show();
@@ -237,11 +236,5 @@ export class PageController {
         })
         .catch(() => onError());
     }
-  }
-
-  _onClickShowMore() {
-    this._perPage += 5;
-    this._films = this._allFilms.slice(0, this._perPage);
-    this._filmsController.render(this._films);
   }
 }

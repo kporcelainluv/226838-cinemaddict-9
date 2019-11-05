@@ -1,4 +1,9 @@
-import { render, unrender } from "../utils";
+import {
+  render,
+  unrender,
+  getMostCommentedFilms,
+  getTopRatedFilms
+} from "../utils";
 import { DefaultFilmList } from "../components/default-film-list";
 import { FilmsContainer } from "../components/film-containter";
 import { FilmListController } from "./film-list-controller";
@@ -7,7 +12,7 @@ import { Loading } from "../components/loading";
 import { EmptyFilms } from "../components/empty-films";
 
 export class FilmsController {
-  constructor({ container, onFilmUpdate, onClickShowMore }) {
+  constructor({ container, onFilmUpdate }) {
     this._container = container;
     this._subscriptions = [];
     this._filmsContainer = new FilmsContainer();
@@ -21,7 +26,6 @@ export class FilmsController {
     this._onTogglePopup = this._onTogglePopup.bind(this);
     this._onRenderFilmCard = this._onRenderFilmCard.bind(this);
     this._onFilmUpdate = onFilmUpdate;
-    this._onClickShowMore = onClickShowMore;
   }
 
   init() {
@@ -33,7 +37,7 @@ export class FilmsController {
     );
   }
 
-  initWithFilms(films, allfilms) {
+  initWithFilms(films) {
     unrender(this._loadingComponent.getElement());
     this._loadingComponent.removeElement();
 
@@ -42,30 +46,23 @@ export class FilmsController {
       films,
       onFilmUpdate: this._onFilmUpdate,
       onTogglePopup: this._onTogglePopup,
-      onRenderFilmCard: this._onRenderFilmCard,
-      onClickShowMore: this._onClickShowMore,
-      filmsAmount: allfilms.length,
-      type: `default`
+      onRenderFilmCard: this._onRenderFilmCard
     });
 
     this._ratedFilmListController = new FilmListController({
       container: this._topRatedList.getElementToRenderFilmsTo(),
-      films,
+      films: getTopRatedFilms(films),
       onFilmUpdate: this._onFilmUpdate,
       onTogglePopup: this._onTogglePopup,
-      onRenderFilmCard: this._onRenderFilmCard,
-      onClickShowMore: this._onClickShowMore,
-      type: `rated`
+      onRenderFilmCard: this._onRenderFilmCard
     });
 
     this._commentedFilmListController = new FilmListController({
       container: this._mostCommentedList.getElementToRenderFilmsTo(),
-      films,
+      films: getMostCommentedFilms(films),
       onFilmUpdate: this._onFilmUpdate,
       onTogglePopup: this._onTogglePopup,
-      onRenderFilmCard: this._onRenderFilmCard,
-      onClickShowMore: this._onClickShowMore,
-      type: `commented`
+      onRenderFilmCard: this._onRenderFilmCard
     });
 
     render(

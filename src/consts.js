@@ -43,3 +43,5 @@ export const UPDATE_TYPE = {
   CREATE_COMMENT: "CREATE_COMMENT",
   DELETE_COMMENT: "DELETE_COMMENT"
 };
+
+export const PER_PAGE = 5;
