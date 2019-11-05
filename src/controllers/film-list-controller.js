@@ -15,7 +15,6 @@ export class FilmListController {
     type
   }) {
     this._container = container;
-    this._wrapper = document.createElement("div");
 
     this._films = films;
     this._type = type;
@@ -37,17 +36,16 @@ export class FilmListController {
 
   render(films) {
     this.unrender();
-    render(this._container, this._wrapper, POSITION.BEFOREEND);
     console.log({
       x: this._filmsDisplayed
     });
 
     films.slice(0, this._filmsDisplayed).forEach(film => {
-      this._renderFilmCard(this._wrapper, film);
+      this._renderFilmCard(this._container, film);
     });
 
     if (films.length > this._filmsDisplayed && this._type === "default") {
-      render(this._wrapper, this._showMoreBtn.getElement(), "beforeend");
+      render(this._container, this._showMoreBtn.getElement(), "beforeend");
       const callback = () => {
         this._filmsDisplayed += PER_PAGE;
         this.render(this._films);
@@ -63,7 +61,7 @@ export class FilmListController {
   }
 
   unrender() {
-    this._wrapper.remove();
+    this._container.innerHTML = "";
   }
 
   _renderFilmCard(container, film) {
