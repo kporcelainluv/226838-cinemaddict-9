@@ -46,7 +46,8 @@ export class FilmsController {
       films,
       onFilmUpdate: this._onFilmUpdate,
       onTogglePopup: this._onTogglePopup,
-      onRenderFilmCard: this._onRenderFilmCard
+      onRenderFilmCard: this._onRenderFilmCard,
+      type: "default"
     });
 
     this._ratedFilmListController = new FilmListController({
@@ -54,7 +55,8 @@ export class FilmsController {
       films: getTopRatedFilms(films),
       onFilmUpdate: this._onFilmUpdate,
       onTogglePopup: this._onTogglePopup,
-      onRenderFilmCard: this._onRenderFilmCard
+      onRenderFilmCard: this._onRenderFilmCard,
+      type: "top-rated"
     });
 
     this._commentedFilmListController = new FilmListController({
@@ -62,7 +64,8 @@ export class FilmsController {
       films: getMostCommentedFilms(films),
       onFilmUpdate: this._onFilmUpdate,
       onTogglePopup: this._onTogglePopup,
-      onRenderFilmCard: this._onRenderFilmCard
+      onRenderFilmCard: this._onRenderFilmCard,
+      type: "most-commented"
     });
 
     render(
@@ -93,6 +96,15 @@ export class FilmsController {
     this._ratedFilmListController.render(films);
     this._commentedFilmListController.render(films);
   }
+
+  renderX(films) {
+    this._unrenderFilmList();
+
+    this._defaultFilmListController.renderX(films);
+    this._ratedFilmListController.render(films);
+    this._commentedFilmListController.render(films);
+  }
+
   renderEmptyFilms() {
     unrender(this._loadingComponent.getElement());
     this._loadingComponent.removeElement();

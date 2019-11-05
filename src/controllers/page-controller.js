@@ -144,25 +144,25 @@ export class PageController {
       this._stats.unrender();
       this._sortController.show();
       this._filmsController.show();
-      this._filmsController.render(this._films);
+      this._filmsController.renderX(this._films);
     } else if (navTab === NAV_TAB.WATCHLIST) {
       this._stats.unrender();
       this._sortController.show();
       this._filmsController.show();
       this._films = getWatchlist(this._allFilms);
-      this._filmsController.render(this._films);
+      this._filmsController.renderX(this._films);
     } else if (navTab === NAV_TAB.HISTORY) {
       this._stats.unrender();
       this._sortController.show();
       this._filmsController.show();
       this._films = getWatched(this._allFilms);
-      this._filmsController.render(this._films);
+      this._filmsController.renderX(this._films);
     } else if (navTab === NAV_TAB.FAVOTITES) {
       this._stats.unrender();
       this._sortController.show();
       this._filmsController.show();
       this._films = getFavorite(this._allFilms);
-      this._filmsController.render(this._films);
+      this._filmsController.renderX(this._films);
     } else if (navTab === NAV_TAB.STATS) {
       this._filmsController.hide();
       this._sortController.hide();

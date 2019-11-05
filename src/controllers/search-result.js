@@ -31,7 +31,8 @@ export class SearchResultContoller {
       films,
       onFilmUpdate: this._onFilmUpdate,
       onTogglePopup: this._onTogglePopup,
-      onRenderFilmCard: this._onRenderFilmCard
+      onRenderFilmCard: this._onRenderFilmCard,
+      type: "search"
     });
   }
 
